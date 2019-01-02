@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
-
-const MusicRoute = () => <Text>Music</Text>;
-
-const AlbumsRoute = () => <Text>Albums</Text>;
-
-const RecentsRoute = () => <Text>Recents</Text>;
-
+import Home from './app/Home/index';
+import Recents from './app/Recents/index';
 export default class App extends Component {
   state = {
     index: 0,
     routes: [
-      { key: 'music', title: 'Music', icon: 'queue-music',  color: '#0366d6' },// color定义底部tab颜色
-      { key: 'albums', title: 'Albums', icon: 'album', color: '#63c1a0'},
+      { key: 'home', title: 'Home', icon: 'apps',  color: '#0366d6' },// color定义底部tab颜色
       { key: 'recents', title: 'Recents', icon: 'history', color: '#24292e' },
     ],
   };
@@ -20,9 +14,8 @@ export default class App extends Component {
   _handleIndexChange = index => this.setState({ index });
 
   _renderScene = BottomNavigation.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
-    recents: RecentsRoute,
+    home: Home,
+    recents: Recents,
   });
 
   render() {
