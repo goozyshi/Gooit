@@ -7,21 +7,24 @@ import {
   Image
 } from 'react-native';
 import Swiper from 'react-native-swiper';
+
+import { _height, _width } from '../../common/config';
+
 export default class CareerSwiper extends Component {
   state = {
     BannerList: [{
       img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
       title: '站酷1',
-      url: 'https://github.com/goozyshi/Mynote/blob/master/D%26A/Data/Stack%E5%A0%86%E6%A0%88.md'
+      url: 'https://yuchengkai.cn/docs/frontend/#typeof'
     },{
       img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
       title: '站酷2',
-      url: 'https://github.com/goozyshi/Mynote/blob/master/D%26A/DataStructure.md'
+      url: 'https://www.baidu.com/'
     },{
       img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
       title: '站酷3',
-      url: 'https://github.com/goozyshi/Mynote/blob/master/D%26A/Algorithm.md'
-    }
+      url: 'http://www.elecfans.com/news/hangye/20181211829968.html'
+    } 
   ]
   }
   render(){
@@ -61,7 +64,7 @@ export default class CareerSwiper extends Component {
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: 150,
+    height: _height*0.22,
   },
   slide1: {
     flex: 1,

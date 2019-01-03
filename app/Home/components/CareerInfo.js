@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+
 import { WebView } from "react-native-webview";
 class CareerInfo extends React.Component {
   static navigationOptions = ({ navigation }) => {

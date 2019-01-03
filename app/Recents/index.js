@@ -1,16 +1,36 @@
 import React, { Component } from 'react';
 import {
   View,
-  Text
+  Text,
+  TouchableOpacity
 } from 'react-native';
-class Recents extends Component {
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+
+import Test from './components/test';
+class RecentsScreen extends Component {
   render() {
+    const { navigate } = this.props.navigation;
     return (
-      <View>
+      <TouchableOpacity onPress={()=>{navigate('Details')}}>
         <Text>RecentsRoute</Text>
-      </View>
+      </TouchableOpacity>
     )
   }
 }
-
+const RecentsRootStack = createStackNavigator(
+  {
+    Recents: RecentsScreen,
+    Details: Test
+  },
+  {
+    initialRouteName: 'Recents',
+    headerMode: 'none'
+  }
+);
+const RecentsContainer = createAppContainer(RecentsRootStack);
+class Recents extends Component {
+  render() {
+    return <RecentsContainer />;
+  }
+}
 export default Recents;

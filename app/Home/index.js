@@ -11,7 +11,6 @@ import CareerInfo from './components/CareerInfo';
 
 class HomeScreen extends Component {
   render() {
-    console.log(this.props)
     return (
       <View>
         <SearchDataSheet/>
@@ -21,7 +20,7 @@ class HomeScreen extends Component {
   }
 }
 
-const RootStack = createStackNavigator(
+const HomeRootStack = createStackNavigator(
   {
     Home: HomeScreen,
     Details: CareerInfo
@@ -31,10 +30,10 @@ const RootStack = createStackNavigator(
     headerMode: 'none'
   }
 );
-const AppContainer = createAppContainer(RootStack);
-class Home extends React.Component {
+const HomeContainer = createAppContainer(HomeRootStack);
+class Home extends Component {
   render() {
-    return <AppContainer />;
+    return <HomeContainer />;
   }
 }
 export default Home;
