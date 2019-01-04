@@ -24,9 +24,8 @@ class SearchDataSheet extends Component {
 const styles = StyleSheet.create({
   container: {
     height: 50,
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10
+    marginTop: 5,
+    marginBottom: 10
   },
   input: {
     backgroundColor: '#f5f5f5',

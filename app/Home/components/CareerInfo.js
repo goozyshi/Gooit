@@ -42,11 +42,4 @@ class CareerInfo extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  a: {
-    fontWeight: '300',
-    color: '#FF3366', 
-  },
-});
-
 export default CareerInfo;

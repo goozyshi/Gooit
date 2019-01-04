@@ -24,6 +24,18 @@ export default class CareerSwiper extends Component {
       img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
       title: '站酷3',
       url: 'http://www.elecfans.com/news/hangye/20181211829968.html'
+    },{
+      img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
+      title: '站酷4',
+      url: 'https://yuchengkai.cn/docs/frontend/#typeof'
+    },{
+      img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
+      title: '站酷5',
+      url: 'https://www.baidu.com/'
+    },{
+      img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
+      title: '站酷6',
+      url: 'http://www.elecfans.com/news/hangye/20181211829968.html'
     } 
   ]
   }
@@ -65,10 +77,10 @@ export default class CareerSwiper extends Component {
 const styles = StyleSheet.create({
   wrapper: {
     height: _height*0.22,
+    marginBottom: 10,
   },
   slide1: {
     flex: 1,
-    margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#9DD6EB',
@@ -76,7 +88,6 @@ const styles = StyleSheet.create({
   },
   slide2: {
     flex: 1,
-    margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#97CAE5',
@@ -84,7 +95,6 @@ const styles = StyleSheet.create({
   },
   slide3: {
     flex: 1,
-    margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#92BBD9',
