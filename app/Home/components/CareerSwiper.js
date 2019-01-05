@@ -15,26 +15,14 @@ export default class CareerSwiper extends Component {
     BannerList: [{
       img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
       title: '站酷1',
-      url: 'https://yuchengkai.cn/docs/frontend/#typeof'
+      url: 'http://www.elecfans.com/news/hangye/20180716711222.html'
     },{
       img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
       title: '站酷2',
-      url: 'https://www.baidu.com/'
+      url: 'http://www.elecfans.com/news/hangye/20180617696029.html'
     },{
       img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
       title: '站酷3',
-      url: 'http://www.elecfans.com/news/hangye/20181211829968.html'
-    },{
-      img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
-      title: '站酷4',
-      url: 'https://yuchengkai.cn/docs/frontend/#typeof'
-    },{
-      img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
-      title: '站酷5',
-      url: 'https://www.baidu.com/'
-    },{
-      img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
-      title: '站酷6',
       url: 'http://www.elecfans.com/news/hangye/20181211829968.html'
     } 
   ]
@@ -46,7 +34,7 @@ export default class CareerSwiper extends Component {
         <Swiper
           loop={true}
           autoplay={true}
-          autoplayTimeout={2.5}
+          autoplayTimeout={3}
           dotStyle={styles.dotStyle}
           activeDotStyle={styles.activeDotStyle}
         >

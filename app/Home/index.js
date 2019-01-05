@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  ScrollView,
   StyleSheet
 } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
@@ -11,13 +12,19 @@ import SearchDataSheet from './components/SearchDataSheet';
 import CareerSwiper from './components/CareerSwiper';
 import CareerInfo from './components/CareerInfo';
 import Caculator from './components/Caculator';
+import Edu from './components/Edu';
 import Tools from './components/Tools';
+import CardList from './components/CardList';
 class HomeScreen extends Component {
   state = {
     itemList:[{
       title: '实用工具',
       _style: {backgroundColor: '#f5f5f5', flex: 0.25},
       _component: <Tools navigation={this.props.navigation} />,
+    },{
+      title: '编程-基础',
+      _style: {backgroundColor: '#fff'},
+      _component: <CardList navigation={this.props.navigation} />,
     }]
   }
   render() {
@@ -25,15 +32,17 @@ class HomeScreen extends Component {
       <View style={styles.homecontainer}>
         <SearchDataSheet/>
         <CareerSwiper navigation={this.props.navigation}/>
-        { this.state.itemList.map((item)=>{
-          return <ItemBox
-            key = {item._component}
-            title = {item.title}
-            subtitle = {item.subtitle}
-            _style = {item._style}
-            _component = {item._component}
-          />
-        })}
+        <ScrollView>
+          { this.state.itemList.map((item)=>{
+            return <ItemBox
+              key = {item._component}
+              title = {item.title}
+              subtitle = {item.subtitle}
+              _style = {item._style}
+              _component = {item._component}
+            />
+          })}
+        </ScrollView>
       </View>
     )
   }
@@ -43,7 +52,8 @@ const HomeRootStack = createStackNavigator(
   {
     Home: HomeScreen,
     Details: CareerInfo,
-    Caculator: Caculator
+    Caculator: Caculator,
+    Edu: Edu
   },
   {
     initialRouteName: 'Home',
