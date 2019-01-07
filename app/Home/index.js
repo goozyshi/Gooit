@@ -29,10 +29,10 @@ class HomeScreen extends Component {
   }
   render() {
     return (
-      <View style={styles.homecontainer}>
+      <ScrollView style={styles.homecontainer}>
         <SearchDataSheet/>
         <CareerSwiper navigation={this.props.navigation}/>
-        <ScrollView>
+        <View>
           { this.state.itemList.map((item)=>{
             return <ItemBox
               key = {item._component}
@@ -42,8 +42,8 @@ class HomeScreen extends Component {
               _component = {item._component}
             />
           })}
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     )
   }
 }
@@ -57,7 +57,7 @@ const HomeRootStack = createStackNavigator(
   },
   {
     initialRouteName: 'Home',
-    headerMode: 'none'
+    headerMode: 'none',
   }
 );
 const HomeContainer = createAppContainer(HomeRootStack);

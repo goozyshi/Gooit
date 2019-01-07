@@ -49,19 +49,22 @@ class Tools extends Component {
 }
 const CaculatorTag = (props) => {
   return(
-    <TouchableOpacity onPress={ props.onPress }>
-      <View style={styles.tag}>
-        <Icon name="plane" size={16} color="#eaa8a4" />
-        <Text style={styles.name}>
-          {props.name}
-        </Text>
-      </View>
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity onPress={ props.onPress }>
+        <View style={styles.tag}>
+          <Icon name="plane" size={16} color="#eaa8a4" />
+          <Text style={styles.name}>
+            {props.name}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   tag: {
+    flex: 1,
     height: _height * 0.04,
     backgroundColor: '#fff',
     flexDirection: 'row',

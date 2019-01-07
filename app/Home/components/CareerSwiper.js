@@ -33,6 +33,8 @@ export default class CareerSwiper extends Component {
       <View style={styles.wrapper}>
         <Swiper
           loop={true}
+          showsButtons={true} // 显示左右按钮
+          removeClippedSubviews={false}
           autoplay={true}
           autoplayTimeout={3}
           dotStyle={styles.dotStyle}
@@ -65,32 +67,30 @@ export default class CareerSwiper extends Component {
 const styles = StyleSheet.create({
   wrapper: {
     height: _height*0.22,
-    marginBottom: 10,
+    margin: 10,
   },
   slide1: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#9DD6EB',
     borderRadius: 5
   },
   slide2: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#97CAE5',
     borderRadius: 5
   },
   slide3: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#92BBD9',
     borderRadius: 5
   },
   banner: {
-    height: 120,
-    width: 200
+    width: _width*0.9,
+    height: _height*0.2,
+    borderRadius: _height*0.02
   },
   text: {
     color: '#fff',

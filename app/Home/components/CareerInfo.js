@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
+  WebView
 } from 'react-native';
 
-import { WebView } from "react-native-webview";
-class CareerInfo extends React.Component {
+class CareerInfo extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('HeaderTitle', '详情页'),// 前面是传过来的标题，后面是备用

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { BottomNavigation, Text } from 'react-native-paper';
+import { BottomNavigation } from 'react-native-paper';
 import Home from './app/Home/index';
 import Recents from './app/Recents/index';
+import { _height, _width } from './app/common/config';
 export default class App extends Component {
   state = {
     index: 0,
@@ -27,7 +28,7 @@ export default class App extends Component {
         shifting = {true}// 除了选中tab，其他只显示logo，不显示标签
         labeled = {true}// 是否显示标签
         activeColor = {'#fff'} // 标签选中颜色
-        barStyle = {{paddingBottom: 0}} // 底部Tab栏样式
+        barStyle = {{}} // 底部Tab栏样式
       />
     );
   }

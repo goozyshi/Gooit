@@ -24,14 +24,14 @@ class SearchDataSheet extends Component {
 const styles = StyleSheet.create({
   container: {
     height: 50,
-    marginTop: 5,
-    marginBottom: 10
+    backgroundColor: '#0366d6',
   },
   input: {
     backgroundColor: '#f5f5f5',
     borderColor: '#666',
     borderWidth: 1,
-    borderRadius: 3
+    borderRadius: 3,
+    margin: 5
   },
   label: {
     color: '#91627b',
