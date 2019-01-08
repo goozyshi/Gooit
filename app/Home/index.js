@@ -69,7 +69,7 @@ class Home extends Component {
 const styles = StyleSheet.create({
   homecontainer: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#f5f5f5'
   },
   box: {
     flex: 1

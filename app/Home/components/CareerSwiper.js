@@ -67,6 +67,7 @@ export default class CareerSwiper extends Component {
 const styles = StyleSheet.create({
   wrapper: {
     height: _height*0.22,
+    backgroundColor: '#fff',
     margin: 10,
   },
   slide1: {

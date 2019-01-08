@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet,View,Text,TouchableOpacity} from 'react-native';
 import Picker from 'react-native-picker';
+import { ResisterData } from '../../common/config';
 class Caculator extends Component{
   constructor (props) {
     super(props);
@@ -10,45 +11,46 @@ class Caculator extends Component{
       secondColor: '',
       thirdColor: '',
       forthColor: '',
-      colorArray: [
-        [{c:'#000', v: '10'}, {c:'#eee', v: '1'}, {c:'#072', v: '100'}],
-        // ['#000', '#eee', '#072'],
-        // ['#000', '#eee', '#072'],
-        // ['#000', '#eee', '#072'],
-      ]
+      colorArray: [...ResisterData]
     }
+  }
+
+  /**
+   * 获取选择器初始数据
+   */
+  getData=()=>{
+    let { colorArray } = this.state;
+    let data = [];
+    for (let i = 0; i<colorArray.length; i++){
+      let temp = [];
+      colorArray[i].map((item)=>{
+        temp.push(item.name)
+      })
+      data[i]=temp;
+    }
+    return data
   }
   //打开色环颜色选择视图
   _showPicker() {
     let { colorArray } = this.state;
-    let data = [
-      ['黑','白','绿'],
-      // ['黑','白','绿'],
-      // ['黑','白','绿'],
-      // ['黑','白','绿'],
-    ];
+    console.log(this.getData())
     Picker.init({
       pickerTitleText:'电阻色环',
       pickerCancelBtnText:'取消',
       pickerConfirmBtnText:'确定',
-      pickerData: data,
-      selectedValue: ['黑'],
+      pickerData: this.getData(),
+      selectedValue: ['绿','白'],
       onPickerConfirm: (data,index) => {
           this.setState({
-            firstColor: colorArray[0][index[0]].c,
-            firstValue: colorArray[0][index[0]].v,
-            // secondColor: colorArray[1][index[1]],
-            // thirdColor: colorArray[2][index[2]],
-            // forthColor: colorArray[3][index[3]],
+            firstColor: colorArray[0][index[0]].color,
+            firstValue: colorArray[0][index[0]].value,
           })
       },
       onPickerSelect: (data,index) => {
+        console.log(index)
         this.setState({
-          firstColor: colorArray[0][index[0]].c,
-          firstValue: colorArray[0][index[0]].v,
-          // secondColor: colorArray[1][index[1]],
-          // thirdColor: colorArray[2][index[2]],
-          // forthColor: colorArray[3][index[3]],
+          firstColor: colorArray[0][index[0]].color,
+          firstValue: colorArray[0][index[0]].value,
         })
       }
     });
@@ -62,7 +64,7 @@ class Caculator extends Component{
     return(
       <View style={styles.container}>
         <View style={styles.resisterbox}>
-          <View style={{marinLeft: 10, height: 40, width: 20, backgroundColor: this.state.firstColor}} />
+          <View style={{marinLeft: 10, height: 40, width: 40, backgroundColor: this.state.firstColor}} />
           {/* <View style={{marinLeft: 10, height: 40, width: 20, backgroundColor: this.state.secondColor}} />
           <View style={{marinLeft: 10, height: 40, width: 20, backgroundColor: this.state.thirdColor}} />
           <View style={{marinLeft: 10, height: 40, width: 20, backgroundColor: this.state.forthColor}} /> */}
@@ -83,7 +85,8 @@ const styles = StyleSheet.create({
   container:{
     flex:1,
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    backgroundColor: '#ECF1F0'
   },
   resisterbox: {
     flexDirection: 'row',

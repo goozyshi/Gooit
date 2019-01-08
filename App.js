@@ -7,7 +7,7 @@ export default class App extends Component {
   state = {
     index: 0,
     routes: [
-      { key: 'home', title: 'Home', icon: 'apps',  color: '#0366d6' },// color定义底部tab颜色
+      { key: 'home', title: 'Home', icon: 'apps',  color: '#24292e' },// color定义底部tab颜色
       { key: 'recents', title: 'Recents', icon: 'history', color: '#24292e' },
     ],
   };
