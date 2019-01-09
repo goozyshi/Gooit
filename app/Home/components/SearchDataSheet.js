@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import MaterialsIcon from 'react-native-vector-icons/MaterialIcons';
 import { Kohana } from 'react-native-textinput-effects';
-
 class SearchDataSheet extends Component {
+  state = {
+    firstQuery: '',
+  };
   render(){
+    const { firstQuery } = this.state;
     return(
       <View style={styles.container}>
         <Kohana
@@ -23,15 +26,14 @@ class SearchDataSheet extends Component {
 }
 const styles = StyleSheet.create({
   container: {
-    height: 50,
-    backgroundColor: '#0366d6',
+    height: 60,
+    backgroundColor: '#24936E',
+    alignItems: 'center',
+    flex: 1,
+    padding: 8
   },
   input: {
     backgroundColor: '#f5f5f5',
-    borderColor: '#666',
-    borderWidth: 1,
-    borderRadius: 3,
-    margin: 5
   },
   label: {
     color: '#91627b',

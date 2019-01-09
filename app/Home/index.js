@@ -18,12 +18,8 @@ import CardList from './components/CardList';
 class HomeScreen extends Component {
   state = {
     itemList:[{
-      title: '实用工具',
-      _style: {backgroundColor: '#f5f5f5', flex: 0.25},
-      _component: <Tools navigation={this.props.navigation} />,
-    },{
       title: '编程-基础',
-      _style: {backgroundColor: '#fff'},
+      _style: {marginTop: 5},
       _component: <CardList navigation={this.props.navigation} />,
     }]
   }
@@ -31,7 +27,9 @@ class HomeScreen extends Component {
     return (
       <ScrollView style={styles.homecontainer}>
         <SearchDataSheet/>
-        <CareerSwiper navigation={this.props.navigation}/>
+        <CareerSwiper navigation={this.props.navigation} />
+        <Tools navigation={this.props.navigation} />
+        <CardList navigation={this.props.navigation} />
         <View>
           { this.state.itemList.map((item)=>{
             return <ItemBox

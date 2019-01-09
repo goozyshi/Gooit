@@ -3,7 +3,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
-  View
+  View,
+  Text
 } from 'react-native';
 import { Card, Title } from 'react-native-paper';
 import { _height, _width } from '../../common/config';
@@ -32,11 +33,15 @@ class CardList extends Component {
   render(){
     const { navigate } = this.props.navigation;
     return(
+      <View style={styles.wrapper}>
+        <View style={styles.head}>
+          <Text style={styles.headline}>编程基础</Text>
+        </View>
         <FlatList
           data={this.state.data}
           keyExtractor={item => item.index}
-          numColumns={3}
-          showsVerticalScrollIndicator={false}//  水平进度条
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}//  水平进度条
           renderItem={({item}) => 
             <CardItem
               img_url={item.img_url}
@@ -45,12 +50,13 @@ class CardList extends Component {
             />
           }
         />
+      </View>
     )
   }
 }
 
 const CardItem = (props) => (
-  <View>
+  <View style={styles.cardwrapper}>
     <TouchableOpacity onPress={props.onPress} style={styles.container}>
       <Card style={styles.card}>
         <Card.Cover 
@@ -66,11 +72,28 @@ const CardItem = (props) => (
 );
 
 const styles = StyleSheet.create({
+  wrapper: {
+    backgroundColor: '#fff',
+    marginTop: 8,
+  },
+  head: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+  },
+  headline: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+  },
   container: {
     flex: 1,
     marginLeft: 10,
     marginRight: 10,
     justifyContent: 'space-between',
+  },
+  cardwrapper: {
+    marginBottom: 5
   },
   card: {
     height: _height*0.13,

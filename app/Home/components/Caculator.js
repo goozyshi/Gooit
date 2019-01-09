@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {StyleSheet,View,Text,TouchableOpacity} from 'react-native';
 import Picker from 'react-native-picker';
-import { ResisterData } from '../../common/config';
+
+import { ResisterData, _height, _width } from '../../common/config';
 class Caculator extends Component{
   constructor (props) {
     super(props);
@@ -11,7 +12,7 @@ class Caculator extends Component{
       secondColor: '',
       thirdColor: '',
       forthColor: '',
-      colorArray: [...ResisterData]
+      colorArray: ResisterData, //电阻数据 
     }
   }
 
@@ -30,47 +31,87 @@ class Caculator extends Component{
     }
     return data
   }
-  //打开色环颜色选择视图
+
+  /**
+   * 打开色环颜色选择视图
+   */
   _showPicker() {
     let { colorArray } = this.state;
-    console.log(this.getData())
     Picker.init({
-      pickerTitleText:'电阻色环',
-      pickerCancelBtnText:'取消',
-      pickerConfirmBtnText:'确定',
+      pickerTitleText: '四色环电阻',
+      pickerCancelBtnText: '取消',
+      pickerConfirmBtnText: '确定',
       pickerData: this.getData(),
-      selectedValue: ['绿','白'],
+      selectedValue: ['棕', '黑', '黑', '棕'],
       onPickerConfirm: (data,index) => {
           this.setState({
             firstColor: colorArray[0][index[0]].color,
             firstValue: colorArray[0][index[0]].value,
+            secondColor: colorArray[1][index[1]].color,
+            secondValue: colorArray[1][index[1]].value,
+            thirdColor: colorArray[2][index[2]].color,
+            thirdValue: colorArray[2][index[2]].value,
+            forthColor: colorArray[3][index[3]].color,
+            forthValue: colorArray[3][index[3]].value,
           })
       },
       onPickerSelect: (data,index) => {
-        console.log(index)
         this.setState({
           firstColor: colorArray[0][index[0]].color,
           firstValue: colorArray[0][index[0]].value,
+          secondColor: colorArray[1][index[1]].color,
+          secondValue: colorArray[1][index[1]].value,
+          thirdColor: colorArray[2][index[2]].color,
+          thirdValue: colorArray[2][index[2]].value,
+          forthColor: colorArray[3][index[3]].color,
+          forthValue: colorArray[3][index[3]].value,
         })
       }
     });
     Picker.show();
   }
+
+  /**
+   * 四环电阻计算部分
+   */
+  counter = () => {
+    let { firstValue, secondValue, thirdValue, forthValue } = this.state;
+    let fault = forthValue || 1;// 误差
+    let ex = thirdValue;// 指数
+    let num = '10';
+    let unit = 'Ω';
+    let reg=/\.\d{2,}/
+    if(ex<2){
+       num = (firstValue + secondValue)*Math.pow(10,ex) ;// 数值部分
+       unit = 'Ω'
+    }else if (2<=ex && ex<=4){
+       num = (firstValue + secondValue)*Math.pow(10,ex-3)
+       unit = 'KΩ'
+    }else if(ex>4){
+       num = (firstValue + secondValue)*Math.pow(10,ex-6);
+       unit = 'MΩ'
+    }
+    if(reg.test(num)){
+      num = num.toFixed(2) // 解决JavaScript精度问题，保存两位有效数字
+    }
+    let result = num + unit + ' ' + '±' + ' ' + fault + '%';
+    return result
+  }
+
   componentWillMount = () => {
     this._showPicker()
   }
-  
   render(){
     return(
       <View style={styles.container}>
         <View style={styles.resisterbox}>
-          <View style={{marinLeft: 10, height: 40, width: 40, backgroundColor: this.state.firstColor}} />
-          {/* <View style={{marinLeft: 10, height: 40, width: 20, backgroundColor: this.state.secondColor}} />
-          <View style={{marinLeft: 10, height: 40, width: 20, backgroundColor: this.state.thirdColor}} />
-          <View style={{marinLeft: 10, height: 40, width: 20, backgroundColor: this.state.forthColor}} /> */}
+          <View style={{height: 40, width: 20, backgroundColor: this.state.firstColor || '#724832'}} />
+          <View style={{height: 40, width: 20, backgroundColor: this.state.secondColor || '#000'}} />
+          <View style={{height: 40, width: 20, backgroundColor: this.state.thirdColor || '#000'}} />
+          <View style={{height: 40, width: 20, backgroundColor: this.state.forthColor || '#724832'}} />
         </View>
         <View style={styles.result}>
-          <Text style={styles.result_txt}>{this.state.firstValue}Ω</Text>
+          <Text style={styles.result_txt}>{this.counter()}</Text>
         </View>
         <View style={styles.content}>
           <TouchableOpacity onPress={()=>this._showPicker()}>
@@ -89,7 +130,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECF1F0'
   },
   resisterbox: {
+    width: '30%',
     flexDirection: 'row',
+    justifyContent: 'space-around'
   },
   result: {
     margin: 20,

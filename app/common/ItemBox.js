@@ -11,7 +11,6 @@ class ItemBox extends Component {
       <View style={[styles.container, this.props._style]}>
         <View style={styles.head}>
           <View style={styles.headcom}>
-            <Text style={styles.title}>*&nbsp;&nbsp;{this.props.title}&nbsp;&nbsp;*</Text>
           </View>
         </View>
         {this.props._component}

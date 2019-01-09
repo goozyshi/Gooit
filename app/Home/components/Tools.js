@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { _height, _width } from '../../common/config';
 class Tools extends Component {
   state = {
-    data: [{
+    tools_data: [{
       name: '电阻色环',
       id: 0
     },{
@@ -26,60 +26,66 @@ class Tools extends Component {
       name: 'NE555',
       id: 4
     },{
-      name: '运算放大器',
+      name: '布尔逻辑门',
       id: 5
+    },{
+      name: 'ASCII表',
+      id: 6
+    },{
+      name: '接口引脚定义',
+      id: 7
+    },{
+      name: '7400系列IC',
+      id: 8
+    },{
+      name: '更多',
+      id: 9
     }]
   }
   render(){
     const { navigate } = this.props.navigation;
+    const { tools_data } = this.state;
     return(
-        <FlatList
-          data={this.state.data}
-          keyExtractor={item => item.name}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}//  水平进度条
-          renderItem={({item}) => 
-            <CaculatorTag
-              name = {item.name}
-              onPress={()=>navigate('Caculator')}
-            />}
-        />
+      <View style={styles.container}>
+        { tools_data.map((item,index)=>(
+            <View key={index}>
+              <TouchableOpacity onPress={()=>navigate('Caculator')}>
+                <View style={styles.tag}>
+                  <Icon name="microchip" size={25} color="#24936E" />
+                  <Text style={styles.name}>
+                    {item.name}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          )
+        )}
+      </View>
     )
   }
 }
-const CaculatorTag = (props) => {
-  return(
-    <View>
-      <TouchableOpacity onPress={ props.onPress }>
-        <View style={styles.tag}>
-          <Icon name="plane" size={16} color="#eaa8a4" />
-          <Text style={styles.name}>
-            {props.name}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  )
-}
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: 5,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    backgroundColor: '#fff'
+  },
   tag: {
     flex: 1,
-    height: _height * 0.04,
-    backgroundColor: '#fff',
-    flexDirection: 'row',
+    width: _width * 0.16,
     alignItems: 'center',
-    justifyContent: 'space-around',
-    borderRadius: 5,
-    borderColor: '#eaa8a4',
-    borderWidth: 2,
-    margin: 10,
-    padding: 5,
+    justifyContent: 'center',
+    margin: 8,
+    // marginBottom: 5,
   },
   name: {
-    marginLeft: 10,
-    fontSize: 14,
-    color: '#666'
+    marginTop: 5,
+    fontSize: 10,
   }
 });
 export default Tools;

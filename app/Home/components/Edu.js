@@ -151,7 +151,7 @@ const ExItem = (props) =>{
       <Text style={styles.extitle}>{index}.{extitle}</Text>
       { (exsub!='') && (
         <View style={styles.tagbox}>
-          <Text style={styles.extag}>知识点</Text><Text style={styles.exsub} numberOfLines={1} ellipsizeMode='middle'>{exsub}</Text>
+          <Text style={styles.extag}>知识点</Text><Text style={styles.exsub} numberOfLines={1} ellipsizeMode='tail'>{exsub}</Text>
         </View>
       )}
     </View>
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     margin: 5,
     flexDirection: 'row',
     alignItems: 'center',
-    width: _width*0.8
+    width: _width*0.8,
   },
   extag: {
     borderWidth: 1,
@@ -245,6 +245,8 @@ const styles = StyleSheet.create({
     padding: 2,
     textAlign: 'center',
     marginRight: 3,
+    flexWrap: 'wrap'// 折行配合TextInput的numberOfLines={1} ellipsizeMode='tail'以省略号结束
+
   },
   exsub: {
     fontSize: 11,

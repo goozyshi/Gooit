@@ -24,39 +24,47 @@ export default class CareerSwiper extends Component {
       img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
       title: '站酷3',
       url: 'http://www.elecfans.com/news/hangye/20181211829968.html'
-    } 
-  ]
+    }],
+    headindex: 1,
   }
   render(){
     const { navigate } = this.props.navigation
     return (
       <View style={styles.wrapper}>
+        <View style={styles.head}>
+          <Text style={styles.headline}>业界情报</Text>
+          <View style={styles.indexbox}>
+            <Text style={styles.current_index}>{this.state.headindex}</Text>
+            <Text style={styles.all_index}>/{this.state.BannerList.length}</Text>
+          </View>
+        </View>
         <Swiper
           loop={true}
-          showsButtons={true} // 显示左右按钮
-          removeClippedSubviews={false}
+          // showsButtons={true} // 显示左右按钮
           autoplay={true}
           autoplayTimeout={3}
           dotStyle={styles.dotStyle}
           activeDotStyle={styles.activeDotStyle}
+          onIndexChanged={(index)=>(
+            this.setState({
+              headindex: index+1,
+            })
+          )}
         >
-          { this.state.BannerList.map((item)=>{
-            return(
-              <TouchableOpacity 
-                key={item.title}
-                style={styles.slide1}
-                onPress={()=>{navigate('Details', {
-                      HeaderTitle:item.title,// 头条标题
-                      url: item.url,//  头条链接
-                    })}
-                }
-              >
-                <Image source={{ uri: item.img }} style={styles.banner}/>
-                <Text>{item.title}</Text>
-              </TouchableOpacity>
+          { this.state.BannerList.map((item)=>(
+                <TouchableOpacity 
+                  key={item.title}
+                  style={styles.slide1}
+                  onPress={()=>{navigate('Details', {
+                        HeaderTitle:item.title,// 头条标题
+                        url: item.url,//  头条链接
+                      })}
+                  }
+                >
+                  <Image source={{ uri: item.img }} style={styles.banner}/>
+                </TouchableOpacity>
+              )
             )
-          })
-            
           }
         </Swiper>
       </View>
@@ -66,32 +74,54 @@ export default class CareerSwiper extends Component {
 
 const styles = StyleSheet.create({
   wrapper: {
-    height: _height*0.22,
+    height: _height*0.28,
     backgroundColor: '#fff',
-    margin: 10,
+    marginTop: 8,
+  },
+  head: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 11,
+  },
+  headline: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+  },
+  indexbox: {
+    flexDirection: 'row',
+    alignItems: 'flex-end'
+  },
+  current_index: {
+    color: '#F75C2F',
+    fontSize: 18
+  },
+  all_index: {
+    fontSize: 14
   },
   slide1: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5
+    
   },
   slide2: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5
+    
   },
   slide3: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 5
+    
   },
   banner: {
     width: _width*0.9,
     height: _height*0.2,
-    borderRadius: _height*0.02
+    borderRadius: 5,
+    marginBottom: 10,
   },
   text: {
     color: '#fff',
