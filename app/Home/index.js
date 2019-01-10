@@ -2,46 +2,41 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  StatusBar,
   ScrollView,
   StyleSheet
 } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-import ItemBox from '../common/ItemBox';
 import SearchDataSheet from './components/SearchDataSheet';
 import CareerSwiper from './components/CareerSwiper';
 import CareerInfo from './components/CareerInfo';
 import Caculator from './components/Caculator';
 import Edu from './components/Edu';
 import Tools from './components/Tools';
-import CardList from './components/CardList';
+import BasicList from './components/BasicList';
+import OSList from './components/OSList';
+import AlgoList from './components/AlgoList';
+import SearchBar from '../common/SearchBar';
 class HomeScreen extends Component {
-  state = {
-    itemList:[{
-      title: '编程-基础',
-      _style: {marginTop: 5},
-      _component: <CardList navigation={this.props.navigation} />,
-    }]
-  }
   render() {
     return (
-      <ScrollView style={styles.homecontainer}>
-        <SearchDataSheet/>
+      <View style={styles.homecontainer} showsVerticalScrollIndicator={false}>
+        <StatusBar
+          animated ={true}
+          backgroundColor="#24936E"//#24936E
+          barStyle="light-content"
+          translucent={true}
+        />
+        <SearchBar/>
+        <ScrollView>
         <CareerSwiper navigation={this.props.navigation} />
         <Tools navigation={this.props.navigation} />
-        <CardList navigation={this.props.navigation} />
-        <View>
-          { this.state.itemList.map((item)=>{
-            return <ItemBox
-              key = {item._component}
-              title = {item.title}
-              subtitle = {item.subtitle}
-              _style = {item._style}
-              _component = {item._component}
-            />
-          })}
-        </View>
-      </ScrollView>
+        <BasicList navigation={this.props.navigation} />
+        <OSList navigation={this.props.navigation} />
+        <AlgoList navigation={this.props.navigation} />
+        </ScrollView>
+      </View>
     )
   }
 }

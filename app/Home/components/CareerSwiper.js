@@ -54,7 +54,7 @@ export default class CareerSwiper extends Component {
           { this.state.BannerList.map((item)=>(
                 <TouchableOpacity 
                   key={item.title}
-                  style={styles.slide1}
+                  style={styles.slide}
                   onPress={()=>{navigate('Details', {
                         HeaderTitle:item.title,// 头条标题
                         url: item.url,//  头条链接
@@ -99,28 +99,14 @@ const styles = StyleSheet.create({
   all_index: {
     fontSize: 14
   },
-  slide1: {
+  slide: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    
   },
   banner: {
     width: _width*0.9,
     height: _height*0.2,
-    borderRadius: 5,
     marginBottom: 10,
   },
   text: {

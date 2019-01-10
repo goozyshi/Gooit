@@ -4,11 +4,11 @@ import {
   TouchableOpacity,
   FlatList,
   View,
-  Text
+  Text,
+  Image
 } from 'react-native';
-import { Card, Title } from 'react-native-paper';
 import { _height, _width } from '../../common/config';
-class CardList extends Component {
+class OSList extends Component {
   state = {
     data: [{
       img_url: 'https://dn-simplecloud.shiyanlou.com/1523348726316.png',
@@ -35,15 +35,15 @@ class CardList extends Component {
     return(
       <View style={styles.wrapper}>
         <View style={styles.head}>
-          <Text style={styles.headline}>编程基础</Text>
+          <Text style={styles.headline}>操作系统 | 软件</Text>
         </View>
         <FlatList
           data={this.state.data}
-          keyExtractor={item => item.index}
+          keyExtractor={item => item.title}
           horizontal={true}
           showsHorizontalScrollIndicator={false}//  水平进度条
           renderItem={({item}) => 
-            <CardItem
+            <OSItem
               img_url={item.img_url}
               title = {item.title}
               onPress={()=>{navigate('Edu')}}
@@ -55,18 +55,16 @@ class CardList extends Component {
   }
 }
 
-const CardItem = (props) => (
+const OSItem = (props) => (
   <View style={styles.cardwrapper}>
     <TouchableOpacity onPress={props.onPress} style={styles.container}>
-      <Card style={styles.card}>
-        <Card.Cover 
+      <View style={styles.card}>
+        <Image
           source={{ uri: props.img_url }}
           style={styles.banner}
           />
-        <Card.Content>
-          <Title style={styles.title}>{props.title}</Title>
-        </Card.Content>
-      </Card>
+          <Text style={styles.title}>{props.title}</Text>
+      </View>
     </TouchableOpacity>
   </View>
 );
@@ -74,7 +72,8 @@ const CardItem = (props) => (
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: '#fff',
-    marginTop: 8,
+    marginTop: 5,
+    padding: 5,
   },
   head: {
     flexDirection: 'row',
@@ -86,29 +85,29 @@ const styles = StyleSheet.create({
     color: '#333',
     fontWeight: '500',
   },
-  container: {
-    flex: 1,
-    marginLeft: 10,
-    marginRight: 10,
-    justifyContent: 'space-between',
-  },
   cardwrapper: {
-    marginBottom: 5
+    marginBottom: 10
+  },
+  container: {
+    marginLeft: 5,
+    marginRight: 5,
   },
   card: {
-    height: _height*0.13,
-    width: _width*0.29,
-    marginTop: 5,
+    height: _width*0.21,
+    width: _width*0.21,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 3,
     marginBottom: 10,
   },
   banner: {
-    height: _height*0.09,
-    resizeMode: 'contain',
+    height: _width*0.18,
+    width: _width*0.18,
   },
   title: {
-    color: '#666',
-    textAlign: 'center',
+    marginTop: 10,
+    color: '#444',
     fontSize: 11
   }
 });
-export default CardList;
+export default OSList;
