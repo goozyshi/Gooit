@@ -39,23 +39,23 @@ class BasicList extends Component {
         </View>
         <FlatList
           data={this.state.data}
-          keyExtractor={item => item.title}
           horizontal={true}
           showsHorizontalScrollIndicator={false}//  水平进度条
           renderItem={({item}) => 
-            <CardItem
+            <BasicItem
               img_url={item.img_url}
               title = {item.title}
               onPress={()=>{navigate('Edu')}}
             />
           }
+          keyExtractor={item => item.title}
         />
       </View>
     )
   }
 }
 
-const CardItem = (props) => (
+const BasicItem = (props) => (
   <View style={styles.cardwrapper}>
     <TouchableOpacity onPress={props.onPress} style={styles.container}>
       <Card style={styles.card}>

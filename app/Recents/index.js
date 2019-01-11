@@ -8,6 +8,7 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { _height, _width } from '../common/config';
 import { StickyHeader } from '../common/Header';
 import Foreground from './components/Foreground';
+
 class RecentsScreen extends Component {
   render() {
     const { navigate } = this.props.navigation;

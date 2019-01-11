@@ -38,8 +38,8 @@ class OSList extends Component {
           <Text style={styles.headline}>操作系统 | 软件</Text>
         </View>
         <FlatList
-          data={this.state.data}
           keyExtractor={item => item.title}
+          data={this.state.data}
           horizontal={true}
           showsHorizontalScrollIndicator={false}//  水平进度条
           renderItem={({item}) => 

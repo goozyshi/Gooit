@@ -25,15 +25,15 @@ class AlgoList extends Component {
       desc: '适合学过 Linux 基础入门课程后的用户练习各种 Linux 命令。'
     },{
       img_url: 'https://dn-simplecloud.shiyanlou.com/1523348726316.png',
-      title: 'C语言入门教程',
+      title: 'C语言入门教程1',
       desc: '适合学过 Linux 基础入门课程后的用户练习各种 Linux 命令。'
     },{
       img_url: 'https://dn-simplecloud.shiyanlou.com/ncn20.jpg',
-      title: '数据结构(新版)',
+      title: '数据结构(新版)1',
       desc: '适合学过 Linux 基础入门课程后的用户练习各种 Linux 命令。'
     },{
       img_url: 'https://dn-simplecloud.shiyanlou.com/1506663669396.png',
-      title: 'Matlab入门',
+      title: 'Matlab入门1',
       desc: '适合学过 Linux 基础入门课程后的用户练习各种 Linux 命令。'
     }]
   }
@@ -45,11 +45,11 @@ class AlgoList extends Component {
           <Text style={styles.headline}>算法精选</Text>
         </View>
         <FlatList
-          data={this.state.data}
           keyExtractor={item => item.title}
+          data={this.state.data}
           showsVerticalScrollIndicator={false}//  隐藏垂直进度条
           renderItem={({item, index}) => 
-            <OSItem
+            <AlItem
               length = {this.state.data.length}
               index = {index}
               img_url={item.img_url}
@@ -64,7 +64,7 @@ class AlgoList extends Component {
   }
 }
 
-const OSItem = (props) => (
+const AlItem = (props) => (
   <View style={styles.cardwrapper}>
     <TouchableOpacity onPress={props.onPress}>
       <View style={styles.card}>

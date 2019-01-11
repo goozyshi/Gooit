@@ -21,15 +21,16 @@ import SearchBar from '../common/SearchBar';
 class HomeScreen extends Component {
   render() {
     return (
-      <View style={styles.homecontainer} showsVerticalScrollIndicator={false}>
+      <View style={styles.homecontainer}>
         <StatusBar
           animated ={true}
           backgroundColor="#24936E"//#24936E
           barStyle="light-content"
+          hidden={true}
           translucent={true}
         />
-        <SearchBar/>
-        <ScrollView>
+        <SearchBar navigation={this.props.navigation}/>
+        <ScrollView showsVerticalScrollIndicator={false}>
         <CareerSwiper navigation={this.props.navigation} />
         <Tools navigation={this.props.navigation} />
         <BasicList navigation={this.props.navigation} />
@@ -46,7 +47,8 @@ const HomeRootStack = createStackNavigator(
     Home: HomeScreen,
     Details: CareerInfo,
     Caculator: Caculator,
-    Edu: Edu
+    Edu: Edu,
+    SearchDataSheet: SearchDataSheet
   },
   {
     initialRouteName: 'Home',
