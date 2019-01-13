@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   ScrollView,
+  TouchableOpacity,
   FlatList
 } from 'react-native';
 import { _height, _width } from '../../common/config';
@@ -68,6 +69,13 @@ class Edu extends Component {
   state = {
     isChecked: false
   }
+  changeState = () =>{
+    this.setState({
+      isChecked: !this.state.isChecked
+    },()=>{
+      console.log(this.state)
+    })
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -83,22 +91,14 @@ class Edu extends Component {
           tabBarInactiveTextColor={'#666'} // 标签未选中颜色
           tabBarUnderlineStyle={{backgroundColor:'#24936E', height:2}}// 下划线样式
           renderTabBar={() => <ScrollableTabBar />}
-        >
+          >
           <Profile tabLabel='信息简介'/>
-          <ExperimentList tabLabel='课程列表'/>
-        </ScrollableTabView>
-        {/* <CheckBox
-            style={{flex: 1, padding: 10}}
+          <ExperimentList
+            tabLabel='课程列表'
             isChecked={this.state.isChecked}
-            checkedCheckBoxColor={'#24936E'}// 勾选颜色
-            uncheckedCheckBoxColor={'#eee'}// 未勾选颜色
-            leftText={"CheckBox"}
-            onClick={()=>{
-              this.setState({
-                  isChecked:!this.state.isChecked
-              })
-            }}
-        /> */}
+            onPress={()=>this.changeState()}
+          />
+        </ScrollableTabView>
         <ToggleFooter/>
       </View>
     );
@@ -125,6 +125,10 @@ class Profile extends Component {
  * 课程列表
  */
 class ExperimentList extends Component {
+  onPress(){
+    this.props.onPress()
+    console.log(`sdasd`)
+  }
   render(){
     return(
       <View style={styles.box_content}>
@@ -133,30 +137,29 @@ class ExperimentList extends Component {
           keyExtractor={item => item.extitle}
           showsVerticalScrollIndicator={false}//  水平进度条
           renderItem={({item, index}) => 
-            <ExItem
-              extitle = {item.extitle}          
-              exsub = {item.exsub}
-              index = {index+1}        
-            />
+            <TouchableOpacity style={styles.excontainer} onPress={()=>{this.onPress()}}>
+              <View style={styles.check}>
+                  <CheckBox
+                    isChecked={this.props.isChecked}
+                    checkedCheckBoxColor={'#24936E'}// 勾选颜色
+                    uncheckedCheckBoxColor={'#eee'}// 未勾选颜色
+                    onClick={()=>{this.onPress()}}
+                  />
+                <Text style={styles.extitle}>{index+1}.{item.extitle}</Text>
+              </View>
+              { (item.exsub!='') && (
+                <View style={styles.tagbox}>
+                  <Text style={styles.extag}>知识点</Text><Text style={styles.exsub} numberOfLines={1} ellipsizeMode='tail'>{item.exsub}</Text>
+                </View>
+              )}
+            </TouchableOpacity>
           }
         />
       </View>
     )
   }
 }
-const ExItem = (props) =>{
-  const { extitle, exsub, index} = props;
-  return (
-    <View style={styles.excontainer}>
-      <Text style={styles.extitle}>{index}.{extitle}</Text>
-      { (exsub!='') && (
-        <View style={styles.tagbox}>
-          <Text style={styles.extag}>知识点</Text><Text style={styles.exsub} numberOfLines={1} ellipsizeMode='tail'>{exsub}</Text>
-        </View>
-      )}
-    </View>
-  )
-}
+
 /**
  * 底部工具栏
  */
@@ -227,7 +230,12 @@ const styles = StyleSheet.create({
   excontainer: {
     margin: 5
   },
+  check: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
   extitle: {
+    marginLeft: 5,
     fontSize: 14,
     fontWeight: '500',
     color: '#333'
@@ -246,7 +254,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginRight: 3,
     flexWrap: 'wrap'// 折行配合TextInput的numberOfLines={1} ellipsizeMode='tail'以省略号结束
-
   },
   exsub: {
     fontSize: 11,

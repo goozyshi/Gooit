@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet,View,Text,TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity, ImageBackground, Image} from 'react-native';
 import Picker from 'react-native-picker';
 
 import { ResisterData, _height, _width } from '../../common/config';
@@ -43,6 +43,7 @@ class Caculator extends Component{
       pickerConfirmBtnText: '确定',
       pickerData: this.getData(),
       selectedValue: ['棕', '黑', '黑', '棕'],
+      pickerHeight: 550,
       onPickerConfirm: (data,index) => {
           this.setState({
             firstColor: colorArray[0][index[0]].color,
@@ -105,15 +106,17 @@ class Caculator extends Component{
     return(
       <View style={styles.container}>
         <View style={styles.resisterbox}>
-          <View style={{height: 40, width: 20, backgroundColor: this.state.firstColor || '#724832'}} />
-          <View style={{height: 40, width: 20, backgroundColor: this.state.secondColor || '#000'}} />
-          <View style={{height: 40, width: 20, backgroundColor: this.state.thirdColor || '#000'}} />
-          <View style={{height: 40, width: 20, backgroundColor: this.state.forthColor || '#724832'}} />
+        <ImageBackground source={require('../../../res/resister.png')} resizeMode='contain' style={styles.register}>
+          <View style={styles.box}>
+            <View style={{height: _height * 0.071, width: 15, backgroundColor: this.state.firstColor || '#724832'}} />
+            <View style={{height: _height * 0.071, width: 15, backgroundColor: this.state.secondColor || '#000'}} />
+            <View style={{height: _height * 0.071, width: 15, backgroundColor: this.state.thirdColor || '#000'}} />
+            <View style={{height: _height * 0.071, width: 15, backgroundColor: this.state.forthColor || '#724832'}} />
+          </View>
+        </ImageBackground>
         </View>
         <View style={styles.result}>
           <Text style={styles.result_txt}>{this.counter()}</Text>
-        </View>
-        <View style={styles.content}>
           <TouchableOpacity onPress={()=>this._showPicker()}>
             <Text style={styles.textStyle}>点击选择</Text>
           </TouchableOpacity>
@@ -130,9 +133,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#ECF1F0'
   },
   resisterbox: {
-    width: '30%',
+    width: '80%',
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'center',
+    alignItems: 'center',
+
+  },
+  register: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  box: {
+    width: '40%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 2,
+    marginLeft: 5,
+    alignItems: 'center',
   },
   result: {
     margin: 20,

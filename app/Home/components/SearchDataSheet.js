@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ToastAndroid,
+  AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { _height, _width } from '../../common/config';
@@ -13,7 +14,7 @@ class SearchDataSheet extends Component {
   state = {
     val: '',
     isShow: false,
-    history: [],  //历史纪录
+    history: [],  //历史记录
   }
  
   /**
@@ -23,7 +24,7 @@ class SearchDataSheet extends Component {
     const { val, history } = this.state;
     let reg=/^(?!(\s+$))/    //  模式匹配。输入内容不为纯空格
     if ( val && reg.test(val) ) {
-      // 不重复添加纪录
+      // 不重复添加记录
       history.map((item, index)=>{
         if( val === item){
           history.splice(index, 1)
@@ -31,13 +32,42 @@ class SearchDataSheet extends Component {
       })
       // 新纪录放在最开始
       history.unshift(val);
+      
+      let saving_data = history.join('-')
       this.setState({
         history: history,
         isShow: true
+      },()=>{
+        // 保存缓存
+        AsyncStorage.setItem('history', saving_data)
       });
     } else {
       ToastAndroid.show("搜索内容不能为空", ToastAndroid.SHORT);
     }
+  }
+
+  async componentDidMount() {
+    // 读取缓存
+    let rawdata = await AsyncStorage.getItem('history');
+    if(rawdata != null){
+      let temp = rawdata.split('-')
+      this.setState({
+        history: temp
+      })
+    }
+  }
+  clearHistory = () =>{
+    this.setState({history: []},()=>{
+      AsyncStorage.removeItem('history')
+    })
+  }
+  handleChange = (item) =>{
+    console.log(item)
+    this.setState({
+      val: item
+    },()=>{
+      this._onSubmitEditing()
+    })
   }
   render(){
     const { val, history, isShow } = this.state;
@@ -79,7 +109,11 @@ class SearchDataSheet extends Component {
               </TouchableOpacity>
             </View>
             <View style={styles.historybox}>
-              { history.map((item)=><Text style={styles.historytext}>{item}</Text>)}
+              { history.map((item, index)=>
+              <TouchableOpacity key={index} onPress={()=>this.handleChange(item)}>
+                <Text style={styles.historytext}>{item}</Text>
+              </TouchableOpacity>
+              )}
             </View>
             <Text style={[styles.headline,{marginLeft: 15, color: 'red', textDecorationLine: 'underline'}]}  >什么是Datasheet?</Text>
           </View>
