@@ -95,7 +95,7 @@ class Caculator extends Component{
     if(reg.test(num)){
       num = num.toFixed(2) // 解决JavaScript精度问题，保存两位有效数字
     }
-    let result = num + unit + ' ' + '±' + ' ' + fault + '%';
+    let result = num + ' ' + unit + ' ' + '±' + ' ' + fault + '%';
     return result
   }
 
@@ -108,10 +108,10 @@ class Caculator extends Component{
         <View style={styles.resisterbox}>
         <ImageBackground source={require('../../../res/resister.png')} resizeMode='contain' style={styles.register}>
           <View style={styles.box}>
-            <View style={{height: _height * 0.071, width: 15, backgroundColor: this.state.firstColor || '#724832'}} />
-            <View style={{height: _height * 0.071, width: 15, backgroundColor: this.state.secondColor || '#000'}} />
-            <View style={{height: _height * 0.071, width: 15, backgroundColor: this.state.thirdColor || '#000'}} />
-            <View style={{height: _height * 0.071, width: 15, backgroundColor: this.state.forthColor || '#724832'}} />
+            <View style={{height: _height * 0.07, width: 15, backgroundColor: this.state.firstColor || '#724832'}} />
+            <View style={{height: _height * 0.07, width: 15, backgroundColor: this.state.secondColor || '#000'}} />
+            <View style={{height: _height * 0.07, width: 15, backgroundColor: this.state.thirdColor || '#000'}} />
+            <View style={{height: _height * 0.07, width: 15, backgroundColor: this.state.forthColor || '#724832'}} />
           </View>
         </ImageBackground>
         </View>

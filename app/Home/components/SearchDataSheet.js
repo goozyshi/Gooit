@@ -196,12 +196,14 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   historytext: {
-    borderColor: '#072',
-    borderWidth: 1,
+    borderColor: '#999',
+    borderWidth: 2,
     marginRight: 15,
     marginBottom: 10,
-    fontSize: 14,
-    padding: 4
+    fontSize: 13,
+    textAlign: 'center',
+    padding: 4,
+    color: '#444'
   }
 })
 export default SearchDataSheet;

@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Text,
   View, 
-  FlatList,
   TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -51,7 +50,7 @@ class Tools extends Component {
             <View key={index}>
               <TouchableOpacity onPress={()=>navigate('Caculator')}>
                 <View style={styles.tag}>
-                  <Icon name="microchip" size={25} color="#24936E" />
+                  <Icon name="microchip" size={48} color="#24936E" />
                   <Text style={styles.name}>
                     {item.name}
                   </Text>
@@ -80,12 +79,11 @@ const styles = StyleSheet.create({
     width: _width * 0.16,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 8,
-    // marginBottom: 5,
+    margin: 10,
   },
   name: {
     marginTop: 5,
-    fontSize: 10,
+    fontSize: 13,
   }
 });
 export default Tools;

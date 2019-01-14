@@ -5,19 +5,14 @@ import {
   Image,
   StyleSheet
 } from 'react-native';
-import { Chip } from 'react-native-paper';
-
 class Foreground extends Component {
   render(){
     return (
       <View style={styles.forebox}>
-        <Image source={{uri: 'https://img.zcool.cn/community/01ffc75b1fb5afa8012034f79b3ed3.jpg@1280w_1l_0o_100sh.jpg'}} style={styles.avatar}/>
-          <Text style={styles.name}>施泽勇</Text>
+        <Image source={{uri: 'https://img.zcool.cn/community/046cca553f71a100000199876ebc3b.jpg@160w_160h_1c_1e_1o_100sh.jpg'}} style={styles.avatar}/>
+        {/* <Image source={{uri: 'https://img.zcool.cn/community/01653d564fd2ef32f87512f6043a97.jpg@1280w_1l_2o_100sh.jpg'}} style={styles.avatar}/> */}
+          <Text style={styles.name}>花泽香菜·恋爱循环</Text>
           <Text style={styles.num}>电子科学与技术学院</Text>
-        <View style={styles.chipbox}>
-          <Chip mode="outlined" icon="info">深圳大学</Chip>
-          <Chip mode="outlined" icon="info">2015160036</Chip>
-        </View>
       </View>
     )
   }
@@ -31,19 +26,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   avatar: {
-    height: 80,
-    width: 80,
-    borderRadius: 40,
+    height: 160,
+    width: 160,
+    borderRadius: 80,
     borderWidth: 3,
-    borderColor: 'blue',
+    borderColor: 'pink',
     marginBottom: 5
   },
   name: {
-    color: '#eee',
+    color: '#fff',
     fontWeight: '500',
-    fontSize: 18,
+    fontSize: 24,
   },
   num: {
+    margin: 3,
     fontSize: 18, 
     color: '#eee',
   },
@@ -51,7 +47,7 @@ const styles = StyleSheet.create({
     width: '60%',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    margin: 5
+    alignItems: 'center',
   }
 })
 export default Foreground;

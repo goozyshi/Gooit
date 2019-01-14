@@ -166,9 +166,67 @@ const ResisterData = [
 	}]
 ]
 
+/**
+ * 列表数据
+ */
+const exdata = [{
+  extitle: '为什么是 C ——因为你无可替代',
+  exsub: '1.如何学习C语言 2.第一个`helloshiyanlou`程序'
+},{
+  extitle: '开发环境和剖析第一个 C 语言',
+  exsub: '1.C程序创建及其运行'
+},{
+  extitle: '挑战：输出I love shiyanlou!',
+  exsub: ''
+},{
+  extitle: '顺序程序设计 - 数据类型（一）',
+  exsub: '1.数据类型 2.运算符与表达式 3.C语句 4.数据的输入与输出'
+},{
+  extitle: '顺序程序设计 - 数据类型（二）',
+  exsub: '1.字符型数据 2.浮点型数据'
+},{
+  extitle: '顺序程序设计 - 运算符和数据转换',
+  exsub: '1.基本的算数运算符 2.自增、自减运算符 3.不同数据类型之间的混合运算 4.强制类型转换 5.数据的输入和输出'
+},{
+  extitle: '挑战：摄氏转华氏温度',
+  exsub: ''
+},{
+  extitle: '选择程序设计',
+  exsub: ' 1.条件判断案例 2.用`if`语句实现选择结构 3.关系运算符和关系表达式 4.逻辑运算符和逻辑表达式 5.条件运算符和条件表达式 6.用`switch`语句实现多分支选择结构'
+},{
+  extitle: '循环程序设计',
+  exsub: '1.用`while`语句实现循环 2.用`dowhile`语句实现循环 3.用`for`语句实现循环 4.改变循环的执行状态 5.循环的嵌套'
+},{
+  extitle: '挑战：序列求和',
+  exsub: ''
+},{
+  extitle: 'C 语言数组',
+  exsub: '1.一维数组 2.二维数组 3.字符串数组'
+},{
+  extitle: '模块化程序设计',
+  exsub: '1.函数的定义 2.函数的嵌套调用 3.递归函数 4.数组与函数'
+},{
+  extitle: '指针（一）',
+  exsub: '1.指针是什么 2.指针变量 3.通过指针引用数组 4.通过指针引用字符串'
+},{
+  extitle: '指针（二）',
+  exsub: '1.指针引用字符串'
+},{
+  extitle: '挑战：修复指针使用错误的 BUG',
+  exsub: ''
+},{
+  extitle: '文件和文件的输入与输出',
+  exsub: '1.文件 2.打开和关闭文件 3.文件的输入与输出'
+}
+]
+
+/**
+ * 导出
+ */
 const { height, width } = Dimensions.get('window');
 module.exports = {
 	_height:height,
 	_width:width,
-	ResisterData: ResisterData
+	ResisterData: ResisterData,
+	exdata: exdata
 }

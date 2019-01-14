@@ -5,7 +5,7 @@ import Recents from './app/Recents/index';
 import { _height, _width } from './app/common/config';
 export default class App extends Component {
   state = {
-    index: 0,
+    index: 1,
     routes: [
       { key: 'home', title: 'Home', icon: 'apps',  color: '#24292e' },// color定义底部tab颜色
       { key: 'recents', title: 'Recents', icon: 'history', color: '#24292e' },

@@ -45,7 +45,10 @@ class BasicList extends Component {
             <BasicItem
               img_url={item.img_url}
               title = {item.title}
-              onPress={()=>{navigate('Edu')}}
+              onPress={()=>{navigate('Edu',{
+                banner_url: item.img_url,
+                title: item.title
+              })}}
             />
           }
           keyExtractor={item => item.title}

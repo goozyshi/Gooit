@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   head: {
     flexDirection: 'row',
-    marginTop: 5,
+    marginTop: 10,
     marginBottom: 5,
     marginLeft: 5,
     padding: 10,
@@ -98,27 +98,27 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   card: {
-    height: _height*0.34,
+    height: _height*0.33,
     width: _width,
-    justifyContent: 'center',
     marginLeft: 15,
   },
   banner: {
     height: _height*0.27,
-    width: _width*0.92,
+    width: _width*0.95,
   },
   title: {
-    marginTop: 5,
+    marginTop: 6,
     color: '#333',
-    fontSize: 14,
+    fontSize: 16,
   },
   desc: {
+    marginTop: 3,
     color: '#999',
-    fontSize: 12,
+    fontSize: 14,
   },
   div: {
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 15,
+    marginRight: 15,
     marginTop: 5,
     marginBottom: 5,
   }

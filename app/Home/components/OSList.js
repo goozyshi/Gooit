@@ -89,7 +89,6 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   container: {
-    marginLeft: 5,
     marginRight: 5,
   },
   card: {

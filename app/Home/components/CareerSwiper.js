@@ -51,19 +51,15 @@ export default class CareerSwiper extends Component {
             })
           )}
         >
-          { this.state.BannerList.map((item)=>(
-                <TouchableOpacity 
-                  key={item.title}
-                  style={styles.slide}
-                  onPress={()=>{navigate('Details', {
-                        HeaderTitle:item.title,// 头条标题
-                        url: item.url,//  头条链接
-                      })}
-                  }
-                >
-                  <Image source={{ uri: item.img }} style={styles.banner}/>
-                </TouchableOpacity>
-              )
+          { this.state.BannerList.map((item)=>
+              <TouchableOpacity 
+                key={item.title}
+                style={styles.slide}
+                onPress={()=>{navigate('Details')}
+                }
+              >
+                <Image source={{uri: item.img}} style={styles.banner}/>
+              </TouchableOpacity>
             )
           }
         </Swiper>
@@ -81,7 +77,7 @@ const styles = StyleSheet.create({
   head: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 11,
+    padding: 10,
   },
   headline: {
     fontSize: 16,
@@ -100,12 +96,11 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   slide: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   banner: {
-    width: _width*0.9,
+    width: _width*0.92,
     height: _height*0.2,
     marginBottom: 10,
   },
@@ -115,16 +110,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   dotStyle: {
-    width: 22,
-    height: 3,
+    width: 40,
+    height: 5,
     backgroundColor: '#fff',
     opacity: 0.4,
-    borderRadius: 0,
   },
   activeDotStyle: {
-    width: 22,
-    height: 3,
+    width: 40,
+    height: 5,
     backgroundColor: '#fff',
-    borderRadius: 0,
   },
 })
