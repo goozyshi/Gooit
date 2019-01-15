@@ -5,49 +5,62 @@ import {
   Image,
   StyleSheet
 } from 'react-native';
+import { _height, _width } from '../../common/config'; 
 class Foreground extends Component {
   render(){
     return (
       <View style={styles.forebox}>
-        <Image source={{uri: 'https://img.zcool.cn/community/046cca553f71a100000199876ebc3b.jpg@160w_160h_1c_1e_1o_100sh.jpg'}} style={styles.avatar}/>
-        {/* <Image source={{uri: 'https://img.zcool.cn/community/01653d564fd2ef32f87512f6043a97.jpg@1280w_1l_2o_100sh.jpg'}} style={styles.avatar}/> */}
-          <Text style={styles.name}>花泽香菜·恋爱循环</Text>
-          <Text style={styles.num}>电子科学与技术学院</Text>
+          <View style={styles.warpper}>
+            <Image source={{uri: 'https://img.zcool.cn/community/046cca553f71a100000199876ebc3b.jpg@120w_160h_1c_1e_1o_100sh.jpg'}} style={styles.avatar}/>
+            <View>
+              <Text style={styles.name}>肯德基</Text>
+              <Text style={styles.sub}>电子科学与技术学院</Text>
+            </View>
+          </View>
+          <Text style={styles.exit}>退出</Text>
       </View>
     )
   }
 }
 const styles = StyleSheet.create({
   forebox: {
-    flex: 1,
-    height: 200,
-    marginTop:30,
+    height: _height * 0.2,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+  },
+  warpper:{
+    alignItems: 'center',
+    flexDirection: 'row'    
   },
   avatar: {
-    height: 160,
-    width: 160,
+    height: 96,
+    width: 96,
     borderRadius: 80,
     borderWidth: 3,
     borderColor: 'pink',
-    marginBottom: 5
+    marginLeft: 20,
+    marginRight: 15
   },
   name: {
-    color: '#fff',
-    fontWeight: '500',
+    color: '#333',
+    fontWeight: '600',
     fontSize: 24,
   },
-  num: {
-    margin: 3,
-    fontSize: 18, 
-    color: '#eee',
+  sub: {
+    marginTop: 10,
+    fontSize: 20, 
+    color: '#666',
   },
-  chipbox: {
-    width: '60%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+  exit: {
+    fontSize: 18,
+    color: '#fff',
+    textAlign: 'center',
+    borderRadius: 5,
+    padding: 15,
+    backgroundColor: '#F75C2F',
+    marginRight: 30,
   }
 })
 export default Foreground;

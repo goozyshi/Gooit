@@ -2,30 +2,25 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Image,
+  Animated
 } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
+
 import { _height, _width } from '../common/config';
 import { StickyHeader } from '../common/Header';
-import Foreground from './components/Foreground';
 
+import Foreground from './components/Foreground';
+import FeatureList from './components/FeatureList';
 class RecentsScreen extends Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <ParallaxScrollView
-        backgroundColor="#81C7D4"
-        contentBackgroundColor="pink"
-        showVerticalScrollIndicator={false}
-        parallaxHeaderHeight={_height*0.4}
-        renderForeground={() => <Foreground/>}
-        // stickyHeaderHeight={_height*0.39}
-        // renderStickyHeader={() => <StickyHeader/>}
-        >
-        <View style={{ height: 500 }}>
-          <Text>Scroll me</Text>
-        </View>
-      </ParallaxScrollView>
+      <View style={{flex: 1, backgroundColor: '#f5f5f5'}}>
+        <StickyHeader/>
+        <Foreground/>
+        <FeatureList/>
+      </View>
     )
   }
 }

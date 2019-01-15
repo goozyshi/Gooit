@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { BottomNavigation } from 'react-native-paper';
 import Home from './app/Home/index';
 import Recents from './app/Recents/index';
+import Task from './app/Task/index';
 import { _height, _width } from './app/common/config';
 export default class App extends Component {
   state = {
-    index: 1,
+    index: 2,
     routes: [
-      { key: 'home', title: 'Home', icon: 'apps',  color: '#24292e' },// color定义底部tab颜色
-      { key: 'recents', title: 'Recents', icon: 'history', color: '#24292e' },
+      { key: 'home', title: 'Home', icon: 'apps',  color: '#24936E' },// color定义底部tab颜色
+      { key: 'task', title: 'Task', icon: 'assignment', color: '#24292e' },
+      { key: 'recents', title: 'Recents', icon: 'person', color: '#24292e' },
     ],
   };
 
@@ -16,6 +18,7 @@ export default class App extends Component {
 
   _renderScene = BottomNavigation.SceneMap({
     home: Home,
+    task: Task,
     recents: Recents,
   });
 
