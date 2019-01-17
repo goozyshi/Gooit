@@ -13,7 +13,7 @@ const StickyHeader =()=>(
   <View style={styles.sticky_box}>
       <Text style={styles.sticky_title}>我的</Text>
       <View style={styles.clear_box}>
-        <Icon name={'trashcan'} size={30} color={'#24292e'} style={styles.setting_icon} />
+        <Icon name={'trashcan'} size={24} color={'#24292e'} style={styles.setting_icon} />
         <Text style={styles.cachetxt}>缓存2.38M</Text>
       </View>
   </View>
@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
     marginRight: 35,
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row'
+    // flexDirection: 'row'
   },
   setting_icon: {
-    marginRight: 10
+    // marginRight: 10
   },
   cachetxt: {
     color: '#F75C2F',

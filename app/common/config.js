@@ -221,12 +221,32 @@ const exdata = [{
 ]
 
 /**
- * 导出
+ * 用户组
  */
+const user = [{
+	name: '老师A',
+	department: '电子科学与技术学院',
+	img: 'https://img.zcool.cn/community/01b4ed59b4fb8ba8012028a9789f84.jpg@1280w_1l_2o_100sh.jpg',
+	favorite: [],
+	type: 'A'
+},{
+	name: '学生B',
+	department: '电子科学与技术',
+	img: 'https://img.zcool.cn/community/0150a35645483e32f87512f682d363.jpg@1280w_1l_2o_100sh.jpg',
+	favorite: [],
+	type: 'B'
+},{
+	name: '学生C',
+	department: '微电子科学与工程',
+	img: 'https://img.zcool.cn/community/046cca553f71a100000199876ebc3b.jpg@120w_160h_1c_1e_1o_100sh.jpg',
+	favorite: [],
+	type: 'C'
+}]
 const { height, width } = Dimensions.get('window');
 module.exports = {
 	_height:height,
 	_width:width,
 	ResisterData: ResisterData,
-	exdata: exdata
+	exdata: exdata,
+	user: user
 }

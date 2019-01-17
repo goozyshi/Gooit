@@ -19,7 +19,8 @@ class FeatureList extends Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView>
+      <View style={styles.container}>
         <List.Section title="个人中心">
           <List.Accordion
             title="我的收藏"
@@ -55,13 +56,13 @@ class FeatureList extends Component {
             <List.Item title="Second item" />
           </List.Accordion>
         </List.Section>
+      </View>
       </ScrollView>
     );
   }
 }
 const styles = StyleSheet.create({
   container: {
-    height: 300,
     marginTop: 10,
     backgroundColor: '#fff'
   }

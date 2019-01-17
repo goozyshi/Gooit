@@ -4,14 +4,13 @@ import {
   Text,
   StyleSheet
 } from 'react-native';
+import LoginHint from './components/LoginHint';
 
 class Task extends Component {
   render(){
     return(
       <View>
-        <Text>
-          啊哈哈合适的借口和1
-        </Text>
+      <LoginHint/>
       </View>
     )
   }

@@ -7,7 +7,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  ToastAndroid
+  ToastAndroid,
+  AsyncStorage
 } from 'react-native';
 import { _height, _width } from './config';
 import Icon from 'react-native-vector-icons/MaterialIcons';
