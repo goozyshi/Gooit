@@ -50,12 +50,12 @@ class SearchDataSheet extends Component {
 
   // 发起请求
   fetchData(id) {
-    return fetch('http://192.168.0.93:3000/search')
+    // return fetch('http://192.168.0.93:3000/search') // bgy
+    return fetch('http://172.29.4.240:3000/search') // szu
       .then(response => response.text())
       .then((responseText) => {
         const rawData = responseText;
         const json = JSON.parse(responseText);
-        console.log(json);
         return json;
       })
       .catch((error) => {
@@ -74,7 +74,6 @@ class SearchDataSheet extends Component {
     }
   }
   handleChange = (item) =>{
-    console.log(item)
     this.setState({
       val: item
     },()=>{
@@ -126,7 +125,7 @@ class SearchDataSheet extends Component {
                     pdf = {item.pdf}
                     data = {item.data}
                     onPress = {()=>navigate('Chip', {
-                      
+                      data: item
                     })}
                   />
                 }
@@ -147,7 +146,7 @@ class SearchDataSheet extends Component {
               </TouchableOpacity>
               )}
             </View>
-            <Text style={[styles.headline,{marginLeft: 15, color: 'red', textDecorationLine: 'underline'}]}  >什么是Datasheet?</Text>
+            <Text style={[styles.headline,{marginLeft: 15, color: 'red', textDecorationLine: 'underline'}]}>什么是Datasheet?</Text>
           </View>
         }
       </View>
@@ -157,13 +156,15 @@ class SearchDataSheet extends Component {
 const ResultItem = (props) => {
   const { name, company, desc, pdf, data, onPress } = props;
   return(
-      <TouchableOpacity onPress={ onPress } style={styles.result_container}>
-      <Text style={styles.result_name}>{name}</Text>
-      <View>
-        <Text style={styles.desc}>{desc.ch}</Text>
-        <Text style={styles.desc}>{desc.en}</Text>
+      <TouchableOpacity onPress={ onPress } >
+      <View style={styles.result_container}>
+        <Text style={styles.result_name}>{name}</Text>
+        <View>
+          <Text style={styles.desc}>{desc.ch}</Text>
+          <Text style={styles.desc}>{desc.en}</Text>
+        </View>
+        <Text style={styles.result_corp}>{company}</Text>
       </View>
-      <Text style={styles.result_corp}>{company}</Text>
       </TouchableOpacity>
   )
 }

@@ -2,21 +2,123 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  ScrollView
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import { _height, _width } from './config';
-
+import { Divider, DataTable } from 'react-native-paper';
 class Chip extends Component {
+  state = {
+    data: []
+  };
+  componentWillMount() {
+    let rawdata = this.props.navigation.getParam('data', '详情页');
+    this.setState({data: rawdata})
+  }
   render() {
+    const { data } = this.state;
     return (
-      <View>
-        <Text>详情页</Text>
+      <View style={styles.container}>
+        <View style={styles.info}>
+          <Text style={styles.name}>{data.name}</Text>
+          <Divider style={styles.divider}/>
+          <View style={styles.download}>
+            <Text style={styles.company}>元件分类：逻辑门</Text>
+            <Text style={styles.pdf}>详情 <Icon name={'file-pdf'} size={17} color={'#fff'} style={{margin: 10}}/></Text>
+          </View>
+          <Text style={styles.company}>厂商名称：{data.company}</Text>
+          <Text style={styles.desc}>中文描述：{data.desc.ch}</Text>
+          <Text style={styles.desc}>英文描述：{data.desc.en}</Text>
+        </View>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Text style={styles.tag}>参数列表</Text>
+          <DataTable style={styles.table}>
+            <DataTable.Header>
+              <DataTable.Title>参数名称</DataTable.Title>
+              <DataTable.Title numeric>数值</DataTable.Title>
+            </DataTable.Header>
+            
+            { data.detail.map((item)=>
+                <DataTable.Row key={item.title}>
+                  <DataTable.Cell>{item.title}</DataTable.Cell>
+                  <DataTable.Cell numeric>{item.val}</DataTable.Cell>
+                </DataTable.Row>
+              )}
+            <DataTable.Pagination
+              page={0}
+              numberOfPages={5}
+              onPageChange={(page) => { console.log(page) }}
+              label={'1-9' + ' of ' +data.detail.length}
+            />
+        </DataTable>
+        </ScrollView>
       </View>
     )
   }
 }
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+    padding: 15,
+  },
+  info: {
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    padding: 10,
+  },
+  download: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#333',
+  },
+  divider: {
+    margin: 10,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  company: {
+    fontSize: 16,
+    margin: 10,
+    color: '#444'
+  },
+  desc: {
+    fontSize: 16,
+    margin: 10,
+    color: '#444'
+  },
+  pdf: {
+    fontSize: 16,
+    padding: 14,
+    paddingTop: 5,
+    paddingBottom: 5,
+    backgroundColor: 'red',
+    color: '#fff',
+    fontWeight: '500',
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  tag: {
+    width: _width*0.15,
+    paddingTop: 5,
+    paddingBottom: 5,
+    fontSize: 18,
+    backgroundColor: 'red',
+    textAlign: 'center',
+    color: '#fff',
+    fontWeight: '600',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  table: {
+    backgroundColor: '#fff'
+  }
 });
 export default Chip;
