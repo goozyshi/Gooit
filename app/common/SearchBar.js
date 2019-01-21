@@ -23,7 +23,7 @@ export default class SearchBar extends Component {
               <View style={styles.searchBtn}><Icon name="search" color="#777" size={30} /></View>
               <TextInput
                 style={styles.input}
-                placeholder={'做毕设好麻烦啊……'}
+                placeholder={'请输入元器件型号'}
                 value={val}
                 fontStyle={val.length == 0 ? 'italic' : 'normal'}// 通过判断val的字符长度来决定placeholder的样式
                 onFocus={()=>navigate('SearchDataSheet')}
@@ -51,14 +51,14 @@ const styles = StyleSheet.create({
     borderRadius: _height / 13,
   },
   inputWrapper:{
-    height: 30,
+    height: 40,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
   input: {
-    height: 30,
-    width: _width * 0.65,
+    height: 40,
+    width: _width * 0.7,
     padding: 0,
     backgroundColor: '#f5f5f5',
   },

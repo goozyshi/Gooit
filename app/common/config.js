@@ -164,7 +164,7 @@ const ResisterData = [
 		value: 10,
 		name: '银'
 	}]
-]
+];
 
 /**
  * 列表数据
@@ -217,8 +217,7 @@ const exdata = [{
 },{
   extitle: '文件和文件的输入与输出',
   exsub: '1.文件 2.打开和关闭文件 3.文件的输入与输出'
-}
-]
+}];
 
 /**
  * 用户组
@@ -241,12 +240,13 @@ const user = [{
 	img: 'https://img.zcool.cn/community/046cca553f71a100000199876ebc3b.jpg@120w_160h_1c_1e_1o_100sh.jpg',
 	favorite: [],
 	type: 'C'
-}]
+}];
+
 const { height, width } = Dimensions.get('window');
 module.exports = {
 	_height:height,
 	_width:width,
 	ResisterData: ResisterData,
 	exdata: exdata,
-	user: user
+	user: user,
 }

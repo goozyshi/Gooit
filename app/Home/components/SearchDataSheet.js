@@ -6,7 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   ToastAndroid,
-  AsyncStorage
+  AsyncStorage,
+  FlatList
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { _height, _width } from '../../common/config';
@@ -15,28 +16,29 @@ class SearchDataSheet extends Component {
     val: '',
     isShow: false,
     history: [],  //历史记录
+    result: []
   }
  
   /**
    * 提交
    */
   _onSubmitEditing = async () => {
+    // 保存历史记录
     const { val, history } = this.state;
     let reg=/^(?!(\s+$))/    //  模式匹配。输入内容不为纯空格
-    if ( val && reg.test(val) ) {
-      // 不重复添加记录
+    if ( val && reg.test(val) ){
       history.map((item, index)=>{
         if( val === item){
           history.splice(index, 1)
         }
-      })
-      // 新纪录放在最开始
-      history.unshift(val);
-      
-      let saving_data = history.join('-')
+      });
+      history.unshift(val);// 新纪录放在最开始
+      let saving_data = history.join('-');
+      let result = await this.fetchData();
       this.setState({
         history: history,
-        isShow: true
+        isShow: true,
+        result: result
       },()=>{
         // 保存缓存
         AsyncStorage.setItem('history', saving_data)
@@ -44,6 +46,21 @@ class SearchDataSheet extends Component {
     } else {
       ToastAndroid.show("搜索内容不能为空", ToastAndroid.SHORT);
     }
+  }
+
+  // 发起请求
+  fetchData(id) {
+    return fetch('http://192.168.0.93:3000/search')
+      .then(response => response.text())
+      .then((responseText) => {
+        const rawData = responseText;
+        const json = JSON.parse(responseText);
+        console.log(json);
+        return json;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   async componentDidMount() {
@@ -56,11 +73,6 @@ class SearchDataSheet extends Component {
       })
     }
   }
-  clearHistory = () =>{
-    this.setState({history: []},()=>{
-      AsyncStorage.removeItem('history')
-    })
-  }
   handleChange = (item) =>{
     console.log(item)
     this.setState({
@@ -70,7 +82,8 @@ class SearchDataSheet extends Component {
     })
   }
   render(){
-    const { val, history, isShow } = this.state;
+    const { val, history, isShow, result} = this.state;
+    const { navigate } = this.props.navigation;
     return(
       <View style={styles.container}>
         <View style={styles.SearchBar}>
@@ -79,12 +92,12 @@ class SearchDataSheet extends Component {
               <View style={styles.searchIcon}><Icon name="search" color="#777" size={30} /></View>
               <TextInput
                 style={styles.input}
-                placeholder={'做毕设好麻烦啊……'}
+                placeholder={'请输入元器件型号'}
                 value={val}
                 autoFocus={true}
                 onChangeText={val => this.setState({val: val})}
               />
-              { (val.length !== 0) && <View style={styles.cancelBtn}><Icon name="close" size={25} color="#494949" onPress={() => this.setState({val: ''})}/></View>}
+              { (val.length !== 0) && <View style={styles.cancelBtn}><Icon name="close" size={30} color="#494949" onPress={() => this.setState({val: ''})}/></View>}
             </View>
           </View>
           <View style={styles.searchBtn}>
@@ -97,14 +110,33 @@ class SearchDataSheet extends Component {
           </View>
         </View>
         { isShow ?
-          <View style={styles.historyheader}>
-            <Text style={styles.headline}>搜索结果</Text>
+          <View>
+            <View style={styles.historyheader}>
+              <Text style={styles.headline}>找到的元器件：</Text>
+            </View>
+            <FlatList
+                data={result}
+                keyExtractor={item => item.id}// 使用数据自带id作为item的id
+                showsVerticalScrollIndicator={false}
+                renderItem={({ item }) => 
+                  <ResultItem
+                    name = {item.name}
+                    company = {item.company}
+                    desc = {item.desc}
+                    pdf = {item.pdf}
+                    data = {item.data}
+                    onPress = {()=>navigate('Chip', {
+                      
+                    })}
+                  />
+                }
+            />
           </View>
           :
           <View>
             <View style={styles.historyheader}>
               <Text style={styles.headline}>历史记录</Text>
-              <TouchableOpacity onPress={()=>this.setState({history: []})}>
+              <TouchableOpacity onPress={()=>this.setState({history: []},()=>{AsyncStorage.removeItem('history')})}>
                 <Text style={styles.cleartxt}>清除</Text>
               </TouchableOpacity>
             </View>
@@ -122,11 +154,24 @@ class SearchDataSheet extends Component {
     )
   }
 }
+const ResultItem = (props) => {
+  const { name, company, desc, pdf, data, onPress } = props;
+  return(
+      <TouchableOpacity onPress={ onPress } style={styles.result_container}>
+      <Text style={styles.result_name}>{name}</Text>
+      <View>
+        <Text style={styles.desc}>{desc.ch}</Text>
+        <Text style={styles.desc}>{desc.en}</Text>
+      </View>
+      <Text style={styles.result_corp}>{company}</Text>
+      </TouchableOpacity>
+  )
+}
 const styles = StyleSheet.create({
   container: {
     // marginTop: 20,// 沉浸
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
   },
   SearchBar: {
     width: _width,
@@ -146,19 +191,19 @@ const styles = StyleSheet.create({
     borderRadius: _height / 13,
   },
   inputWrapper:{
-    height: 30,
+    height: 40,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
   input: {
-    height: 30,
+    height: 40,
     width: _width * 0.65,
     padding: 0,
     backgroundColor: '#f5f5f5',
   },
   searchIcon: {
-    width: _height / 13,
+    width: _height / 12,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -181,7 +226,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   headline: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#333',
     fontWeight: '500',
   },
@@ -204,6 +249,36 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 4,
     color: '#444'
+  },
+  result_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+    padding: 20
+  },
+  result_name: {
+    fontSize: 21,
+    color: '#333',
+    marginRight: 15,
+    fontWeight: '500'
+  },
+  desc: {
+    fontSize: 14,
+    marginRight: 15
+  },
+  result_corp: {
+    marginTop: 20,
+    textAlign: 'center',
+    borderRadius: 4,
+    padding: 5,
+    fontSize: 10,
+    color: '#fff',
+    backgroundColor: '#072',
+    fontWeight: '500'
   }
+
 })
 export default SearchDataSheet;
