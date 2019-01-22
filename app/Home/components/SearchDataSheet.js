@@ -7,14 +7,17 @@ import {
   TouchableOpacity,
   ToastAndroid,
   AsyncStorage,
-  FlatList
+  FlatList,
+  ActivityIndicator
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { _height, _width } from '../../common/config';
+import { Portal } from 'react-native-paper';
 class SearchDataSheet extends Component {
   state = {
     val: '',
     isShow: false,
+    stopLoading: true,
     history: [],  //历史记录
     result: []
   }
@@ -34,29 +37,34 @@ class SearchDataSheet extends Component {
       });
       history.unshift(val);// 新纪录放在最开始
       let saving_data = history.join('-');
-      let result = await this.fetchData();
-      this.setState({
-        history: history,
-        isShow: true,
-        result: result
-      },()=>{
-        // 保存缓存
-        AsyncStorage.setItem('history', saving_data)
-      });
+      let rawData = await this.fetchData();
+      let result = JSON.parse(rawData);
+      this.setState({stopLoading: false})
+      this.timer = setTimeout(() => {
+        this.setState({
+          history: history,
+          isShow: true,
+          result: result,
+          stopLoading: true,
+        },()=>{
+          // 保存缓存
+          AsyncStorage.setItem('history', saving_data)
+        });
+      }, 1000);
     } else {
       ToastAndroid.show("搜索内容不能为空", ToastAndroid.SHORT);
     }
   }
 
   // 发起请求
-  fetchData(id) {
+  fetchData() {
     // return fetch('http://192.168.0.93:3000/search') // bgy
-    return fetch('http://172.29.4.240:3000/search') // szu
+    // return fetch('http://172.29.4.240:3000/search') // szu
+    return fetch('http://140.143.91.181:3000/search') // ssr
       .then(response => response.text())
       .then((responseText) => {
         const rawData = responseText;
-        const json = JSON.parse(responseText);
-        return json;
+        return rawData;// 返回字符串便于缓存
       })
       .catch((error) => {
         console.error(error);
@@ -73,6 +81,10 @@ class SearchDataSheet extends Component {
       })
     }
   }
+  componentWillUnmount() {
+    this.timer && clearTimeout(this.timer);
+  }
+  
   handleChange = (item) =>{
     this.setState({
       val: item
@@ -81,7 +93,7 @@ class SearchDataSheet extends Component {
     })
   }
   render(){
-    const { val, history, isShow, result} = this.state;
+    const { val, history, isShow, result, stopLoading } = this.state;
     const { navigate } = this.props.navigation;
     return(
       <View style={styles.container}>
@@ -108,27 +120,28 @@ class SearchDataSheet extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        { isShow ?
+        { stopLoading ?
+          isShow?
           <View>
             <View style={styles.historyheader}>
               <Text style={styles.headline}>找到的元器件：</Text>
             </View>
             <FlatList
-                data={result}
-                keyExtractor={item => item.id}// 使用数据自带id作为item的id
-                showsVerticalScrollIndicator={false}
-                renderItem={({ item }) => 
-                  <ResultItem
-                    name = {item.name}
-                    company = {item.company}
-                    desc = {item.desc}
-                    pdf = {item.pdf}
-                    data = {item.data}
-                    onPress = {()=>navigate('Chip', {
-                      data: item
-                    })}
-                  />
-                }
+              data={result}
+              keyExtractor={item => item.id}// 使用数据自带id作为item的id
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => 
+                <ResultItem
+                  name = {item.name}
+                  company = {item.company}
+                  desc = {item.desc}
+                  pdf = {item.pdf}
+                  data = {item.data}
+                  onPress = {()=>navigate('Chip', {
+                    data: item
+                  })}
+                />
+              }
             />
           </View>
           :
@@ -148,6 +161,8 @@ class SearchDataSheet extends Component {
             </View>
             <Text style={[styles.headline,{marginLeft: 15, color: 'red', textDecorationLine: 'underline'}]}>什么是Datasheet?</Text>
           </View>
+          :
+          <ActivityIndicator style={styles.stopLoading} size="large" color="#072" />
         }
       </View>
     )
@@ -159,8 +174,8 @@ const ResultItem = (props) => {
       <TouchableOpacity onPress={ onPress } >
       <View style={styles.result_container}>
         <Text style={styles.result_name}>{name}</Text>
-        <View>
-          <Text style={styles.desc}>{desc.ch}</Text>
+        <View style={{justifyContent: 'center'}}>
+          {desc.ch? <Text style={styles.desc}>{desc.ch}</Text> : null}
           <Text style={styles.desc}>{desc.en}</Text>
         </View>
         <Text style={styles.result_corp}>{company}</Text>
@@ -254,21 +269,21 @@ const styles = StyleSheet.create({
   result_container: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     backgroundColor: '#fff',
     marginLeft: 10,
-    marginRight: 10,
     marginTop: 10,
     padding: 20
   },
   result_name: {
     fontSize: 21,
     color: '#333',
-    marginRight: 15,
+    marginRight: 10,
     fontWeight: '500'
   },
   desc: {
     fontSize: 14,
-    marginRight: 15
+    marginRight: 10
   },
   result_corp: {
     marginTop: 20,
@@ -279,6 +294,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     backgroundColor: '#072',
     fontWeight: '500'
+  },
+  stopLoading: {
+    marginTop: 400
   }
 
 })

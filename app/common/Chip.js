@@ -10,14 +10,17 @@ import { _height, _width } from './config';
 import { Divider, DataTable } from 'react-native-paper';
 class Chip extends Component {
   state = {
-    data: []
+    data: [],
+    page: 0,
+    current: 1,
   };
   componentWillMount() {
     let rawdata = this.props.navigation.getParam('data', '详情页');
     this.setState({data: rawdata})
   }
   render() {
-    const { data } = this.state;
+    let { data, page, current } = this.state;
+    let total = Math.ceil(data.detail.length / 8)
     return (
       <View style={styles.container}>
         <View style={styles.info}>
@@ -39,17 +42,19 @@ class Chip extends Component {
               <DataTable.Title numeric>数值</DataTable.Title>
             </DataTable.Header>
             
-            { data.detail.map((item)=>
+            { data.detail.map((item, index)=>
+                ( 8*page <= index && index < 8*(page+1) )?
                 <DataTable.Row key={item.title}>
                   <DataTable.Cell>{item.title}</DataTable.Cell>
                   <DataTable.Cell numeric>{item.val}</DataTable.Cell>
                 </DataTable.Row>
+                : null
               )}
             <DataTable.Pagination
-              page={0}
-              numberOfPages={5}
-              onPageChange={(page) => { console.log(page) }}
-              label={'1-9' + ' of ' +data.detail.length}
+              page={page}
+              numberOfPages={total}
+              onPageChange={(page) => { this.setState({page: page, current: page+1}) }}
+              label={'第' + current + '页，共' + total + '页'}
             />
         </DataTable>
         </ScrollView>
