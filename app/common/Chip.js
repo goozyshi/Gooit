@@ -19,6 +19,7 @@ class Chip extends Component {
     this.setState({data: rawdata})
   }
   render() {
+    let type = this.props.navigation.getParam('type', '详情页');
     let { data, page, current } = this.state;
     let total = Math.ceil(data.detail.length / 8)
     return (
@@ -27,7 +28,7 @@ class Chip extends Component {
           <Text style={styles.name}>{data.name}</Text>
           <Divider style={styles.divider}/>
           <View style={styles.download}>
-            <Text style={styles.company}>元件分类：逻辑门</Text>
+            <Text style={styles.company}>元件分类：{type === 'ne555' ? '模拟器件': '逻辑门'}</Text>
             <Text style={styles.pdf}>详情 <Icon name={'file-pdf'} size={17} color={'#fff'} style={{margin: 10}}/></Text>
           </View>
           <Text style={styles.company}>厂商名称：{data.company}</Text>
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
   },
   info: {
     backgroundColor: '#fff',
-    marginBottom: 10,
+    marginBottom: 20,
     padding: 10,
   },
   download: {

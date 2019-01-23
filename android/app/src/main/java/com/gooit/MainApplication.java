@@ -3,7 +3,9 @@ package com.gooit;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.github.alinz.reactnativewebviewbridge.WebViewBridgePackage;
+import org.wonday.pdf.RCTPdfView;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.keyee.pdfview.PDFView;
 import com.beefe.picker.PickerViewPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -27,7 +29,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new WebViewBridgePackage(),
+            new RCTPdfView(),
+            new RNFetchBlobPackage(),
+            new PDFView(),
             new PickerViewPackage(),
             new RNGestureHandlerPackage(),
             new VectorIconsPackage()

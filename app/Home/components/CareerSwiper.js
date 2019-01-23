@@ -22,7 +22,7 @@ export default class CareerSwiper extends Component {
       url: 'http://www.elecfans.com/consume/856924.html'
     },{
       img: 'http://file.elecfans.com/web1/M00/83/6E/pIYBAFxH4SmAb9vOAABnadHw0Ms248.jpg',
-      title: '苹果iPhone明年将会完全放弃LCD显示屏转而采用OLED显示屏',
+      title: '苹果明年将完全放弃LCD显示屏',
       url: 'http://www.elecfans.com/xianshi/jishu/20190123856916.html'
     }],
     headindex: 1,
@@ -55,10 +55,13 @@ export default class CareerSwiper extends Component {
               <TouchableOpacity 
                 key={item.title}
                 style={styles.slide}
-                onPress={()=>{navigate('Details')}
+                onPress={()=>{navigate('Details',{
+                  url: item.url
+                })}
                 }
               >
                 <Image source={{uri: item.img}} style={styles.banner}/>
+                <Text style={styles.banner_title}>{item.title}</Text>
               </TouchableOpacity>
             )
           }
@@ -101,13 +104,15 @@ const styles = StyleSheet.create({
   },
   banner: {
     width: _width*0.92,
-    height: _height*0.2,
-    marginBottom: 10,
+    height: _height*0.22,
+    marginTop: 5,
+    borderRadius:8
   },
-  text: {
+  banner_title: {
     color: '#fff',
-    fontSize: 30,
+    fontSize: 21,
     fontWeight: 'bold',
+    marginTop: - _height*0.125,
   },
   dotStyle: {
     width: 40,

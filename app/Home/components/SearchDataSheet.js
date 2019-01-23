@@ -38,7 +38,7 @@ class SearchDataSheet extends Component {
       });
       history.unshift(val);// 新纪录放在最开始
       let saving_data = history.join('-');
-      let rawData = await this.fetchData();
+      let rawData = await this.fetchData(val);
       let result = JSON.parse(rawData);
       this.setState({stopLoading: false})
       this.timer = setTimeout(() => {
@@ -52,14 +52,14 @@ class SearchDataSheet extends Component {
           // 保存缓存
           AsyncStorage.setItem('history', saving_data)
         });
-      }, 1000);
+      }, 500);
     } else {
       ToastAndroid.show("搜索内容不能为空", ToastAndroid.SHORT);
     }
   }
 
   // 发起请求
-  fetchData(id = 'ne555') {
+  fetchData(id) {
     // return fetch('http://192.168.0.93:3000/search') // bgy
     // return fetch('http://172.29.4.240:3000/search') // szu
     return fetch(`http://140.143.91.181:3000/search/${id}`) // ssr
@@ -140,7 +140,8 @@ class SearchDataSheet extends Component {
                   pdf = {item.pdf}
                   data = {item.data}
                   onPress = {()=>navigate('Chip', {
-                    data: item
+                    data: item,
+                    type: val
                   })}
                 />
               }
@@ -295,7 +296,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#fff',
     backgroundColor: '#072',
-    fontWeight: '500'
+    fontWeight: '500',
   },
   stopLoading: {
     marginTop: 400

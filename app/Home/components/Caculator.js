@@ -327,12 +327,12 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 5,
-    fontSize: 22,
+    fontSize: 20,
     color: '#333',
     fontWeight: '500'
   },
   content: {
     fontSize: 18,
-    color: '#666'
+    color: '#444'
   }
 })
