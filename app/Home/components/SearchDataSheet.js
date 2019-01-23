@@ -19,7 +19,8 @@ class SearchDataSheet extends Component {
     isShow: false,
     stopLoading: true,
     history: [],  //历史记录
-    result: []
+    result: [],
+    sub_val: ''//提交的搜索字段
   }
  
   /**
@@ -46,6 +47,7 @@ class SearchDataSheet extends Component {
           isShow: true,
           result: result,
           stopLoading: true,
+          sub_val: this.state.val
         },()=>{
           // 保存缓存
           AsyncStorage.setItem('history', saving_data)
@@ -57,10 +59,10 @@ class SearchDataSheet extends Component {
   }
 
   // 发起请求
-  fetchData() {
+  fetchData(id = 'ne555') {
     // return fetch('http://192.168.0.93:3000/search') // bgy
     // return fetch('http://172.29.4.240:3000/search') // szu
-    return fetch('http://140.143.91.181:3000/search') // ssr
+    return fetch(`http://140.143.91.181:3000/search/${id}`) // ssr
       .then(response => response.text())
       .then((responseText) => {
         const rawData = responseText;
@@ -93,7 +95,7 @@ class SearchDataSheet extends Component {
     })
   }
   render(){
-    const { val, history, isShow, result, stopLoading } = this.state;
+    const { val, history, isShow, result, stopLoading, sub_val} = this.state;
     const { navigate } = this.props.navigation;
     return(
       <View style={styles.container}>
@@ -122,9 +124,9 @@ class SearchDataSheet extends Component {
         </View>
         { stopLoading ?
           isShow?
-          <View>
+          <View style={{justifyContent: 'center', width: _width}}>
             <View style={styles.historyheader}>
-              <Text style={styles.headline}>找到的元器件：</Text>
+              <Text style={styles.headline}>找到的<Text style={{color: 'red'}}>&nbsp;{sub_val}&nbsp;</Text>元器件：</Text>
             </View>
             <FlatList
               data={result}
@@ -169,7 +171,7 @@ class SearchDataSheet extends Component {
   }
 }
 const ResultItem = (props) => {
-  const { name, company, desc, pdf, data, onPress } = props;
+  const { name, company, desc, pdf, data, onPress} = props;
   return(
       <TouchableOpacity onPress={ onPress } >
       <View style={styles.result_container}>
@@ -271,8 +273,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#fff',
-    marginLeft: 10,
-    marginTop: 10,
+    margin: 10,
+    borderRadius: 8,
     padding: 20
   },
   result_name: {

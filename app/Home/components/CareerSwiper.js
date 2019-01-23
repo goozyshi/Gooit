@@ -13,17 +13,17 @@ import { _height, _width } from '../../common/config';
 export default class CareerSwiper extends Component {
   state = {
     BannerList: [{
-      img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
-      title: '站酷1',
-      url: 'http://www.elecfans.com/news/hangye/20180716711222.html'
+      img: 'http://file.elecfans.com/web1/M00/82/F0/o4YBAFxH4-6AHRwKAADT8LmsT1g256.jpg',
+      title: '人工智能区块链或将能改变未来的资产管理',
+      url: 'http://www.elecfans.com/blockchain/856933.html'
     },{
-      img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
-      title: '站酷2',
-      url: 'http://www.elecfans.com/news/hangye/20180617696029.html'
+      img: 'http://file.elecfans.com/web1/M00/83/6E/pIYBAFxH4gWAG3QBAASVKQO5ec4817.png',
+      title: 'DRAM价格有望止跌回稳',
+      url: 'http://www.elecfans.com/consume/856924.html'
     },{
-      img: 'https://img.zcool.cn/community/01efb05c2d71f3a80121df908b5677.jpg',
-      title: '站酷3',
-      url: 'http://www.elecfans.com/news/hangye/20181211829968.html'
+      img: 'http://file.elecfans.com/web1/M00/83/6E/pIYBAFxH4SmAb9vOAABnadHw0Ms248.jpg',
+      title: '苹果iPhone明年将会完全放弃LCD显示屏转而采用OLED显示屏',
+      url: 'http://www.elecfans.com/xianshi/jishu/20190123856916.html'
     }],
     headindex: 1,
   }
