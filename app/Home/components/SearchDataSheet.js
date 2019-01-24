@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { _height, _width } from '../../common/config';
+import BackButton from '../../common/BackButton';
 import { Portal } from 'react-native-paper';
 class SearchDataSheet extends Component {
   state = {
@@ -39,20 +40,24 @@ class SearchDataSheet extends Component {
       history.unshift(val);// 新纪录放在最开始
       let saving_data = history.join('-');
       let rawData = await this.fetchData(val);
-      let result = JSON.parse(rawData);
-      this.setState({stopLoading: false})
-      this.timer = setTimeout(() => {
-        this.setState({
-          history: history,
-          isShow: true,
-          result: result,
-          stopLoading: true,
-          sub_val: this.state.val
-        },()=>{
-          // 保存缓存
-          AsyncStorage.setItem('history', saving_data)
-        });
-      }, 500);
+      if(rawData){
+        let result = JSON.parse(rawData);
+        this.setState({stopLoading: false})
+        this.timer = setTimeout(() => {
+          this.setState({
+            history: history,
+            isShow: true,
+            result: result,
+            stopLoading: true,
+            sub_val: this.state.val
+          },()=>{
+            // 保存缓存
+            AsyncStorage.setItem('history', saving_data)
+          });
+        }, 500);
+      }else {
+        ToastAndroid.show("找不到你说气不气", ToastAndroid.SHORT);
+      }
     } else {
       ToastAndroid.show("搜索内容不能为空", ToastAndroid.SHORT);
     }
@@ -74,6 +79,7 @@ class SearchDataSheet extends Component {
   }
 
   async componentDidMount() {
+    console.log(this.props)
     // 读取缓存
     let rawdata = await AsyncStorage.getItem('history');
     if(rawdata != null){
@@ -100,9 +106,10 @@ class SearchDataSheet extends Component {
     return(
       <View style={styles.container}>
         <View style={styles.SearchBar}>
+          <BackButton pop={ this.props.navigation.pop } />
           <View style={styles.InputCell}>
             <View style={styles.inputWrapper}>
-              <View style={styles.searchIcon}><Icon name="search" color="#777" size={30} /></View>
+              <View style={styles.searchIcon}><Icon name="search" color="#777" size={32} /></View>
               <TextInput
                 style={styles.input}
                 placeholder={'请输入元器件型号'}
@@ -110,7 +117,7 @@ class SearchDataSheet extends Component {
                 autoFocus={true}
                 onChangeText={val => this.setState({val: val})}
               />
-              { (val.length !== 0) && <View style={styles.cancelBtn}><Icon name="close" size={30} color="#494949" onPress={() => this.setState({val: ''})}/></View>}
+              { (val.length !== 0) && <View style={styles.cancelBtn}><Icon name="close" size={32} color="#494949" onPress={() => this.setState({val: ''})}/></View>}
             </View>
           </View>
           <View style={styles.searchBtn}>
@@ -222,7 +229,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   searchIcon: {
-    width: _height / 12,
+    width: _height/20,
     justifyContent: 'center',
     alignItems: 'center',
   },

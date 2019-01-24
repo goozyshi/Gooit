@@ -14,20 +14,26 @@ class BasicList extends Component {
       img_url: 'https://dn-simplecloud.shiyanlou.com/1523348726316.png',
       title: 'C语言入门教程'
     },{
-      img_url: 'https://dn-simplecloud.shiyanlou.com/ncn20.jpg',
-      title: '数据结构'
-    },{
-      img_url: 'https://dn-simplecloud.shiyanlou.com/1506663669396.png',
-      title: 'Matlab入门'
-    },{
       img_url: 'https://dn-simplecloud.shiyanlou.com/course/1542592801417_%E3%80%90596%E3%80%91-%E3%80%90Python3%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B%E3%80%91.png',
-      title: 'Python3简明教程'
+      title: 'Python3 简明教程'
     },{
-      img_url: 'https://dn-simplecloud.shiyanlou.com/ncn18.jpg',
-      title: 'Java编程语言'
+      img_url: 'https://dn-simplecloud.shiyanlou.com/1547620906601.png',
+      title: 'Java 编程语言基础'
     },{
-      img_url: 'https://dn-simplecloud.shiyanlou.com/ncn1.jpg',
-      title: 'Linux基础入门'
+      img_url: 'https://dn-simplecloud.shiyanlou.com/course/1542592847397_%E3%80%90605%E3%80%91-%E3%80%90C++11_14%E9%AB%98%E9%80%9F%E4%B8%8A%E6%89%8B%E6%95%99%E7%A8%8B%E3%80%91.png',
+      title: 'C++11/14高速上手教程'
+    },{
+      img_url: 'http://140.143.91.181:3000/images/sort.gif',
+      title: 'Javascript 编程基础'
+    },{
+      img_url: 'https://dn-simplecloud.shiyanlou.com/course/1524713748754_%E3%80%9023%E3%80%91-%E3%80%90PHP%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8%E3%80%91.png',
+      title: 'PHP 编程入门'
+    },{
+      img_url: 'https://dn-simplecloud.shiyanlou.com/1451525605970.png',
+      title: 'Git 实战教程'
+    },{
+      img_url: 'http://140.143.91.181:3000/images/more.png',
+      title: '查看更多'
     }]
   }
   render(){

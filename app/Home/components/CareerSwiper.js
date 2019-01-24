@@ -24,6 +24,18 @@ export default class CareerSwiper extends Component {
       img: 'http://file.elecfans.com/web1/M00/83/6E/pIYBAFxH4SmAb9vOAABnadHw0Ms248.jpg',
       title: '苹果明年将完全放弃LCD显示屏',
       url: 'http://www.elecfans.com/xianshi/jishu/20190123856916.html'
+    },{
+      img: 'http://file.elecfans.com/web1/M00/82/FB/o4YBAFxILuiAS2kvAAHu0Ru_qf0285.jpg',
+      title: '华为领先完成5G技术第三阶段测试',
+      url: 'http://www.elecfans.com/tongxin/rf/20190123857279.html'
+    },{
+      img: 'http://file.elecfans.com/web1/M00/83/78/pIYBAFxIK96APIeWAAFUlBQoHes111.png',
+      title: '苹果拒绝与高通和解',
+      url: 'http://www.elecfans.com/d/857255.html'
+    },{
+      img: 'http://file.elecfans.com/web1/M00/82/FA/o4YBAFxIKcWAXRNiAAECOIPxJL8916.png',
+      title: '松下ALPHA阿尔法洗衣机卓越洗涤性能 ',
+      url: 'http://www.elecfans.com/video/20190123857244.html'
     }],
     headindex: 1,
   }
@@ -32,7 +44,7 @@ export default class CareerSwiper extends Component {
     return (
       <View style={styles.wrapper}>
         <View style={styles.head}>
-          <Text style={styles.headline}>业界情报</Text>
+          <Text style={styles.headline}>行业资讯</Text>
           <View style={styles.indexbox}>
             <Text style={styles.current_index}>{this.state.headindex}</Text>
             <Text style={styles.all_index}>/{this.state.BannerList.length}</Text>
@@ -115,13 +127,13 @@ const styles = StyleSheet.create({
     marginTop: - _height*0.125,
   },
   dotStyle: {
-    width: 40,
+    width: 25,
     height: 5,
     backgroundColor: '#fff',
     opacity: 0.4,
   },
   activeDotStyle: {
-    width: 40,
+    width: 25,
     height: 5,
     backgroundColor: '#fff',
   },

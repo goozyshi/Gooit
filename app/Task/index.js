@@ -2,15 +2,23 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage,
+  ToastAndroid
 } from 'react-native';
 import LoginHint from './components/LoginHint';
+import Login from './components/Login';
 
 class Task extends Component {
+ async componentWillMount() {
+    let re = await AsyncStorage.getItem('logged_user')
+    ToastAndroid.show(re, ToastAndroid.SHORT);
+  };
   render(){
     return(
       <View>
-      <LoginHint/>
+        {/* <LoginHint/> */}
+        <Login/>
       </View>
     )
   }

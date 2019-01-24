@@ -11,23 +11,26 @@ import { _height, _width } from '../../common/config';
 class OSList extends Component {
   state = {
     data: [{
-      img_url: 'https://dn-simplecloud.shiyanlou.com/1523348726316.png',
-      title: 'C语言入门教程'
+      img_url: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=725421707,3293209347&fm=26&gp=0.jpg',
+      title: 'Linux 入门基础教程'
     },{
-      img_url: 'https://dn-simplecloud.shiyanlou.com/ncn20.jpg',
-      title: '数据结构'
-    },{
-      img_url: 'https://dn-simplecloud.shiyanlou.com/1506663669396.png',
+      img_url: 'https://ww2.mathworks.cn/help/examples/matlab_featured/win64/MatlabLogoExample_08.png',
       title: 'Matlab入门'
     },{
-      img_url: 'https://dn-simplecloud.shiyanlou.com/course/1542592801417_%E3%80%90596%E3%80%91-%E3%80%90Python3%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B%E3%80%91.png',
-      title: 'Python3简明教程'
+      img_url: 'https://dn-simplecloud.shiyanlou.com/1499681177825.png',
+      title: 'Github 快速上手教程 '
     },{
-      img_url: 'https://dn-simplecloud.shiyanlou.com/ncn18.jpg',
-      title: 'Java编程语言'
+      img_url: 'https://dn-simplecloud.shiyanlou.com/ncn195.jpg',
+      title: 'Linux 内核分析'
     },{
-      img_url: 'https://dn-simplecloud.shiyanlou.com/ncn1.jpg',
-      title: 'Linux基础入门'
+      img_url: 'https://dn-simplecloud.shiyanlou.com/ncn68.jpg',
+      title: 'Linux 命令实例练习'
+    },{
+      img_url: 'https://dn-simplecloud.shiyanlou.com/course/1542591658684_%E3%80%902%E3%80%91-%E3%80%90Vim%E7%BC%96%E8%BE%91%E5%99%A8%E3%80%91.png',
+      title: 'Vim 编辑器'
+    },{
+      img_url: 'https://dn-simplecloud.shiyanlou.com/ncn90.jpg',
+      title: '正则表达式基础'
     }]
   }
   render(){
@@ -92,21 +95,21 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   card: {
-    height: _width*0.21,
-    width: _width*0.21,
+    height: _width*0.27,
+    width: _width*0.27,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 3,
     marginBottom: 10,
   },
   banner: {
-    height: _width*0.18,
-    width: _width*0.18,
+    height: _width*0.25,
+    width: _width*0.25,
   },
   title: {
     marginTop: 10,
     color: '#444',
-    fontSize: 11
+    fontSize: 12
   }
 });
 export default OSList;

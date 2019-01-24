@@ -4,7 +4,6 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  ToastAndroid
 } from 'react-native';
 //  第三方库
 import Icon from 'react-native-vector-icons/EvilIcons';
@@ -20,7 +19,7 @@ export default class SearchBar extends Component {
         <View style={styles.SearchBar}>
           <View style={styles.InputCell}>
             <View style={styles.inputWrapper}>
-              <View style={styles.searchBtn}><Icon name="search" color="#777" size={30} /></View>
+              <View style={styles.searchBtn}><Icon name="search" color="#777" size={32} /></View>
               <TextInput
                 style={styles.input}
                 placeholder={'请输入元器件型号'}
@@ -58,12 +57,12 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    width: _width * 0.7,
+    width: _width * 0.65,
     padding: 0,
     backgroundColor: '#f5f5f5',
   },
   searchBtn: {
-    width: _height / 13,
+    width: _height/20,
     justifyContent: 'center',
     alignItems: 'center',
   },

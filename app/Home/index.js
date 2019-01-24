@@ -54,11 +54,13 @@ const HomeRootStack = createStackNavigator(
   },
   {
     initialRouteName: 'Home',
+    mode: 'card',// 定义页面渲染和转换的风格
     headerMode: 'none',
   }
 );
+
 const HomeContainer = createAppContainer(HomeRootStack);
-class Home extends Component {
+export default class Home extends Component {
   render() {
     return <HomeContainer />;
   }
@@ -77,4 +79,3 @@ const styles = StyleSheet.create({
     lineHeight: 16
   }
 })
-export default Home;

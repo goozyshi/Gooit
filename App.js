@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { BottomNavigation } from 'react-native-paper';
+import { BottomNavigation, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
 import Home from './app/Home/index';
 import Recents from './app/Recents/index';
 import Task from './app/Task/index';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { _height, _width } from './app/common/config';
 class App extends Component {
   state = {
-    index: 0,
+    index: 1,
     routes: [
       { key: 'home', title: 'Home', icon: 'apps',  color: '#24292e' },// color定义底部tab颜色
       { key: 'task', title: 'Task', icon: 'assignment', color: '#24292e' },
