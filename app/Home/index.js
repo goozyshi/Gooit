@@ -19,6 +19,7 @@ import OSList from './components/OSList';
 import AlgoList from './components/AlgoList';
 import SearchBar from '../common/SearchBar';
 import Chip from '../common/Chip';
+import PDFView from '../common/PDFView';
 class HomeScreen extends Component {
   render() {
     return (
@@ -50,7 +51,8 @@ const HomeRootStack = createStackNavigator(
     Caculator: Caculator,
     Edu: Edu,
     SearchDataSheet: SearchDataSheet,
-    Chip: Chip
+    Chip: Chip,
+    PDFView: PDFView
   },
   {
     initialRouteName: 'Home',

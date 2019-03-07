@@ -8,14 +8,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   ToastAndroid,
-  AsyncStorage
 } from 'react-native';
 import { _height, _width } from './config';
+import CustomStorage from './CustomStorage';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class ToggleFooter extends Component {
   state = {
-    isFavorited: false
+    isFavorited: false,
+    arr: []
   };
 
   /**
@@ -23,8 +24,15 @@ class ToggleFooter extends Component {
    */
   _onFavorite = () => {
     const { title, banner } = this.props;
-    this.setState({isFavorited: !this.state.isFavorited},()=>{
-      ToastAndroid.show(title, ToastAndroid.SHORT);
+    var str;
+    this.setState({
+      isFavorited: !this.state.isFavorited,
+      arr: this.state.arr.push(title)
+    },()=>{
+      this.state.isFavorited && (
+        ToastAndroid.show('已收藏', ToastAndroid.SHORT),
+        CustomStorage.save('favor', title)
+      )
     })
   };
 

@@ -7,7 +7,7 @@ import Task from './app/Task/index';
 import { _height, _width } from './app/common/config';
 class App extends Component {
   state = {
-    index: 1,
+    index: 0,
     routes: [
       { key: 'home', title: 'Home', icon: 'apps',  color: '#24292e' },// color定义底部tab颜色
       { key: 'task', title: 'Task', icon: 'assignment', color: '#24292e' },

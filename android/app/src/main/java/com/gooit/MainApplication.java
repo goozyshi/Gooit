@@ -6,7 +6,6 @@ import com.facebook.react.ReactApplication;
 import org.wonday.orientation.OrientationPackage;
 import org.wonday.pdf.RCTPdfView;
 import com.RNFetchBlob.RNFetchBlobPackage;
-import com.keyee.pdfview.PDFView;
 import com.beefe.picker.PickerViewPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -33,7 +32,6 @@ public class MainApplication extends Application implements ReactApplication {
             new OrientationPackage(),
             new RCTPdfView(),
             new RNFetchBlobPackage(),
-            new PDFView(),
             new PickerViewPackage(),
             new RNGestureHandlerPackage(),
             new VectorIconsPackage()

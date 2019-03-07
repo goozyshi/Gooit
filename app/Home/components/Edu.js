@@ -65,8 +65,9 @@ class Edu extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.box_banner}>
-          <Image source={{uri:banner_url}}
-          style={styles.banner}
+          <Image 
+            source={{uri:banner_url}}
+            style={styles.banner}
           />
         </View>
         <ScrollableTabView

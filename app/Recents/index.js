@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
   View,
-  ActivityIndicator
+  AsyncStorage,
+  ToastAndroid,
+  Text
 } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 

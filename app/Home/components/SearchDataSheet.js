@@ -66,8 +66,8 @@ class SearchDataSheet extends Component {
   // 发起请求
   fetchData(id) {
     // return fetch('http://192.168.0.93:3000/search') // bgy
-    // return fetch('http://172.29.4.240:3000/search') // szu
-    return fetch(`http://140.143.91.181:3000/search/${id}`) // ssr
+    // return fetch(`http://172.29.4.240:3000/search/${id}`) // szu
+    return fetch(`http://129.204.128.185:3000/search/${id}`) // ssr
       .then(response => response.text())
       .then((responseText) => {
         const rawData = responseText;
@@ -144,7 +144,6 @@ class SearchDataSheet extends Component {
                   name = {item.name}
                   company = {item.company}
                   desc = {item.desc}
-                  pdf = {item.pdf}
                   data = {item.data}
                   onPress = {()=>navigate('Chip', {
                     data: item,

@@ -3,10 +3,12 @@ import {
   View,
   Text,
   StyleSheet,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import { _height, _width } from './config';
+import PDFView from './PDFView';
 import { Divider, DataTable } from 'react-native-paper';
 class Chip extends Component {
   state = {
@@ -14,12 +16,15 @@ class Chip extends Component {
     page: 0,
     current: 1,
   };
+
   componentWillMount() {
-    let rawdata = this.props.navigation.getParam('data', '详情页');
+    let rawdata = this.props.navigation.getParam('data', []);
     this.setState({data: rawdata})
   }
+
   render() {
-    let type = this.props.navigation.getParam('type', '详情页');
+    let type = this.props.navigation.getParam('type', '');
+    const { navigate } = this.props.navigation;
     let { data, page, current } = this.state;
     let total = Math.ceil(data.detail.length / 8)
     return (
@@ -29,7 +34,10 @@ class Chip extends Component {
           <Divider style={styles.divider}/>
           <View style={styles.download}>
             <Text style={styles.company}>元件分类：{type === 'ne555' ? '模拟器件': '逻辑门'}</Text>
-            <Text style={styles.pdf}>详情 <Icon name={'file-pdf'} size={17} color={'#fff'} style={{margin: 10}}/></Text>
+            <TouchableOpacity onPress={()=>{navigate('PDFView', {pdfUrl: this.state.data.pdf})}}>
+              <Text style={styles.pdf}>
+                    详情 <Icon name={'file-pdf'} size={17} color={'#fff'} style={{margin: 10}}/></Text>
+            </TouchableOpacity>
           </View>
           <Text style={styles.company}>厂商名称：{data.company}</Text>
           <Text style={styles.desc}>中文描述：{data.desc.ch}</Text>

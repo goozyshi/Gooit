@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import LoginHint from './components/LoginHint';
 import Login from './components/Login';
-
+import PDFView from '../common/PDFView';
 class Task extends Component {
  async componentWillMount() {
     let re = await AsyncStorage.getItem('logged_user')
@@ -16,9 +16,10 @@ class Task extends Component {
   };
   render(){
     return(
-      <View>
+      <View style={{flex:1}}>
         {/* <LoginHint/> */}
         <Login/>
+        <PDFView />
       </View>
     )
   }

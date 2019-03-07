@@ -42,6 +42,7 @@ class User extends Component {
         AsyncStorage.removeItem('logged_type');
         AsyncStorage.removeItem('logged_img');
         AsyncStorage.removeItem('logged');
+        AsyncStorage.removeItem('favor');
       })
     }, 500);
   }
