@@ -37,7 +37,7 @@ export default class SearchBar extends Component {
 const styles = StyleSheet.create({
   SearchBar: {
     width: _width,
-    backgroundColor: '#24936E',
+    backgroundColor: '#24292e',
     // marginTop: 20,// 沉浸
   },
   InputCell: {

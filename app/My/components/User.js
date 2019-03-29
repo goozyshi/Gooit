@@ -114,7 +114,7 @@ class User extends Component {
     const { isLogin, wait, selectedUser, selectedDepartment, img} = this.state;
     return (
       <View style={styles.forebox}>
-          <View style={styles.warpper}>
+          <View style={styles.wrapper}>
             <Image source={{uri: isLogin? this.state.img :'https://static.zcool.cn/git_z/z/images/boy.png'}} style={styles.avatar}/>
             <View>
               <Text style={styles.name}>{isLogin? selectedUser : '尚未登录'}</Text>
@@ -145,8 +145,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#fff',
+    marginBottom: 15
   },
-  warpper:{
+  wrapper:{
     alignItems: 'center',
     flexDirection: 'row'    
   },

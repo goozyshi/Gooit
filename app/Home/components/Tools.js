@@ -48,7 +48,7 @@ class Tools extends Component {
       <View style={styles.container}>
         { tools_data.map((item,index)=>(
             <View key={index}>
-              <TouchableOpacity onPress={()=>navigate('Caculator')}>
+              <TouchableOpacity onPress={()=>navigate('Caculator', {'name': item.name})}>
                 <View style={styles.tag}>
                   <Icon name="microchip" size={48} color="#24936E" />
                   <Text style={styles.name}>

@@ -8,9 +8,25 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import { _height, _width } from './config';
-import PDFView from './PDFView';
 import { Divider, DataTable } from 'react-native-paper';
+import BackButton from '../common/BackButton';
 class Chip extends Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('HeaderTitle', '参数列表'),// 前面是传过来的标题，后面是备用
+      /**
+      *设置一个空View让标题居中
+      **/
+      headerLeft: <BackButton pop={ navigation.pop } name = {'chevron-left'}/>,
+      headerRight: (
+           <View style={{height: 44,width: 55,justifyContent: 'center',paddingRight:15} }/>
+       ),
+      headerTitleStyle:{
+        flex:1,
+        textAlign:'center',
+      },
+    };
+  };
   state = {
     data: [],
     page: 0,
@@ -34,7 +50,7 @@ class Chip extends Component {
           <Divider style={styles.divider}/>
           <View style={styles.download}>
             <Text style={styles.company}>元件分类：{type === 'ne555' ? '模拟器件': '逻辑门'}</Text>
-            <TouchableOpacity onPress={()=>{navigate('PDFView', {pdfUrl: this.state.data.pdf})}}>
+            <TouchableOpacity onPress={()=>{navigate('PDFView', {name: data.name, pdfUrl: this.state.data.pdf})}}>
               <Text style={styles.pdf}>
                     详情 <Icon name={'file-pdf'} size={17} color={'#fff'} style={{margin: 10}}/></Text>
             </TouchableOpacity>

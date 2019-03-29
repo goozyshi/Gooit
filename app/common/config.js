@@ -376,7 +376,8 @@ const ResisterFive = [
 /**
  * 列表数据
  */
-const exdata = [{
+const exdata = 
+[{
   extitle: '为什么是 C ——因为你无可替代',
   exsub: '1.如何学习C语言 2.第一个`helloshiyanlou`程序'
 },{
@@ -448,6 +449,7 @@ const user = [{
 	favorite: [],
 	type: 'C'
 }];
+
 
 const { height, width } = Dimensions.get('window');
 module.exports = {

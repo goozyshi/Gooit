@@ -13,8 +13,10 @@ import {
 import Icon from 'react-native-vector-icons/EvilIcons';
 import { _height, _width } from '../../common/config';
 import BackButton from '../../common/BackButton';
-import { Portal } from 'react-native-paper';
 class SearchDataSheet extends Component {
+  static navigationOptions = {
+    header: null
+  };
   state = {
     val: '',
     isShow: false,
@@ -106,7 +108,7 @@ class SearchDataSheet extends Component {
     return(
       <View style={styles.container}>
         <View style={styles.SearchBar}>
-          <BackButton pop={ this.props.navigation.pop } />
+          <BackButton pop={ this.props.navigation.pop } name = {'chevron-left'}/>
           <View style={styles.InputCell}>
             <View style={styles.inputWrapper}>
               <View style={styles.searchIcon}><Icon name="search" color="#777" size={32} /></View>
@@ -146,6 +148,7 @@ class SearchDataSheet extends Component {
                   desc = {item.desc}
                   data = {item.data}
                   onPress = {()=>navigate('Chip', {
+                    name: item.name,
                     data: item,
                     type: val
                   })}
@@ -171,7 +174,7 @@ class SearchDataSheet extends Component {
             <Text style={[styles.headline,{marginLeft: 15, color: 'red', textDecorationLine: 'underline'}]}>什么是Datasheet?</Text>
           </View>
           :
-          <ActivityIndicator style={styles.stopLoading} size="large" color="#072" />
+          <ActivityIndicator style={styles.stopLoading} size="large" color="#24936E" />
         }
       </View>
     )
@@ -200,7 +203,7 @@ const styles = StyleSheet.create({
   },
   SearchBar: {
     width: _width,
-    backgroundColor: '#24936E',
+    backgroundColor: '#24292e',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -242,8 +245,9 @@ const styles = StyleSheet.create({
   cancelBtn: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fef',
-    borderRadius: 40,
+    backgroundColor: '#ddd',
+    borderRadius: 50,
+    padding: 2
   },
   historyheader: {
     padding: 15,
@@ -301,7 +305,7 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 10,
     color: '#fff',
-    backgroundColor: '#072',
+    backgroundColor: '#24936E',
     fontWeight: '500',
   },
   stopLoading: {

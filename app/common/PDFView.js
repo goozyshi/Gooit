@@ -2,34 +2,35 @@ import React from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
 
 import Pdf from 'react-native-pdf';
+import BackButton from '../common/BackButton';
 
 export default class PDFView extends React.Component {
-    render() {
-        let pdf_uri = this.props.navigation.getParam('pdfUrl', '');
-        console.log(pdf_uri)
-        const source = {uri:`${pdf_uri} `,cache:true};
-        //const source = require('./test.pdf');  // ios only
-        //const source = {uri:'bundle-assets://test.pdf'};
-
-        //const source = {uri:'file:///sdcard/test.pdf'};
-        //const source = {uri:"data:application/pdf;base64,..."};
-
-        return (
-            <View style={styles.container}>
-                <Pdf
-                    source={source}
-                    onLoadComplete={(numberOfPages,filePath)=>{
-                        console.log(`number of pages: ${numberOfPages}`);
-                    }}
-                    onPageChanged={(page,numberOfPages)=>{
-                        console.log(`current page: ${page}`);
-                    }}
-                    onError={(error)=>{
-                        console.log(error);
-                    }}
-                    style={styles.pdf}/>
-            </View>
-        )
+  static navigationOptions = ({ navigation, navigationOptions }) => {
+    const { params } = navigation.state;
+    return {
+      title: params ? params.name : 'A Nested Details Screen',
+      /**
+      *设置一个空View让标题居中
+      **/
+      headerLeft: <BackButton pop={ navigation.pop } name = {'chevron-left'}/>,
+      
+      headerRight: (
+          <View style={{height: 44,width: 55,justifyContent: 'center',paddingRight:15} }/>
+      ),
+      headerTitleStyle:{
+          flex:1,
+          textAlign:'center',
+      },
+    };
+  };
+  render() {
+      let pdf_uri = this.props.navigation.getParam('pdfUrl', '');
+      const source = {uri:`${pdf_uri} `,cache:true};
+      return (
+          <View style={styles.container}>
+              <Pdf source={source} style={styles.pdf}/>
+          </View>
+      )
   }
 }
 

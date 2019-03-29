@@ -4,7 +4,7 @@ import {
   Text,
   WebView
 } from 'react-native';
-
+import BackButton from '../../common/BackButton';
 class CareerInfo extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -12,6 +12,7 @@ class CareerInfo extends Component {
       /**
       *设置一个空View让标题居中
       **/
+      headerLeft: <BackButton pop={ navigation.pop } name = {'chevron-left'}/>,
       headerRight: (
            <View style={{height: 44,width: 55,justifyContent: 'center',paddingRight:15} }/>
        ),
@@ -29,7 +30,6 @@ class CareerInfo extends Component {
         style={{width:'100%',height:'100%'}}
         startInLoadingState={true}
         renderError={() => {
-            console.log('renderError')
             return <View><Text>网络出问题啦！404</Text></View>
         }}
         renderLoading={() => {

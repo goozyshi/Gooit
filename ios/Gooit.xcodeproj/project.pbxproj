@@ -63,6 +63,8 @@
 		4C79E8DE18E6431BAFE54FFC /* libRNPDFView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB4E942BE434B5CA85C678E /* libRNPDFView.a */; };
 		1A2DAAC06C7C48F39ABF728B /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF913CF1DD334AAEB0EC11ED /* libReact-Native-Webview-Bridge.a */; };
 		5D7947BAE5764430B06971BA /* libRCTOrientation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC1629954656422D800EFAC7 /* libRCTOrientation.a */; };
+		835F20F228B249D196470E43 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 36A89494A6C244FDAF3F5A9E /* libRNSVG.a */; };
+		350A91C989D14DC7817F851E /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1403A1A0A7F94FDCAB83C08A /* libRNSVG-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -404,6 +406,9 @@
 		EF913CF1DD334AAEB0EC11ED /* libReact-Native-Webview-Bridge.a */ = {isa = PBXFileReference; name = "libReact-Native-Webview-Bridge.a"; path = "libReact-Native-Webview-Bridge.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		6FF2E420D9174600BC5172AE /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; name = "RCTOrientation.xcodeproj"; path = "../node_modules/react-native-orientation-locker/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		EC1629954656422D800EFAC7 /* libRCTOrientation.a */ = {isa = PBXFileReference; name = "libRCTOrientation.a"; path = "libRCTOrientation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		285473CAD8E5416ABAF3C6C9 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; name = "RNSVG.xcodeproj"; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		36A89494A6C244FDAF3F5A9E /* libRNSVG.a */ = {isa = PBXFileReference; name = "libRNSVG.a"; path = "libRNSVG.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		1403A1A0A7F94FDCAB83C08A /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; name = "libRNSVG-tvOS.a"; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -441,6 +446,7 @@
 				4C79E8DE18E6431BAFE54FFC /* libRNPDFView.a in Frameworks */,
 				1A2DAAC06C7C48F39ABF728B /* libReact-Native-Webview-Bridge.a in Frameworks */,
 				5D7947BAE5764430B06971BA /* libRCTOrientation.a in Frameworks */,
+				835F20F228B249D196470E43 /* libRNSVG.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +463,7 @@
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
 				3ABA12A901C3489895A42E3B /* libRNVectorIcons-tvOS.a in Frameworks */,
+				350A91C989D14DC7817F851E /* libRNSVG-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -638,6 +645,7 @@
 				05B04C4AB0604F85B011CBFF /* RNPDFView.xcodeproj */,
 				0FD0DBEDC7E7489F96D02190 /* React-Native-Webview-Bridge.xcodeproj */,
 				6FF2E420D9174600BC5172AE /* RCTOrientation.xcodeproj */,
+				285473CAD8E5416ABAF3C6C9 /* RNSVG.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1315,6 +1323,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1328,6 +1338,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-pdf-view\RNPDFView",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation-locker\iOS\RCTOrientation",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1360,6 +1371,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1373,6 +1386,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-pdf-view\RNPDFView",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation-locker\iOS\RCTOrientation",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;
@@ -1405,6 +1419,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-pdf-view\RNPDFView",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation-locker\iOS\RCTOrientation",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1436,6 +1451,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-pdf-view\RNPDFView",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation-locker\iOS\RCTOrientation",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;
@@ -1476,6 +1492,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1489,6 +1507,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-pdf-view\RNPDFView",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation-locker\iOS\RCTOrientation",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1529,6 +1548,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1542,6 +1563,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-pdf-view\RNPDFView",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation-locker\iOS\RCTOrientation",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;
@@ -1581,6 +1603,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1594,6 +1618,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-pdf-view\RNPDFView",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation-locker\iOS\RCTOrientation",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Debug;
@@ -1633,6 +1658,8 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1646,6 +1673,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-pdf-view\RNPDFView",
 					"$(SRCROOT)\..\node_modules\react-native-webview-bridge\ios",
 					"$(SRCROOT)\..\node_modules\react-native-orientation-locker\iOS\RCTOrientation",
+					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
 				);
 			};
 			name = Release;

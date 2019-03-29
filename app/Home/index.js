@@ -21,6 +21,9 @@ import SearchBar from '../common/SearchBar';
 import Chip from '../common/Chip';
 import PDFView from '../common/PDFView';
 class HomeScreen extends Component {
+  static navigationOptions = {
+    header: null
+  };
   render() {
     return (
       <View style={styles.homecontainer}>
@@ -33,11 +36,11 @@ class HomeScreen extends Component {
         />
         <SearchBar navigation={this.props.navigation}/>
         <ScrollView showsVerticalScrollIndicator={false}>
-        <CareerSwiper navigation={this.props.navigation} />
-        <Tools navigation={this.props.navigation} />
-        <BasicList navigation={this.props.navigation} />
-        <OSList navigation={this.props.navigation} />
-        <AlgoList navigation={this.props.navigation} />
+          <CareerSwiper navigation={this.props.navigation} />
+          <Tools navigation={this.props.navigation} />
+          <BasicList navigation={this.props.navigation} />
+          <OSList navigation={this.props.navigation} />
+          <AlgoList navigation={this.props.navigation} />
         </ScrollView>
       </View>
     )
@@ -57,7 +60,17 @@ const HomeRootStack = createStackNavigator(
   {
     initialRouteName: 'Home',
     mode: 'card',// 定义页面渲染和转换的风格
-    headerMode: 'none',
+    headerMode: 'float',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#24292e',
+      },
+      title: '',
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
   }
 );
 

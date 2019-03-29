@@ -9,6 +9,8 @@ import Picker from 'react-native-picker';
 import { Button } from 'react-native-paper';
 import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import { ResisterFour, ResisterFive, _height, _width } from '../../common/config';
+import BackButton from '../../common/BackButton';
+
 class Four_Caculator extends Component{
   constructor (props) {
     super(props);
@@ -109,7 +111,7 @@ class Four_Caculator extends Component{
     return(
       <View style={styles.container}>
         <View style={styles.resisterbox}>
-          <ImageBackground source={'http:129.204.128.185/resister.png'} resizeMode='contain' style={styles.register}>
+          <ImageBackground source={{uri:'http:129.204.128.185:3000/images/resister.png'}} resizeMode='contain' style={styles.register}>
             <View style={styles.box}>
               <View style={{height: _height * 0.092, width: 15, opacity: 0.875, backgroundColor: this.state.firstColor || '#724832'}} />
               <View style={{height: _height * 0.07, width: 15, opacity: 0.875, backgroundColor: this.state.secondColor || '#000'}} />
@@ -120,7 +122,7 @@ class Four_Caculator extends Component{
         </View>
         <View style={styles.result}>
           <Text style={styles.result_txt}>{this.counter()}</Text>
-          <Button mode="contained" onPress={()=>this._showPicker()} color='#072'>
+          <Button mode="contained" onPress={()=>this._showPicker()} color='#24936E'>
             <Text style={styles.textStyle} style={{fontSize: 22}}>点击选择</Text>
           </Button>
         </View>
@@ -237,7 +239,7 @@ class Five_Caculator extends Component{
     return(
       <View style={styles.container}>
         <View style={styles.resisterbox}>
-          <ImageBackground source={'http:129.204.128.185/resister.png'} resizeMode='contain' style={styles.register}>
+          <ImageBackground source={{uri:'http:129.204.128.185:3000/images/resister.png'}} resizeMode='contain' style={styles.register}>
             <View style={styles.box}>
               <View style={{height: _height * 0.092, width: 15, opacity: 0.875, backgroundColor: this.state.firstColor || '#724832'}} />
               <View style={{height: _height * 0.07, width: 15, opacity: 0.875, backgroundColor: this.state.secondColor || '#000'}} />
@@ -261,17 +263,33 @@ class Five_Caculator extends Component{
   }
 }
 
-export default () => {
-  return <ScrollableTabView
-    style={{marginTop: 15, flex: 1}}
-    initialPage={1}
-    renderTabBar={() => <ScrollableTabBar />}
-  >
-    <Four_Caculator tabLabel='3' />
-    <Four_Caculator tabLabel='4' />
-    <Five_Caculator tabLabel='5' />
-    <Four_Caculator tabLabel='6' />
-  </ScrollableTabView>;
+
+export default class Caculator extends Component{
+  static navigationOptions = ({ navigation, navigationOptions }) => {
+    const { params } = navigation.state;
+    return {
+      title: params ? params.name : 'A Nested Details Screen',
+      /**
+      *设置一个空View让标题居中
+      **/
+      headerLeft: <BackButton pop={ navigation.pop } name = {'chevron-left'}/>,
+      headerRight: (
+          <View style={{height: 44,width: 55,justifyContent: 'center',paddingRight:15} }/>
+      ),
+      headerTitleStyle:{
+          flex:1,
+          textAlign:'center',
+      },
+    };
+  };
+  render(){
+    return <ScrollableTabView 
+              initialPage={0}
+              renderTabBar={() => <ScrollableTabBar style={{borderWidth: 0}}/>} >
+              <Four_Caculator tabLabel='四色环电阻' />
+              <Five_Caculator tabLabel='五色环电阻' />
+            </ScrollableTabView>
+  }
 }
 const styles = StyleSheet.create({
   container:{
@@ -312,9 +330,10 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   content:{
-    width:'100%',
     flexDirection:'row',
     justifyContent:'space-around',
+    fontSize: 18,
+    color: '#444'
   },
   textStyle:{
     justifyContent: 'center',
@@ -331,8 +350,4 @@ const styles = StyleSheet.create({
     color: '#333',
     fontWeight: '500'
   },
-  content: {
-    fontSize: 18,
-    color: '#444'
-  }
 })
