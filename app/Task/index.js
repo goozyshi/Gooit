@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { FAB } from 'react-native-paper';
 
 import LoginHint from './components/LoginHint';
-import Login from './components/Login';
+import TaskList from './components/TaskList';
 import CreateTask from './components/CreateTask';
 import ChooseList from './components/ChooseList';
 import TaskDetail from './components/TaskDetail';
@@ -32,21 +32,21 @@ class Publish extends Component{
 
 
 class TaskScreen extends Component {
-  state = {
-    type: 'A'
-  };
   static navigationOptions = {
     title: '任务',
     headerStyle: {
       backgroundColor: '#24292e',
     },
-
+    
+  };
+  state = {
+    type: 'B'
   };
   render(){
     return(
       <View style={styles.container}>
         <Text style={styles.title}>{ this.state.type === 'A' ? '已发布的任务':'任务列表' }</Text>
-        <Login navigation={this.props.navigation} />
+        <TaskList navigation={this.props.navigation} />
         { this.state.type === 'A' && <Publish navigation={this.props.navigation}/> }
       </View> 
     )

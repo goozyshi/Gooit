@@ -7,9 +7,10 @@ import {
   ToastAndroid,
   DeviceEventEmitter
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import { TextInput, List, Divider } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import BackButton from './../../common/BackButton';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import { _height, _width } from '../../common/config';
 
@@ -17,7 +18,7 @@ class CreateTask extends Component {
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const { params } = navigation.state;
     return {
-        title: params ? params.title : 'A Nested Details Screen',
+        title: params ? params.title : '自定义标题',
         /**
         * 设置一个空View让标题居中
         */
@@ -28,15 +29,78 @@ class CreateTask extends Component {
   };
   state = {
     title: '',
-    achademic: '',
+    academy: '',
     contact: '',
-    status: '',
-    remark: ''
+    status: '未开始',
+    remark: '',
+    date_begin: '',
+    date_over: '',
+    status_color: '#61BCF5',
+    beginPickerVisible: false,
+    overPickerVisible: false,
   };
-  _submitForm = () =>{
-    var params = this.state;
 
-    if(!params.title || !params.achademic || !params.contact || !params.status){
+  /** 开始日期选择 */
+  _showBeginPicker = () => this.setState({ beginPickerVisible: true });
+
+  _hideBeginPicker = () => this.setState({ beginPickerVisible: false });
+
+  _handleBeginPicked = (date) => {
+    let current = this.getmyDate(date)
+    if(this.state.date_over && this.state.date_over < current){
+      ToastAndroid.show('开始时间不能大于结束时间', ToastAndroid.SHORT)
+      this._hideBeginPicker()
+    }else {
+      this.setState({
+          date_begin: current
+      },()=>this._hideBeginPicker())
+    }
+  };
+  /** 结束日期选择 */
+  _showOverPicker = () => this.setState({ overPickerVisible: true });
+
+  _hideOverPicker = () => this.setState({ overPickerVisible: false });
+
+  _handleOverPicked = (date) => {
+    let current = this.getmyDate(date)
+    if( this.state.date_begin && this.state.date_begin>current){
+      ToastAndroid.show('结束时间不能小于开始时间', ToastAndroid.SHORT)
+      this._hideOverPicker()
+    }else {
+      this.setState({
+          date_over: current
+      },()=>this._hideOverPicker())
+    }
+  };
+
+  getmyDate(date) {
+    date = new Date(date)
+    var year = date.getFullYear().toString();
+    var month = (date.getMonth()+1).toString();
+    if (month<10){
+      month = '0' + month
+    }
+    var day = date.getDate().toString();
+    if (day<10){
+      day = '0' + day
+    }
+    return year+'/'+month+'/'+day
+  }
+
+  _submitForm = () =>{
+    const { title, academy, contact, status, status_color, remark, date_begin, date_over } = this.state;
+    var params = {
+      title,
+      academy,
+      contact,
+      status,
+      status_color,
+      remark,
+      date_begin,
+      date_over
+    }
+
+    if(!params.title || !params.academy || !params.contact || !params.status){
       ToastAndroid.show('没填完哦', ToastAndroid.SHORT)
       return false
     }
@@ -53,6 +117,13 @@ class CreateTask extends Component {
     this.props.navigation.goBack();
   }
   componentDidMount (){
+    
+    let date = new Date()
+    let mydate = this.getmyDate(date);
+    this.setState({
+      date_begin: mydate
+    })
+    
     this.props.navigation.setParams({ submit: this._submitForm });
   }
   render(){
@@ -67,10 +138,10 @@ class CreateTask extends Component {
           onChangeText={title => this.setState({ title })}
         />
         <View>
-          <TouchableOpacity style={styles.message_box} onPress={()=>{navigate('ChooseList', {'title': '选择学院', callback: ((info)=>{this.setState({achademic: info})}) })}}>
+          <TouchableOpacity style={styles.message_box} onPress={()=>{navigate('ChooseList', {'title': '选择学院', callback: ((info)=>{this.setState({academy: info})}) })}}>
             <Text style={styles.message_box_title}>面向学院</Text>
             <View style={styles.message_box_opt}>
-              <Text>{ this.state.achademic || '请选择'}</Text>
+              <Text>{ this.state.academy || '请选择'}</Text>
               <Icon name="angle-right" size={20} color="#999" style={{marginLeft: 20}}/>
             </View>
           </TouchableOpacity>
@@ -83,7 +154,7 @@ class CreateTask extends Component {
             </View>
           </TouchableOpacity
           >
-          <TouchableOpacity style={styles.message_box} onPress={()=>{navigate('ChooseList', { 'title': '更改状态', callback: ((info)=>{this.setState({status: info})})})}}>
+          <TouchableOpacity style={styles.message_box} onPress={()=>{navigate('ChooseList', { 'title': '更改状态', callback: ((info, color)=>{this.setState({status: info, status_color: color})})})}}>
             <Text style={styles.message_box_title}>项目状态</Text>
             <View style={styles.message_box_opt}>
               <Text>{ this.state.status || '未开始'}</Text>
@@ -102,7 +173,21 @@ class CreateTask extends Component {
           style = {{margin: 10, padding: 8, backgroundColor: '#fff'}}
           onChangeText={remark => this.setState({ remark })}
         />
-
+          <List.Accordion title="更多选项(选填)" style={styles.more}>
+          <View style={{backgroundColor: '#fff', marginHorizontal: 15}}>
+            <TouchableOpacity style={styles.time_opt} onPress={this._showBeginPicker}><Text style={styles.time_text}>开始时间</Text><Text style={styles.time_text}>{this.state.date_begin}</Text></TouchableOpacity>
+            <Divider/>
+            <TouchableOpacity style={styles.time_opt} onPress={this._showOverPicker}><Text style={styles.time_text}>结束时间</Text><Text style={styles.time_text}>{this.state.date_over}</Text></TouchableOpacity>
+            <DateTimePicker
+              isVisible={this.state.beginPickerVisible}
+              onConfirm={this._handleBeginPicked}
+              onCancel={this._hideBeginPicker} />
+            <DateTimePicker
+              isVisible={this.state.overPickerVisible}
+              onConfirm={this._handleOverPicked}
+              onCancel={this._hideOverPicker} />
+        </View>
+          </List.Accordion>
       </View>
     )
   }
@@ -142,13 +227,22 @@ const styles = StyleSheet.create({
     color: '#fff',
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
-  container: {
-    flex: 1,
-    marginLeft: 10,
-    marginRight: 10,
+  more: {
+    margin: 15,
+    backgroundColor: '#fff',
+    color: '#333',
+    fontSize: 16
+  },
+  time_opt: {
+    margin: 25,
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  time_text: {
+    color: '#333'
   }
 });
 export default CreateTask;

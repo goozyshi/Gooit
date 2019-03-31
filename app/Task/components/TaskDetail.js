@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Card } from 'react-native-paper';
 import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Feather';
 
 import { _height, _width } from '../../common/config';
 import BackButton from '../../common/BackButton';
+import { TextInput } from 'react-native-paper';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class TaskDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -24,9 +27,15 @@ export default class TaskDetail extends Component {
     };
   };
   state = {
-    data: []
+    data: [],
+    type: 'A',
+    announce: ''
   };
   componentWillMount (){
+    const temp_data = this.props.navigation.state.params.data;
+    this.setState({
+      data: temp_data
+    })
     // fetch('http://129.204.128.185:3000/users')
     //   .then((response) => response.json())
     //   .then((responseJson) => {
@@ -40,24 +49,40 @@ export default class TaskDetail extends Component {
     //   });
   }
   render() {
-    
+    console.log('this.props', this.props)
     return (
       <View style={styles.container}>
-        <View style={styles.banner}>
-          <Text style={styles.title}>title</Text>
-        </View>
+        <Card style={styles.banner}>
+          <View style={styles.box_head}>
+            <Text style={styles.title}>{this.state.data.title}</Text>
+            <Icon name="edit" size={20} color={'#444'} style={{marginRight: 8}}/>
+          </View>
+          <View>
+            <TextInput
+              mode='outlined'
+              multiline={true}
+              label={'项目公告'}
+              numberOfLines = {3}
+              disabled={this.state.type !== 'A'}
+              value={this.state.data.announce || this.state.announce}
+              placeholder='尚未填写公告'
+              style = {{padding: 5, color: '#333'}}
+              onChangeText={announce => this.setState({ announce })}
+            />
+         </View>
+        </Card>
         <ScrollableTabView
-          style={styles.scrolltab}
           initialPage={0}
           tabBarActiveTextColor={'#24936E'}// 标签选择颜色
           tabBarInactiveTextColor={'#666'} // 标签未选中颜色
-          tabBarUnderlineStyle={{backgroundColor:'#24936E', height:2}}// 下划线样式
-          renderTabBar={() => <ScrollableTabBar style={{borderWidth: 0}}/>}
+          tabBarUnderlineStyle={{backgroundColor:'#24936E', height:3}}// 下划线样式
+          renderTabBar={() => <ScrollableTabBar style={{ borderColor: '#ddd'}}/>}
           >
-          <View tabLabel='动态'><Text>hshshs</Text></View>
-          <View tabLabel='详情'><Text>hshshs</Text></View>
-          <View tabLabel='交流'><Text>hshshs</Text></View>
-          <View tabLabel='公告'><Text>hshshs</Text></View>
+          <View tabLabel='动态' style={styles.tab_container}><Text>hshshs</Text></View>
+          <View tabLabel='详情' style={styles.tab_container}>
+
+          </View>
+          <View tabLabel='交流' style={styles.tab_container}><Text>hshshs</Text></View>
         </ScrollableTabView>
       </View>
     );
@@ -70,20 +95,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5'
   },
   banner: {
-    height: _height * 0.22,
-    margin: 35,
-    padding: 10,
-    
+    marginHorizontal: 30,
+    marginVertical: 20,
+    padding: 15,
     backgroundColor: '#fff',
-    
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#ddd'
+  },
+  box_head: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: '#333',
-    textAlign: 'center',
+    marginVertical: 10
   },
+  tab_container: {
+    flex: 1,
+    margin: 20,
+    padding: 10,
+    // backgroundColor: '#fff'
+  }
 })
