@@ -40,7 +40,7 @@ class TaskScreen extends Component {
     
   };
   state = {
-    type: 'B'
+    type: 'A'
   };
   render(){
     return(

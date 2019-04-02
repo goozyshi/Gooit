@@ -135,7 +135,7 @@ class SearchDataSheet extends Component {
           isShow?
           <View style={{justifyContent: 'center', width: _width}}>
             <View style={styles.historyheader}>
-              <Text style={styles.headline}>找到的<Text style={{color: 'red'}}>&nbsp;{sub_val}&nbsp;</Text>元器件：</Text>
+              <Text style={styles.headline}>找到的<Text style={{color: '#24936E'}}>&nbsp;{sub_val}&nbsp;</Text>元器件：</Text>
             </View>
             <FlatList
               data={result}

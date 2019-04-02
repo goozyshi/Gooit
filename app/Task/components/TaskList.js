@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, DeviceEventEmitter} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, DeviceEventEmitter, ToastAndroid} from 'react-native';
 import { _height, _width } from '../../common/config';
 import Icon from 'react-native-vector-icons/Feather';
+import Swipeout from 'react-native-swipeout';
+import { ToolbarAndroid } from 'react-native-gesture-handler';
+
+const delete_component = <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}><View  style={{height: 72, width: 72, padding: 15, backgroundColor: '#fff', borderRadius: 100, alignItems: 'center', justifyContent: 'center'}}><Icon name="trash-2" size={32} color={'#eb2456'}/></View></View>;
 
 export default class TaskList extends Component {
   state = {
     dataList: [],
-    flag: false
+    flag: false,
+    type: 'A'
   };
+
   getRemoteData(){
     fetch('http://129.204.128.185:3000/users')
     .then((response) => response.json())
@@ -22,6 +28,34 @@ export default class TaskList extends Component {
       console.error(error);
     });
   }
+  swipeHandleDelete = () => {
+    if(this.state.type !== 'A'){
+      ToastAndroid.show('你没有权限删除', ToastAndroid.SHORT);
+      return false
+    }
+    ToastAndroid.show('删除成功', ToastAndroid.SHORT);
+    let index = this.state.dataList.length -1 - this.state.rowIndex;
+    fetch('http://129.204.128.185:3000/users/' + index, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(()=>this.getRemoteData())
+  }
+
+  onSwipeOpen (rowIndex) {
+    this.setState({
+      rowIndex: rowIndex
+    })
+  };
+  onSwipeClose(rowIndex) {
+    if (rowIndex === this.state.rowIndex) {
+      this.setState({ rowIndex: null });
+    }
+  };
+
   componentWillMount (){
     { this.state.dataList && this.getRemoteData()}
   };
@@ -31,18 +65,33 @@ export default class TaskList extends Component {
   componentWillUnmount() {
     this.subscription.remove();
   };
+
   render() {
     const { navigate } = this.props.navigation;
+    const length = this.state.dataList.length -1;
+    const swipeoutBtns = [{
+      component: delete_component,
+      backgroundColor: '#f5f5f5',
+      onPress: ()=>(this.swipeHandleDelete())
+    }];
     return (
-      
       <View style={styles.container}>
       <FlatList
         data={this.state.dataList}
+        extraData= {this.state.rowIndex}
         showsVerticalScrollIndicator={false}
-        renderItem={({item}) => 
-        <TouchableOpacity style={[styles.task_container, {borderColor: item.status_color}]} key={item.title + item.date_begin} onPress={()=>navigate('TaskDetail', {'data': item})}>
+        renderItem={({item, index}) => 
+        <Swipeout backgroundColor={'#f5f5f5'} right={(swipeoutBtns)}
+          onOpen={()=>(this.onSwipeOpen(index))}
+          close={this.state.rowIndex !== index}
+          onClose={()=>(this.onSwipeClose(index))}
+          rowIndex={index}
+          sectionId={0}
+          autoClose={true}    
+        >
+        <TouchableOpacity style={[styles.task_container, {borderColor: item.status_color}]} key={item.title + item.date_begin} onPress={()=>navigate('TaskDetail', {'data': item, 'id': length-index })}>
           <View style={styles.header}>
-            <Icon name="info" size={20} color={item.status_color} style={{marginRight: 8}}/>
+            <Icon name="info" size={20} color={item.status_color} style={{marginRight: 10}}/>
             <Text style={styles.title}>{item.title}</Text>
           </View>
           <View style={styles.header}>
@@ -51,7 +100,7 @@ export default class TaskList extends Component {
           </View>
           <View style={styles.footer}>
             <View style={styles.item}>
-              <Icon name="activity" size={20} color={item.status_color} style={{marginRight: 8}}/>
+              <Icon name={item.status === '未开始' ? 'anchor': (item.status === '进行中' ? 'activity' : 'check')} size={20} color={item.status_color} style={{marginRight: 8}}/>
               <View style={{borderWidth:1, paddingHorizontal: 10, borderColor: item.status_color, borderRadius: 40}}>
                 <Text style={styles.status}>{item.status}</Text>
               </View>
@@ -66,6 +115,7 @@ export default class TaskList extends Component {
             </View>
           </View>
         </TouchableOpacity>
+        </Swipeout>
         }
         keyExtractor={item => item.title}
       />
@@ -76,7 +126,7 @@ export default class TaskList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: _height * 0.74,
+    height: _height * 0.8,
   },
   task_container: {
     marginHorizontal: 20,

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Card } from 'react-native-paper';
+import { View, Text, StyleSheet, ToastAndroid } from 'react-native';
+import { Card, TextInput, Divider } from 'react-native-paper';
 import ScrollableTabView, { ScrollableTabBar, } from 'react-native-scrollable-tab-view';
 import Icon from 'react-native-vector-icons/Feather';
+import Dynamic from './Dynamic';
 
 import { _height, _width } from '../../common/config';
 import BackButton from '../../common/BackButton';
-import { TextInput } from 'react-native-paper';
-import { ScrollView } from 'react-native-gesture-handler';
+import Example from './Example';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class TaskDetail extends Component {
   static navigationOptions = ({ navigation }) => {
@@ -28,61 +29,119 @@ export default class TaskDetail extends Component {
   };
   state = {
     data: [],
+    index: '',
     type: 'A',
-    announce: ''
+    announce: '',
+    announce_date: '',
   };
   componentWillMount (){
     const temp_data = this.props.navigation.state.params.data;
+    const temp_index = this.props.navigation.state.params.id;
     this.setState({
-      data: temp_data
+      data: temp_data,
+      index: temp_index,
+      announce: temp_data.announce,
+      announce_date: temp_data.announce_date
     })
-    // fetch('http://129.204.128.185:3000/users')
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     let temp =  [...responseJson]
-    //     this.setState({
-    //       published_Data: temp
-    //     })
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+  }
+
+  addAnnounce = () => {
+    let index = this.state.index;
+    let params = this.state.data;
+    let announce_date = this.getmyDate(new Date());
+    this.setState({announce_date})
+    params['announce'] = this.state.announce;
+    params['announce_date'] = this.state.announce_date;
+    fetch('http://129.204.128.185:3000/users/' + index, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params)
+    })
+  }
+  getmyDate(date) {
+    date = new Date(date)
+    var year = date.getFullYear().toString();
+    var month = (date.getMonth()+1).toString();
+    if (month<10){
+      month = '0' + month
+    }
+    var day = date.getDate().toString();
+    if (day<10){
+      day = '0' + day
+    }
+    return year+'/'+month+'/'+day
   }
   render() {
-    console.log('this.props', this.props)
+    const { data } = this.state;
     return (
       <View style={styles.container}>
         <Card style={styles.banner}>
           <View style={styles.box_head}>
-            <Text style={styles.title}>{this.state.data.title}</Text>
-            <Icon name="edit" size={20} color={'#444'} style={{marginRight: 8}}/>
-          </View>
+            <Text style={styles.title}>{ data.title}</Text>
+            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+              <Icon name="bell" size={20} style={{margin: 10}} color={data.status_color}/>
+              <Text>{ this.state.announce_date}</Text></View>
+            </View>
           <View>
             <TextInput
               mode='outlined'
-              multiline={true}
-              label={'项目公告'}
               numberOfLines = {3}
-              disabled={this.state.type !== 'A'}
-              value={this.state.data.announce || this.state.announce}
-              placeholder='尚未填写公告'
               style = {{padding: 5, color: '#333'}}
+              multiline={true}
+              disabled={this.state.type !== 'A'}
+              label={'项目公告'}
+              value={this.state.announce}
+              placeholder='示例: 下午在电子楼505开会。 ——2019.04.01'
               onChangeText={announce => this.setState({ announce })}
+              onBlur={()=>this.addAnnounce()}
             />
          </View>
-        </Card>
+        </Card> 
         <ScrollableTabView
           initialPage={0}
-          tabBarActiveTextColor={'#24936E'}// 标签选择颜色
-          tabBarInactiveTextColor={'#666'} // 标签未选中颜色
-          tabBarUnderlineStyle={{backgroundColor:'#24936E', height:3}}// 下划线样式
+          tabBarActiveTextColor={data.status_color}// 标签选择颜色
+          tabBarInactiveTextColor={'#777'} // 标签未选中颜色
+          tabBarUnderlineStyle={{backgroundColor: data.status_color, height:2}}// 下划线样式
           renderTabBar={() => <ScrollableTabBar style={{ borderColor: '#ddd'}}/>}
           >
-          <View tabLabel='动态' style={styles.tab_container}><Text>hshshs</Text></View>
-          <View tabLabel='详情' style={styles.tab_container}>
+          {/** 动态 **/}
+          <View tabLabel='动态' style={styles.tab_container}><Dynamic/></View>
 
+          {/** 详情 **/}
+          <View tabLabel='详情' style={styles.tab_container}>
+            <View style={[styles.block, {backgroundColor: data.status_color, marginBottom: 0}]}>
+              <Text style={{color: '#fff', fontWeight: '600', fontSize: 16}}>{'    ' +  data.status}</Text>
+            </View>
+            <View style={[styles.block, {borderColor: data.status_color, borderWidth: 1}]}>
+              <Text style={styles.remark}>{'    ' +  data.remark}</Text>
+            </View>
+            <View style={[styles.block, {borderColor: data.status_color, borderWidth: 1}]}>
+              <View style={styles.item}>
+                <Icon name="layers" size={20} style={{margin: 10}} color={data.status_color}/>
+                <Text style={styles.remark}>面向学院：{ data.academy}</Text>
+              </View>
+              <Divider style={{margin: 8}}/>
+              <View style={styles.item}>
+                <Icon name="user" size={20} style={{margin: 10}} color={data.status_color}/>
+                <Text style={styles.remark}>任务负责人：{ data.contact}</Text>
+              </View>
+              <Divider style={{margin: 8}}/>
+              <View style={styles.item}>
+                <Icon name="clock" size={20} style={{margin: 10}} color={data.status_color}/>
+                <Text style={styles.remark}>开始时间：{ data.date_begin}</Text>
+              </View>
+              <View style={styles.item}>
+                <Icon name="calendar" size={20} style={{margin: 10}} color={data.status_color}/>
+                <Text style={styles.remark}>截止时间：{ data.date_over}</Text>
+              </View>
+            </View>
           </View>
-          <View tabLabel='交流' style={styles.tab_container}><Text>hshshs</Text></View>
+          
+          {/** 交流 **/}
+          <View tabLabel='交流' style={styles.tab_container}><Example/></View>
         </ScrollableTabView>
       </View>
     );
@@ -113,8 +172,21 @@ const styles = StyleSheet.create({
   },
   tab_container: {
     flex: 1,
-    margin: 20,
+    margin: 15,
     padding: 10,
-    // backgroundColor: '#fff'
+  },
+  block: {
+    padding: 10,
+    marginBottom: 20,
+    backgroundColor: '#fff',
+  },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  remark: {
+    lineHeight: 24,
+    margin: 10,
+    color: '#444'
   }
 })

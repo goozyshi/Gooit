@@ -28,7 +28,7 @@ class App extends Component {
   componentDidMount(){
     DeviceEventEmitter.addListener("colorMaker", (color) => {
       this.setState({
-        customcolor: color,
+        customcolor: color
       },()=>{
         tab_color = this.state.customcolor
         theme.colors.primary = this.state.customcolor
@@ -42,7 +42,6 @@ class App extends Component {
         navigationState = {this.state}
         onIndexChange = {this._handleIndexChange}
         renderScene = {this._renderScene}
-        getBadge= {({ route: home }) => '23'}
         shifting = {true}// 除了选中tab，其他只显示logo，不显示标签
         labeled = {false}// 是否显示标签
         activeColor = {'#fff'} // 标签选中颜色

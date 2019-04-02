@@ -8,7 +8,7 @@ import BackButton from '../../common/BackButton';
 class CareerInfo extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('HeaderTitle', '详情页'),// 前面是传过来的标题，后面是备用
+      title: navigation.getParam('HeaderTitle', '电子资讯'),// 前面是传过来的标题，后面是备用
       /**
       *设置一个空View让标题居中
       **/

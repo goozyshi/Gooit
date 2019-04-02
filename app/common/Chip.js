@@ -50,9 +50,9 @@ class Chip extends Component {
           <Divider style={styles.divider}/>
           <View style={styles.download}>
             <Text style={styles.company}>元件分类：{type === 'ne555' ? '模拟器件': '逻辑门'}</Text>
-            <TouchableOpacity onPress={()=>{navigate('PDFView', {name: data.name, pdfUrl: this.state.data.pdf})}}>
-              <Text style={styles.pdf}>
-                    详情 <Icon name={'file-pdf'} size={17} color={'#fff'} style={{margin: 10}}/></Text>
+            <TouchableOpacity style={styles.pdf} onPress={()=>{navigate('PDFView', {name: data.name, pdfUrl: this.state.data.pdf})}}>
+              <Text style={{color: '#fff', fontSize: 16}}>详情</Text>
+              <Icon name={'file-pdf'} size={20} color={'#fff'} style={{margin: 5}}/>
             </TouchableOpacity>
           </View>
           <Text style={styles.company}>厂商名称：{data.company}</Text>
@@ -124,31 +124,23 @@ const styles = StyleSheet.create({
     color: '#444'
   },
   pdf: {
-    fontSize: 16,
-    padding: 14,
-    paddingTop: 5,
-    paddingBottom: 5,
-    backgroundColor: 'red',
-    color: '#fff',
-    fontWeight: '500',
-    borderRadius: 4,
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around'
+    backgroundColor: '#24936E',
+    borderRadius: 5,
+    paddingHorizontal: 10,
   },
   tag: {
-    width: _width*0.15,
-    paddingTop: 5,
-    paddingBottom: 5,
+    padding: 10,
     fontSize: 18,
-    backgroundColor: 'red',
-    textAlign: 'center',
+    backgroundColor: '#24936E',
     color: '#fff',
     fontWeight: '600',
-    alignItems: 'center',
-    justifyContent: 'center'
   },
   table: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: '#24936E'
   }
 });
 export default Chip;
