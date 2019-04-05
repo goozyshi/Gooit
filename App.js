@@ -8,12 +8,11 @@ import Task from './app/Task/index';
 import { _height, _width } from './app/common/config';
 class App extends Component {
   state = {
-    tab_color: '#000072',
-    index: 1,
+    index: 2,
     routes: [
-      { key: 'home', title: '首页', icon: 'home',  color: this.tab_color },// color定义底部tab颜色
-      { key: 'task', title: '任务', icon: 'assignment', color: this.tab_color },
-      { key: 'my', title: '我的', icon: 'account-circle', color: this.tab_color },
+      { key: 'home', title: '首页', icon: 'home' },// color定义底部tab颜色
+      { key: 'task', title: '任务', icon: 'assignment' },
+      { key: 'my', title: '我的', icon: 'account-circle' },
     ],
     customcolor: '#332'
   };
@@ -28,15 +27,13 @@ class App extends Component {
   componentDidMount(){
     DeviceEventEmitter.addListener("colorMaker", (color) => {
       this.setState({
-        customcolor: color
+        customcolor: color,
       },()=>{
-        tab_color = this.state.customcolor
         theme.colors.primary = this.state.customcolor
       })
     })
   }
   render() {
-
     return (
       <BottomNavigation
         navigationState = {this.state}

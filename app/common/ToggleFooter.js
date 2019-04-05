@@ -10,30 +10,10 @@ import {
   ToastAndroid,
 } from 'react-native';
 import { _height, _width } from './config';
-import CustomStorage from './CustomStorage';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 class ToggleFooter extends Component {
   state = {
-    isFavorited: false,
     arr: []
-  };
-
-  /**
-   * 收藏功能
-   */
-  _onFavorite = () => {
-    const { title, banner } = this.props;
-    var str;
-    this.setState({
-      isFavorited: !this.state.isFavorited,
-      arr: this.state.arr.push(title)
-    },()=>{
-      this.state.isFavorited && (
-        ToastAndroid.show('已收藏', ToastAndroid.SHORT),
-        CustomStorage.save('favor', title)
-      )
-    })
   };
 
   /**
@@ -48,16 +28,8 @@ class ToggleFooter extends Component {
   };
 
   render() {
-    const { isFavorited } = this.state;
     return (
       <View style={styles.togglebox}>
-        <TouchableOpacity style={styles.icon} onPress={()=>this._onFavorite()}>
-          <Icon 
-            name={isFavorited? 'favorite' :'favorite-border'}
-            size={34}
-            color={'#24936E'}
-          />
-        </TouchableOpacity>
         <TouchableOpacity style={styles.text_toggle} onPress={()=>this._Learning()}>
           {this.props.isLearned?
             <Text style={{color: '#fff', fontSize: 17,}}>继续学习</Text>
@@ -77,13 +49,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#f5f5f5'
   },
-  icon: {
-    flex: 0.2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   text_toggle: {
-    flex: 0.8,
+    flex: 1,
     backgroundColor: '#24936E',
     alignItems: 'center',
     justifyContent: 'center',

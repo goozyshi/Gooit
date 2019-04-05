@@ -32,7 +32,6 @@ class HomeScreen extends Component {
           backgroundColor="#24936E"//#24936E
           barStyle="light-content"
           hidden={true}
-          translucent={true}
         />
         <SearchBar navigation={this.props.navigation}/>
         <ScrollView showsVerticalScrollIndicator={false}>

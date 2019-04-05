@@ -13,18 +13,10 @@ import BackButton from '../common/BackButton';
 class Chip extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('HeaderTitle', '参数列表'),// 前面是传过来的标题，后面是备用
-      /**
-      *设置一个空View让标题居中
-      **/
+      title: navigation.getParam('HeaderTitle', '参数列表'),
       headerLeft: <BackButton pop={ navigation.pop } name = {'chevron-left'}/>,
-      headerRight: (
-           <View style={{height: 44,width: 55,justifyContent: 'center',paddingRight:15} }/>
-       ),
-      headerTitleStyle:{
-        flex:1,
-        textAlign:'center',
-      },
+      headerRight: <View style={{height: 44,width: 55,justifyContent: 'center',paddingRight:15} }/>,
+      headerTitleStyle:{ flex:1, textAlign:'center' },
     };
   };
   state = {
@@ -75,6 +67,7 @@ class Chip extends Component {
                 </DataTable.Row>
                 : null
               )}
+              
             <DataTable.Pagination
               page={page}
               numberOfPages={total}
@@ -82,8 +75,8 @@ class Chip extends Component {
               label={'第' + current + '页，共' + total + '页'}
             />
         </DataTable>
-        </ScrollView>
-      </View>
+      </ScrollView>
+    </View>
     )
   }
 }

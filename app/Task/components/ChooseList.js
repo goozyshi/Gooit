@@ -3,11 +3,9 @@ import { View, ScrollView, Text, StyleSheet, TouchableOpacity } from 'react-nati
 import { _height, _width } from '../../common/config';
 import BackButton from '../../common/BackButton';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-
 const achedemic = ['数学与统计学院', '物理与能源学院', '化学与环境工程学院', '材料学院', '信息工程学院', '计算机与软件学院', '建筑与城市规划学院', '土木工程学院', '电子科学与技术学院', '机电与控制工程学院', '生命与海洋科学学院', '光电工程学院', '高尔夫学院', '医学部', '国际交流学院', '心理与社会学院', '南特商学院', '高等研究院', '创业学院', '继续教育学院', '研究生院', '体育部', '师范学院(部)', '人文学院', '外国语学院', '传播学院', '经济学院', '管理学院', '法学院', '艺术设计学院', ];
 const status = [{name: '未开始', color: '#61BCF5'}, {name: '进行中', color: '#FC9F4D'}, {name: '已完成', color: '#53c68c'}]
-const contact = ['学生A', '学生B']
+const contact = ['学生B', '学生C']
 export default class ChooseList extends Component {
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;

@@ -6,7 +6,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
-  AsyncStorage
+  AsyncStorage,
+  DeviceEventEmitter
 } from 'react-native';
 import { Button, Dialog, Portal } from 'react-native-paper';
 
@@ -18,7 +19,6 @@ class User extends Component {
     index: 0,
     selectedUser:'',
     selectedDepartment: '',
-    type: '',
     img: '',
     temp: []
   }
@@ -37,12 +37,8 @@ class User extends Component {
         isLogin: false,
         wait: false,
       },()=>{
-        AsyncStorage.removeItem('logged_user');
-        AsyncStorage.removeItem('logged_department');
-        AsyncStorage.removeItem('logged_type');
-        AsyncStorage.removeItem('logged_img');
-        AsyncStorage.removeItem('logged');
-        AsyncStorage.removeItem('favor');
+        AsyncStorage.multiRemove(['logged_user', 'logged_department', 'logged_img', 'logged']);
+        DeviceEventEmitter.emit('LOGOUT')
       })
     }, 500);
   }
@@ -84,26 +80,30 @@ class User extends Component {
         AsyncStorage.setItem('logged', this.state.isLogin)
         AsyncStorage.setItem('logged_user', this.state.selectedUser)
         AsyncStorage.setItem('logged_department', this.state.selectedDepartment)
-        AsyncStorage.setItem('logged_type', this.state.type)
         AsyncStorage.setItem('logged_img', this.state.img)
+        DeviceEventEmitter.emit('LOGGED')
       })
     }, 500);
   }
 
   async componentDidMount() {
-    let rawuser = await AsyncStorage.getItem('logged_user');
-    let rawdepartment = await AsyncStorage.getItem('logged_department');
-    let rawtype = await AsyncStorage.getItem('logged_type');
-    let rawimg = await AsyncStorage.getItem('logged_img');
-    if(rawuser){
-      this.setState({
-        isLogin: true,
-        selectedUser: rawuser,
-        selectedDepartment: rawdepartment,
-        type: rawtype,
-        img: rawimg,
-      })
-    }
+    try {
+      let rawuser = await AsyncStorage.getItem('logged_user');
+      let rawdepartment = await AsyncStorage.getItem('logged_department');
+      let rawimg = await AsyncStorage.getItem('logged_img');
+      if(rawuser){
+        this.setState({
+          isLogin: true,
+          selectedUser: rawuser,
+          selectedDepartment: rawdepartment,
+          img: rawimg,
+        })
+      }
+
+     } catch (error) {
+      throw Error
+     }
+
   }
   
   componentWillUnmount() {
@@ -145,7 +145,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: '#fff',
-    marginBottom: 15
+    marginBottom: 15,
+    borderColor: '#ddd',
+    borderBottomWidth: 1
   },
   wrapper:{
     alignItems: 'center',

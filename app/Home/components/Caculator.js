@@ -111,7 +111,7 @@ class Four_Caculator extends Component{
     return(
       <View style={styles.container}>
         <View style={styles.resisterbox}>
-          <ImageBackground source={{uri:'http:129.204.128.185:3000/images/resister.png'}} resizeMode='contain' style={styles.register}>
+          <ImageBackground source={{uri:'http://129.204.128.185:3000/images/resister.png'}} resizeMode='contain' style={styles.register}>
             <View style={styles.box}>
               <View style={{height: _height * 0.092, width: 15, opacity: 0.875, backgroundColor: this.state.firstColor || '#724832'}} />
               <View style={{height: _height * 0.07, width: 15, opacity: 0.875, backgroundColor: this.state.secondColor || '#000'}} />

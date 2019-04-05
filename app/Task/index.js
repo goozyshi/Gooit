@@ -2,33 +2,20 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  AsyncStorage,
+  DeviceEventEmitter
 } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { FAB } from 'react-native-paper';
 
-import LoginHint from './components/LoginHint';
 import TaskList from './components/TaskList';
 import CreateTask from './components/CreateTask';
 import ChooseList from './components/ChooseList';
 import TaskDetail from './components/TaskDetail';
+import Edit_Progress from './components/Edit_Progress';
 import { _height, _width } from '../common/config';
-
-class Publish extends Component{
-  render(){
-    const { navigate } = this.props.navigation;
-    return (
-          <FAB
-            style={styles.fab}
-            large
-            icon="add"
-            onPress={()=>navigate('CreateTask', {'title': '新建项目'})}
-          />
-    )
-  }
-}
+import LoginHint from './components/LoginHint';
 
 
 class TaskScreen extends Component {
@@ -37,18 +24,51 @@ class TaskScreen extends Component {
     headerStyle: {
       backgroundColor: '#24292e',
     },
-    
   };
   state = {
-    type: 'A'
+    type: '',
+    loadding: true,
+  };
+  ChangeType = async () => {
+    try {
+      let type = await AsyncStorage.getItem ('logged_user');
+      if (type !== null) {
+        this.setState({type, loadding: false})
+      }else {
+        this.setState({type: '', loadding: false})
+      }
+      this.setState({
+        loadding: true
+      })
+     } catch (error) {
+      throw Error
+     }
+  }
+  componentDidMount = () => {
+    this.ChangeType()
+    this.INDEX = DeviceEventEmitter.addListener('LOGGED', this.ChangeType.bind(this))
+    this.LOGOUT = DeviceEventEmitter.addListener('LOGOUT', this.ChangeType.bind(this))
+  };
+  componentWillUnmount() {
+    this.INDEX.remove();
+    this.LOGOUT.remove();
   };
   render(){
     return(
-      <View style={styles.container}>
-        <Text style={styles.title}>{ this.state.type === 'A' ? '已发布的任务':'任务列表' }</Text>
-        <TaskList navigation={this.props.navigation} />
-        { this.state.type === 'A' && <Publish navigation={this.props.navigation}/> }
-      </View> 
+      this.state.type === '' ? <LoginHint/>
+        :
+        <View style={styles.container}>
+          <Text style={styles.title}>{ this.state.type === '老师A' ? '已发布的任务':'任务列表' }</Text>
+          { this.state.loadding && <TaskList navigation={this.props.navigation} type={this.state.type}/> }
+          { this.state.type === '老师A' && 
+              <FAB
+                style={styles.fab}
+                large
+                icon="add"
+                onPress={()=>this.props.navigation.navigate('CreateTask', {'title': '新建项目'})}
+              />
+          }
+        </View> 
     )
   }
 }
@@ -58,6 +78,7 @@ const TaskRootStack = createStackNavigator(
     CreateTask: CreateTask,
     TaskDetail: TaskDetail,
     ChooseList: ChooseList,
+    Edit_Progress: Edit_Progress,
   },
   {
     initialRouteName: 'Task',

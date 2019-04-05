@@ -7,32 +7,10 @@ import {
   TouchableOpacity,
   DeviceEventEmitter
 } from 'react-native';
+
 import { List, Divider } from 'react-native-paper';
-const customColor = [{
-  color: '#F4A7B9',
-  name: '一斥染',
-  remark: 'IKKONZOME'
-},{
-  color: '#4E4F97',
-  name: '红褂花',
-  remark: 'BENIKAKEHANA'
-},{
-  color: '#E2943B',
-  name: '朽叶',
-  remark: 'KUCHIBA'
-},{
-  color: '#91AD70',
-  name: '柳染',
-  remark: 'YANAGIZOME'
-},{
-  color: '#66BAB7',
-  name: '水浅葱',
-  remark: 'MIZUASAGI'
-},{
-  color: '#005CAF',
-  name: '瑠璃',
-  remark: 'RURI'
-}]
+import { customColor } from '../../common/config';
+
 class FeatureList extends Component {
   state = {
     expanded: false,
@@ -45,14 +23,9 @@ class FeatureList extends Component {
   
   render() {
     return (
-      <ScrollView>
-
+      <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.container}>
         <List.Section title="个人中心">
-          <List.Accordion title="我的收藏" left={props => <List.Icon {...props} icon="favorite" />} >
-            { this.state.favor_arr && this.state.favor_arr.map((item)=><List.Item key={item} title={item} />)}
-          </List.Accordion>
-          <Divider />
           <List.Accordion title="多彩主题" left={props => <List.Icon {...props} icon="insert-emoticon" />}>
           {customColor.map((item)=>
             <TouchableOpacity key ={item.remark} onPress={ ()=>{ this.setState({expanded:!this.state.expanded},()=>{DeviceEventEmitter.emit('colorMaker',item.color)})} }>
@@ -71,7 +44,7 @@ class FeatureList extends Component {
             title="意见反馈"
             left={props => <List.Icon {...props} icon="thumbs-up-down" />}
           >
-          <Text style={styles.underline} textDecorationLine='underline' color={'#072'}>说出你的梦想&nbsp;&nbsp; <Text style={{color:'#072', textDecorationLine: 'underline'}}>https://github.com/goozyshi/Gooit </Text></Text>
+          <Text style={styles.underline}>https://github.com/goozyshi/Gooit </Text>
           </List.Accordion>
           <Divider />
           <List.Accordion  title="关于Gooit" left={ props =>  <List.Icon {...props} icon="info" />} >
@@ -102,13 +75,13 @@ const styles = StyleSheet.create({
     margin: 10,
     color:'#444',
     marginLeft: -40,
-    padding: 3,
-    lineHeight: 24,
+    padding: 15,
+    lineHeight: 32,
   },
   colorfulitem: {
     marginHorizontal: 40,
-    marginVertical: 2,
-    padding: 8,
+    marginVertical: 5,
+    padding: 15,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,

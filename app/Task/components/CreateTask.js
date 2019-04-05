@@ -15,7 +15,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import { _height, _width } from '../../common/config';
 
 class CreateTask extends Component {
-  static navigationOptions = ({ navigation, navigationOptions }) => {
+  static navigationOptions = ({ navigation}) => {
     const { params } = navigation.state;
     return {
         title: params ? params.title : '自定义标题',
@@ -27,6 +27,7 @@ class CreateTask extends Component {
         headerTitleStyle:{ flex:1, textAlign:'center'}
     };
   };
+
   state = {
     title: '',
     academy: '',
@@ -36,41 +37,12 @@ class CreateTask extends Component {
     date_begin: '',
     date_over: '',
     status_color: '#61BCF5',
+    announce: '',
+    announce_date: '',
+    progress: [],
     beginPickerVisible: false,
     overPickerVisible: false,
-  };
-
-  /** 开始日期选择 */
-  _showBeginPicker = () => this.setState({ beginPickerVisible: true });
-
-  _hideBeginPicker = () => this.setState({ beginPickerVisible: false });
-
-  _handleBeginPicked = (date) => {
-    let current = this.getmyDate(date)
-    if(this.state.date_over && this.state.date_over < current){
-      ToastAndroid.show('开始时间不能大于结束时间', ToastAndroid.SHORT)
-      this._hideBeginPicker()
-    }else {
-      this.setState({
-          date_begin: current
-      },()=>this._hideBeginPicker())
-    }
-  };
-  /** 结束日期选择 */
-  _showOverPicker = () => this.setState({ overPickerVisible: true });
-
-  _hideOverPicker = () => this.setState({ overPickerVisible: false });
-
-  _handleOverPicked = (date) => {
-    let current = this.getmyDate(date)
-    if( this.state.date_begin && this.state.date_begin>current){
-      ToastAndroid.show('结束时间不能小于开始时间', ToastAndroid.SHORT)
-      this._hideOverPicker()
-    }else {
-      this.setState({
-          date_over: current
-      },()=>this._hideOverPicker())
-    }
+    type: '老师A'
   };
 
   getmyDate(date) {
@@ -86,38 +58,100 @@ class CreateTask extends Component {
     }
     return year+'/'+month+'/'+day
   }
+  addProgress = () => {
+    const { type, title, academy, contact, status, remark, date_begin, date_over, progress } = this.state;
+    let temp_date = this.getmyDate(new Date())
+    var temp_progress = progress;
+    let temp_body = ''
+    if(this.props.navigation.state.params.data !== undefined){
+      let pre_data = this.props.navigation.state.params.data.data;
 
-  _submitForm = () =>{
-    const { title, academy, contact, status, status_color, remark, date_begin, date_over } = this.state;
-    var params = {
-      title,
-      academy,
-      contact,
-      status,
-      status_color,
-      remark,
-      date_begin,
-      date_over
+      { (pre_data.title !== title ) && (temp_body +='修改了项目标题为'+ title+ '\n') }
+      { (pre_data.academy !== academy ) && (temp_body +='修改了面向学院为'+ academy+ '\n')}
+      { (pre_data.contact !== contact ) && (temp_body +='修改了任务负责人为'+ contact+ '\n') }
+      { (pre_data.status !== status ) && (temp_body +='修改了项目状态为'+ status+ '\n') }
+      { (pre_data.remark !== remark ) && (temp_body +='修改了项目描述为'+ remark+ '\n') }
+      { (pre_data.date_begin !== date_begin ) && (temp_body +='修改了开始时间为'+ date_begin+ '\n') }
+      { (pre_data.date_over !== date_over ) && (temp_body +='修改了截止时间为'+ date_over+ '\n') }
+      temp_progress.push({title: type+'修改了项目配置', date: temp_date, body: temp_body})
+    }else {
+      temp_progress.push({title: type+'创建了项目'+title, date: temp_date})
     }
-
-    if(!params.title || !params.academy || !params.contact || !params.status){
-      ToastAndroid.show('没填完哦', ToastAndroid.SHORT)
-      return false
-    }
-
-    fetch('http://129.204.128.185:3000/users', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(params)
-    })
-    DeviceEventEmitter.emit('UPDATE')
-    this.props.navigation.goBack();
   }
+
+  _submitForm = async () =>{
+    const { type, title, academy, contact, status, status_color, remark, date_begin, date_over, announce, announce_date, progress } = this.state;
+    var temp_progress = await this.addProgress();
+
+    this.setState({progress: temp_progress},()=>{
+      console.log()
+      var params = {
+        title,
+        academy,
+        contact,
+        status,
+        status_color,
+        remark,
+        date_begin,
+        date_over,
+        announce,
+        announce_date,
+        progress
+      }
+      if(!params.title || !params.academy || !params.contact || !params.status){
+        ToastAndroid.show('没填完哦', ToastAndroid.SHORT)
+        return false
+      }
+      if(this.props.navigation.state.params.data !== undefined){
+        let index = this.props.navigation.state.params.data.id
+        fetch('http://129.204.128.185:3000/users/' + index, {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(params)
+        })
+        .then(()=>{
+          DeviceEventEmitter.emit('UPDATE')
+          this.props.navigation.pop(2);
+        })
+      }else{
+        fetch('http://129.204.128.185:3000/users', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(params)
+        })
+        .then(()=>{
+          DeviceEventEmitter.emit('UPDATE')
+          this.props.navigation.goBack();
+        })
+      }
+    })
+
+  };
+
   componentDidMount (){
-    
+    if(this.props.navigation.state.params.data){
+      const temp_data = this.props.navigation.state.params.data.data;
+      this.setState({
+        title: temp_data.title,
+        remark: temp_data.remark,
+        academy: temp_data.academy,
+        contact: temp_data.contact,
+        status: temp_data.status,
+        status_color: temp_data.status_color,
+        date_begin: temp_data.date_begin,
+        date_over: temp_data.date_over,
+        announce: temp_data.announce,
+        announce_date: temp_data.announce_date,
+        progress: temp_data.progress
+      })
+    }
+
     let date = new Date()
     let mydate = this.getmyDate(date);
     this.setState({
@@ -177,7 +211,7 @@ class CreateTask extends Component {
           <View style={{backgroundColor: '#fff', marginHorizontal: 15}}>
             <TouchableOpacity style={styles.time_opt} onPress={this._showBeginPicker}><Text style={styles.time_text}>开始时间</Text><Text style={styles.time_text}>{this.state.date_begin}</Text></TouchableOpacity>
             <Divider/>
-            <TouchableOpacity style={styles.time_opt} onPress={this._showOverPicker}><Text style={styles.time_text}>结束时间</Text><Text style={styles.time_text}>{this.state.date_over}</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.time_opt} onPress={this._showOverPicker}><Text style={styles.time_text}>截止时间</Text><Text style={styles.time_text}>{this.state.date_over}</Text></TouchableOpacity>
             <DateTimePicker
               isVisible={this.state.beginPickerVisible}
               onConfirm={this._handleBeginPicked}
@@ -191,6 +225,38 @@ class CreateTask extends Component {
       </View>
     )
   }
+  /** 开始日期选择 */
+  _showBeginPicker = () => this.setState({ beginPickerVisible: true });
+
+  _hideBeginPicker = () => this.setState({ beginPickerVisible: false });
+
+  _handleBeginPicked = (date) => {
+    let current = this.getmyDate(date)
+    if(this.state.date_over && this.state.date_over < current){
+      ToastAndroid.show('开始时间不能大于结束时间', ToastAndroid.SHORT)
+      this._hideBeginPicker()
+    }else {
+      this.setState({
+          date_begin: current
+      },()=>this._hideBeginPicker())
+    }
+  };
+  /** 结束日期选择 */
+  _showOverPicker = () => this.setState({ overPickerVisible: true });
+
+  _hideOverPicker = () => this.setState({ overPickerVisible: false });
+
+  _handleOverPicked = (date) => {
+    let current = this.getmyDate(date)
+    if( this.state.date_begin && this.state.date_begin>current){
+      ToastAndroid.show('结束时间不能小于开始时间', ToastAndroid.SHORT)
+      this._hideOverPicker()
+    }else {
+      this.setState({
+          date_over: current
+      },()=>this._hideOverPicker())
+    }
+  };
 }
 
 const styles = StyleSheet.create({

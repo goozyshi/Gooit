@@ -81,7 +81,6 @@ class SearchDataSheet extends Component {
   }
 
   async componentDidMount() {
-    console.log(this.props)
     // 读取缓存
     let rawdata = await AsyncStorage.getItem('history');
     if(rawdata != null){

@@ -5,21 +5,19 @@ import { Banner } from 'react-native-paper';
 export default class LoginHint extends React.Component {
   state = {
     visible: true,
-    isLogin: false,
   };
 
   render() {
     return (
-      !this.state.isLogin &&
       <Banner
         visible={this.state.visible}
         actions={[
           {
-            label:'再用用看',
+            label: '再看看',
             onPress: () => this.setState({ visible: false }),
           },
           {
-            label: '立即登录',
+            label: '马上登录',
             onPress: () => this.setState({ visible: false }),
           },
         ]}
@@ -33,7 +31,7 @@ export default class LoginHint extends React.Component {
           />
         }
       >
-        登录之后可以体验更多功能呢
+        There was a problem processing a transaction on your credit card.
       </Banner>
     );
   }

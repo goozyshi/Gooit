@@ -450,13 +450,38 @@ const user = [{
 	type: 'C'
 }];
 
-
+const customColor = [{
+  color: '#F4A7B9',
+  name: '一斥染',
+  remark: 'IKKONZOME'
+},{
+  color: '#4E4F97',
+  name: '红褂花',
+  remark: 'BENIKAKEHANA'
+},{
+  color: '#E2943B',
+  name: '朽叶',
+  remark: 'KUCHIBA'
+},{
+  color: '#91AD70',
+  name: '柳染',
+  remark: 'YANAGIZOME'
+},{
+  color: '#66BAB7',
+  name: '水浅葱',
+  remark: 'MIZUASAGI'
+},{
+  color: '#005CAF',
+  name: '瑠璃',
+  remark: 'RURI'
+}]
 const { height, width } = Dimensions.get('window');
 module.exports = {
 	_height:height,
 	_width:width,
-	ResisterFour: ResisterFour,
-	ResisterFive: ResisterFive,
-	exdata: exdata,
-	user: user,
+	ResisterFour,
+	ResisterFive,
+	exdata,
+  user,
+  customColor
 }
