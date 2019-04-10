@@ -4,9 +4,9 @@ import {
   TouchableOpacity,
   FlatList,
   View,
+  Image,
   Text
 } from 'react-native';
-import { Card } from 'react-native-paper';
 import { _height, _width } from '../../common/config';
 class BasicList extends Component {
   state = {
@@ -67,12 +67,12 @@ class BasicList extends Component {
 const BasicItem = (props) => (
   <View style={styles.cardwrapper}>
     <TouchableOpacity onPress={props.onPress} style={styles.container}>
-      <Card style={styles.card}>
-        <Card.Cover 
+      <View style={styles.card}>
+        <Image 
           source={{ uri: props.img_url }}
           style={styles.banner}
           />
-      </Card>
+      </View>
     </TouchableOpacity>
   </View>
 );

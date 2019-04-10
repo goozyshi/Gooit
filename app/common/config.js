@@ -374,7 +374,7 @@ const ResisterFive = [
 ];
 
 /**
- * 列表数据
+ * 课程列表数据
  */
 const exdata = 
 [{
@@ -450,6 +450,9 @@ const user = [{
 	type: 'C'
 }];
 
+/**
+ * 自定义颜色
+ */
 const customColor = [{
   color: '#F4A7B9',
   name: '一斥染',
@@ -475,6 +478,87 @@ const customColor = [{
   name: '瑠璃',
   remark: 'RURI'
 }]
+
+/**
+ * 工具栏数据
+ */
+const tools_data = [{
+  name: '电阻色环',
+  id: 0,
+  color: '#17807d',
+  icon: 'calculator'
+},{
+  name: '贴片电阻',
+  id: 1,
+  color: '#ddd',
+  icon: 'building'
+},{
+  name: '电感色环',
+  id: 2,
+  color: '#ddd',
+  icon: 'calculator'
+},{
+  name: '滤波器',
+  id: 3,
+  color: '#ddd',
+  icon: 'file-audio-o'
+},{
+  name: 'NE555',
+  id: 4,
+  color: '#ddd',
+  icon: 'microchip'
+},{
+  name: '布尔逻辑门',
+  id: 5,
+  color: '#ddd',
+  icon: 'file-code-o'
+},{
+  name: 'ASCII表',
+  id: 6, 
+  color: '#ddd',
+  icon: 'file-word-o'
+},{
+  name: '接口引脚',
+  id: 7,
+  color: '#ddd',
+  icon: 'file-text-o'
+},{
+  name: '74系列IC',
+  id: 8,
+  color: '#ddd',
+  icon: 'microchip'
+},{
+  name: '更多',
+  id: 9,
+  color: '#ddd',
+  icon: 'plus'
+}]
+
+const BannerList = [{
+  img: 'http://file.elecfans.com/web1/M00/82/F0/o4YBAFxH4-6AHRwKAADT8LmsT1g256.jpg',
+  title: '人工智能区块链或将能改变未来的资产管理',
+  url: 'https://visualgo.net/zh'
+},{
+  img: 'http://file.elecfans.com/web1/M00/83/6E/pIYBAFxH4gWAG3QBAASVKQO5ec4817.png',
+  title: 'DRAM价格有望止跌回稳',
+  url: 'http://www.elecfans.com/consume/856924.html'
+},{
+  img: 'http://file.elecfans.com/web1/M00/83/6E/pIYBAFxH4SmAb9vOAABnadHw0Ms248.jpg',
+  title: '苹果明年将完全放弃LCD显示屏',
+  url: 'http://www.elecfans.com/xianshi/jishu/20190123856916.html'
+},{
+  img: 'http://file.elecfans.com/web1/M00/82/FB/o4YBAFxILuiAS2kvAAHu0Ru_qf0285.jpg',
+  title: '华为领先完成5G技术第三阶段测试',
+  url: 'http://www.elecfans.com/tongxin/rf/20190123857279.html'
+},{
+  img: 'http://file.elecfans.com/web1/M00/83/78/pIYBAFxIK96APIeWAAFUlBQoHes111.png',
+  title: '苹果拒绝与高通和解',
+  url: 'http://www.elecfans.com/d/857255.html'
+},{
+  img: 'http://file.elecfans.com/web1/M00/82/FA/o4YBAFxIKcWAXRNiAAECOIPxJL8916.png',
+  title: '松下ALPHA阿尔法洗衣机卓越洗涤性能 ',
+  url: 'http://www.elecfans.com/video/20190123857244.html'
+}]
 const { height, width } = Dimensions.get('window');
 module.exports = {
 	_height:height,
@@ -483,5 +567,7 @@ module.exports = {
 	ResisterFive,
 	exdata,
   user,
-  customColor
+  customColor,
+  tools_data,
+  BannerList
 }

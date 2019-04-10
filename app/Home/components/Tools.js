@@ -6,40 +6,10 @@ import {
   TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { _height, _width } from '../../common/config';
+import { _height, _width, tools_data } from '../../common/config';
 class Tools extends Component {
   state = {
-    tools_data: [{
-      name: '电阻色环',
-      id: 0
-    },{
-      name: '贴片电阻',
-      id: 1
-    },{
-      name: '电感色环',
-      id: 2
-    },{
-      name: '滤波器',
-      id: 3
-    },{
-      name: 'NE555',
-      id: 4
-    },{
-      name: '布尔逻辑门',
-      id: 5
-    },{
-      name: 'ASCII表',
-      id: 6
-    },{
-      name: '接口引脚定义',
-      id: 7
-    },{
-      name: '7400系列IC',
-      id: 8
-    },{
-      name: '更多',
-      id: 9
-    }]
+    tools_data: tools_data
   }
   render(){
     const { navigate } = this.props.navigation;
@@ -49,9 +19,9 @@ class Tools extends Component {
         { tools_data.map((item,index)=>(
             <View key={index}>
               <TouchableOpacity onPress={()=>navigate('Caculator', {'name': item.name})}>
-                <View style={styles.tag}>
-                  <Icon name="microchip" size={48} color="#24936E" />
-                  <Text style={styles.name}>
+                <View style={[styles.tag, {borderColor: item.color} ]}>
+                  <Icon name={item.icon} size={28} color={item.color} />
+                  <Text style={{marginTop: 4, fontWeight: '600', fontSize: 12, color: item.color}}>
                     {item.name}
                   </Text>
                 </View>
@@ -67,6 +37,7 @@ class Tools extends Component {
 const styles = StyleSheet.create({
   container: {
     marginTop: 5,
+    padding: 5,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
@@ -75,15 +46,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   tag: {
-    flex: 1,
-    width: _width * 0.16,
+    width: _width * 0.17,
+    height: _width * 0.17,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 10,
-  },
-  name: {
-    marginTop: 5,
-    fontSize: 13,
+    margin: 5,
+    padding: 8,
+    borderWidth: 2,
+    borderRadius: 200,
   }
 });
 export default Tools;

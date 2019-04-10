@@ -14,7 +14,7 @@ class OSList extends Component {
       img_url: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=725421707,3293209347&fm=26&gp=0.jpg',
       title: 'Linux 入门基础教程'
     },{
-      img_url: 'https://ww2.mathworks.cn/help/examples/matlab_featured/win64/MatlabLogoExample_08.png',
+      img_url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554890546333&di=6615c5aa8ac74c83d8ef49dcb623f75c&imgtype=0&src=http%3A%2F%2Ffile.elecfans.com%2Fweb1%2FM00%2F84%2FDB%2Fo4YBAFxmGveANXy-AAIY6C_D0Ys669.png',
       title: 'Matlab入门'
     },{
       img_url: 'https://dn-simplecloud.shiyanlou.com/1499681177825.png',

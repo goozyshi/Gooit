@@ -79,9 +79,10 @@ const styles = StyleSheet.create({
     lineHeight: 32,
   },
   colorfulitem: {
-    marginHorizontal: 40,
-    marginVertical: 5,
-    padding: 15,
+    marginLeft: -40,
+    marginRight: 20,
+    marginVertical: 1,
+    padding: 10,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,

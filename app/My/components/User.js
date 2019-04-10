@@ -55,7 +55,7 @@ class User extends Component {
       </TouchableOpacity>
       )
       :
-      <ActivityIndicator  size="large" color="#072" />
+      <ActivityIndicator  size="large" color="#24292e" />
     )
   }
 
@@ -114,62 +114,66 @@ class User extends Component {
     const { isLogin, wait, selectedUser, selectedDepartment, img} = this.state;
     return (
       <View style={styles.forebox}>
+          <Image source={{uri: isLogin? this.state.img :'https://static.zcool.cn/git_z/z/images/boy.png'}} style={styles.avatar}/>
           <View style={styles.wrapper}>
-            <Image source={{uri: isLogin? this.state.img :'https://static.zcool.cn/git_z/z/images/boy.png'}} style={styles.avatar}/>
-            <View>
+            <View style={{margin: 10}}>
               <Text style={styles.name}>{isLogin? selectedUser : '尚未登录'}</Text>
               <Text style={styles.sub}>{isLogin? selectedDepartment : '点击右侧登陆吧'}</Text>
             </View>
+            <View>
+              <TouchableOpacity onPress={this._showDialog}>
+                <Text style={isLogin? styles.exit: styles.login}>{isLogin? '退出' : '登录'}</Text>
+                <Portal>
+                  <Dialog
+                    visible={this.state.visible}
+                    onDismiss={this._hideDialog}
+                  >
+                    <Dialog.Title>{wait? '请稍后' :(isLogin? '切换用户': '选择用户')}</Dialog.Title>
+                    <Dialog.Content>{this._showUser()}</Dialog.Content>
+                    { !wait && <Dialog.Actions><Button onPress={()=>this._confirmExit()}>{isLogin? '确认退出' : '取消'}</Button></Dialog.Actions> }
+                  </Dialog>
+                </Portal>
+              </TouchableOpacity>
+            </View>
           </View>
-          <TouchableOpacity onPress={this._showDialog}>
-            <Text style={isLogin? styles.exit: styles.login}>{isLogin? '退出' : '登录'}</Text>
-            <Portal>
-              <Dialog
-                visible={this.state.visible}
-                onDismiss={this._hideDialog}
-              >
-                <Dialog.Title>{wait? '请稍后' :(isLogin? '切换用户': '选择用户')}</Dialog.Title>
-                <Dialog.Content>{this._showUser()}</Dialog.Content>
-                { !wait && <Dialog.Actions><Button onPress={()=>this._confirmExit()}>{isLogin? '确认退出' : '取消'}</Button></Dialog.Actions> }
-              </Dialog>
-            </Portal>
-          </TouchableOpacity>
       </View>
     )
   }
 }
 const styles = StyleSheet.create({
   forebox: {
-    height: _height * 0.2,
-    flexDirection: 'row',
+    height: _height*0.25,
+    justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'space-between',
     backgroundColor: '#fff',
     marginBottom: 15,
     borderColor: '#ddd',
     borderBottomWidth: 1
   },
   wrapper:{
+    width: _width*0.75,
+    marginTop: 10,
+    flexDirection: 'row', 
     alignItems: 'center',
-    flexDirection: 'row'    
+    justifyContent: 'space-around',
   },
   avatar: {
-    height: 96,
-    width: 96,
+    height: 120,
+    width: 120,
     borderRadius: 80,
-    borderWidth: 5,
-    borderColor: 'pink',
+    borderWidth: 1,
+    borderColor: '#999',
     marginLeft: 20,
     marginRight: 15
   },
   name: {
     color: '#333',
     fontWeight: '600',
-    fontSize: 24,
+    fontSize: 22,
   },
   sub: {
     marginTop: 10,
-    fontSize: 18, 
+    fontSize: 16, 
     color: '#666',
   },
   login_user: {
