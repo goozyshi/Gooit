@@ -11,7 +11,7 @@ class App extends Component {
     index: 2,
     routes: [
       { key: 'home', title: '首页', icon: 'home' },// color定义底部tab颜色
-      { key: 'task', title: '任务', icon: 'assignment' },
+      { key: 'task', title: '项目中心', icon: 'assignment' },
       { key: 'my', title: '我的', icon: 'account-circle' },
     ],
     customcolor: '#332'

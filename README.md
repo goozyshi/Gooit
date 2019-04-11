@@ -5,5 +5,5 @@ react-native run-android
 ```
 # 2. 展示
 ## 概览
-![](./demoImg/preview.png)
+![](./paperimg/ui.png)
 

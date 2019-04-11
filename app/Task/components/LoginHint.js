@@ -31,7 +31,7 @@ export default class LoginHint extends React.Component {
           />
         }
       >
-        There was a problem processing a transaction on your credit card.
+        登录之后才能使用项目管理功能哦
       </Banner>
     );
   }

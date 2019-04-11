@@ -20,7 +20,7 @@ import LoginHint from './components/LoginHint';
 
 class TaskScreen extends Component {
   static navigationOptions = {
-    title: '任务',
+    title: '项目',
     headerStyle: {
       backgroundColor: '#24292e',
     },
@@ -58,7 +58,7 @@ class TaskScreen extends Component {
       this.state.type === '' ? <LoginHint/>
         :
         <View style={styles.container}>
-          <Text style={styles.title}>{ this.state.type === '老师A' ? '已发布的任务':'任务列表' }</Text>
+          <Text style={styles.title}>{ this.state.type === '老师A' ? '已发布的项目':'项目列表' }</Text>
           { this.state.loadding && <TaskList navigation={this.props.navigation} type={this.state.type}/> }
           { this.state.type === '老师A' && 
               <FAB
