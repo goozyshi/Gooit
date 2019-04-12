@@ -14,7 +14,7 @@ export default class TaskList extends Component {
   };
 
   getRemoteData(){
-    fetch('http://129.204.128.185:3000/users')
+    fetch('http://129.204.128.185:3000/project')
     .then((response) => response.json())
     .then((responseJson) => {
       let temp =  [...responseJson].reverse()
@@ -34,7 +34,7 @@ export default class TaskList extends Component {
     }
     ToastAndroid.show('删除成功', ToastAndroid.SHORT);
     let index = this.state.dataList.length -1 - this.state.rowIndex;
-    fetch('http://129.204.128.185:3000/users/' + index, {
+    fetch('http://129.204.128.185:3000/project/' + index, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',

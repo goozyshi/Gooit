@@ -66,7 +66,7 @@ export default class TaskDetail extends Component {
     this.setState({announce_date: date},()=>{
       params['announce'] = this.state.announce;
       params['announce_date'] = this.state.announce_date;
-      fetch('http://129.204.128.185:3000/users/' + index, {
+      fetch('http://129.204.128.185:3000/project/' + index, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',

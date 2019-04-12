@@ -34,7 +34,7 @@ Native App开发模式的优点在于编写出来的代码直接依托于手机�
 
 1.2.2 Web App 开发模式
 
-即网页开发模式,通过前端开发人员使用HTML + CSS + JS编写页面并将其部署在相应的务器上,而后用户直接通过浏览器访问即可使用，这一点比较吸引用户。Web App 可通过浏览器直接访问的特点使得其具备跨Android、iOS双平台的能力，而页面的更新维护也能通过前端人员的代码重写调试后重新部署到服务器上来实现，因此在解决了用户手机端缓存问题的前提下，它拥有着最快的更新速度同时也便于维护。也正是Web App开发出来的应用直接在浏览器上运行，在网络不稳定页面访问速度慢的情况下，用户体验非常糟糕，而在网络正常的情况下也可能存在网站优化不佳消耗用户流量的隐患。另外，通过使用HTML5中自带的API实现出来的Web App，不是一个独立的App，无法发布到AppStore上，其功能也因为无法充分调用系统APi而受到了极大的限制。
+即网页开发模式,通过前端开发人员使用HTML + CSS + JS编写页面并将其部署在相应的务器上,而后用户直接通过浏览器访问即可使用，这一点比较吸引用户。Web App 可通过浏览器直接访问的特点使得其具备跨Android、iOS双平台的能力，而页面的更新维护也能通过前端人员的代码重写调试后重新部署到服务器上来实现，因此在解决了用户手机端缓存问题的前提下，它拥有着最快的更新速度同时也便于维护。也正是Web App开发出来的应用直接在浏览器上运行，在网络不稳定页面访问速度慢的情况下，用户体验非常糟糕，而在网络正常的情况下也可能存在网站优化不佳消耗用户流量的隐患。另外，通过使用HTML5中自带的API实现出来的Web App，不是一个独立的App，无法发布到AppStore上，其功能也因为无法充分调用系统API而受到了极大的限制。
 
 
 1.2.3 Hybrid App 开发模式
@@ -146,19 +146,246 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
 ![](./paperimg/communicate.png)
 - 上一级页面传递数据给下一级页面时，可以基于官方提供的props属性便捷而快速的传递。
 - 下一级页面在返回数据给上一级页面时，则可以通过父组件的props中传递一个回调函数，通过调用回调函数从而改变父组件的state。
-- 在多级页面跳转时，页面数据的传递使用props会带来许多的不便，因为props只能一个页面一个页面的进行传递，效率低下。这个时候我们可以通过 DeviceEventEmitter API进行相关事件的监听绑定或者使用 react-navigation 第三方库在页面跳转时提供的 setPrams 和 getParams方法。
+- 在多级页面跳转时，页面数据的传递使用props会带来许多的不便，因为props只能一个页面一个页面的进行传递，效率低下。这个时候我们可以通过 DeviceEventEmitter API进行相关事件的监听绑定或者使用 react-navigation 第三方库在页面跳转时提供的 setPrams 和 getParams方法进行参数的设置与获取。
 
 2.5 本章小结
 在上一章的需求基础上,对程序进行了总体的页面设计、功能模块划分以及将业务逻辑抽象成流程图并将工程文件以业务需求进行归类。这对之后程序的具体设计以及功能细分来说是重要的设计蓝图。
 
-## 三.辅助程序的功能模块以及具体实现
+## 三.程序客户端的功能模块以及具体实现
 3.1 元器件查询功能模块的具体设计与实现
 
-3.2 项目跟踪管理功能模块的具体设计与实现
+3.2 实验室用计算器功能的具体设计与实现
 
-3.3 用户注册登录功能模块的具体设计与实现
+3.3 项目跟踪管理功能模块的具体设计与实现
+
+3.4 用户注册登录功能模块的具体设计与实现
 
 ## 四. ReactNative 的服务器端处理
+在上一章我们已经实现并介绍了程序的各大功能模块。但程序内的数据不能只单靠手动组件的state进行更新，一来操作繁琐，二则过多的组件所形成的庞大的state树不利于维护。因此程序的绝大部分数据都是从服务器动态获取更新，本章也将从服务器端的开发角度来展开具体介绍。
+
+### 4.1 服务器语言与接口规范
+4.1.1 Node.js
+
+Node.js (以下称Node)是一个基于 Google V8 引擎的服务器端 JavaScript 运行环境。我们都知道，浏览器可以充当一个解析器去解析HTML文件里的 JS 代码 ,而对于独立运行的JS文件来说，Node 就是它的解析器。之所以选择Node.JS作为该项目的服务器语言而非其他诸如Ruby、Python、PHP的主流语言，是因为Node具备了以下优势。
+- 统一的开发语言：Node也是由 JavaScript 语言开发而来，前面我们已经知道 JS 可以用来开发ReactNative应用，这样一来，掌握了JS就可以开发前后端不同平台不同场景下的程序，方便快捷。
+- 性能高：Node 使用了一个事件驱动、非阻塞式 I/O 的模型，来代替传统服务器语言中的多线程。在使用强大的Google V8引擎的同时，它还可以使用效率更高的libev和libeio库支持事件驱动和异步I/O,使其轻量又高效。
+- 跨平台与活跃的社区： 一方面Node几乎支持所有现有的操作系统平台，如Windows、macOS、Linux，这是由于Node的底层语言是由C/C++语言进行编写的所以很容易做到跨平台。另外一方面，Node拥有着庞大的使用群体以及活跃的社区，不论是新手学习还是老手开发，都有着很好的使用体验。
+
+4.1.2 RESTful 接口规范
+
+RESTful API设计规范是Roy Fielding 博士(http://en.wikipedia.org/wiki.Roy_Fielding)在2000年的博士论文中所提及的一种表述性状态转移的软件架构风格。表述性状态转移是一种架构约束条件和原则，根据RESTful 规范设计出来的一种网址则对应一种资源。例如：
+- http://localhost:3000/search： 表示搜索API
+- http://localhost:3000/login: 表示登录用API
+
+而面对同一资源的不同操作，则通过HTTP协议的常用方法来区分。常用的HTTP协议方法如下：
+- GET：请求服务器获取指定资源，即进行查询操作
+- POST：请求服务器新建资源，即添加操作
+- PUT：请求服务器更新资源，即进行更新操作
+- DELETE： 请求服务器删除资源，即进行删除操作
+
+以项目中项目跟踪管理模块的项目接口为例，介绍以RESTful设计出来的API接口命名：
+- http://localhost:3000/project GET ：查询已发布的所有项目
+- http://localhost:3000/project POST：新建项目
+- http://localhost:3000/project/id PUT ：更新已有的指定id项目
+- http://localhost:3000/project/id DELETE ：删除已有的指定id项目
+
+将上述本地localhost转为腾讯云服务器地址，并使用Postman发起GET请求,返回已发布项目数据:
+
+![](./paperimg/project_api.png)
+
+## 4.2 使用Express框架实现服务器端接口
+Express 开发框架是目前而言最稳定、最强大而且使用最为广泛的轻量级Node框架。项目中使用以下命令创建服务器端Node项目。
+```js
+npm install express-generator --g // 安装express框架
+express --ejs GooSSR // 使用ejs模板引擎新建服务器端项目GooSSR
+```
+![](./paperimg/goossr.png)
+### 4.2.1 Express 项目结构介绍
+生成的名为GooSSR 的Express项目目录结构如下表
+|目录/文件|说明|
+|:--:|:--:|
+|bin|可执行文件，配置和启动工程入口|
+|db|MySQL数据库相关文件|
+|public|静态资源文件|
+|routes|路由目录|
+|views|模板文件，本项目使用ejs模板|
+|app.js|入口文件|
+|package.json|工程配置文件，包含工程信息（版本号）及第三方库依赖关系|
+GooSSR 项目作为服务器端为ReactNative 程序提供API，主要涉及到的目录及文件如下。
+- public 目录： 用于存放图片、pdf等静态资源 
+- routes 目录：用于实现路由API
+- app.js 文件：配置整个项目，包括路由控制
+
+以下是 app.js 文件中的路由控制。
+```js
+// 引入接口文件
+var indexRouter = require('./routes/index');
+var projectRouter = require('./routes/project');
+var searchRouter = require('./routes/search');
+var loginRouter = require('./routes/login');
+
+// 设置路由
+app.use('/', indexRouter);  // 路由'/'路径的请求
+app.use('/project', projectRouter);  // 路由'/project'路径的请求 
+app.use('/login', loginRouter);  // 路由'/login'路径的请求 
+app.use('/search', searchRouter);  // 路由'/search'路径的请求 
+app.use('/search/:id', searchRouter);  // 路由'/search/*'路径的请求 
+```
+### 4.2.2 实现具体数据接口
+以项目跟踪管理功能中的项目API为例。目标文件为routes目录下的 project.js 文件。
+ - 查询项目列表
+
+ 设置初始数据列表为一个名为 task 的空数组，添加项目查询API，使用HTTP协议的GET方法。
+ ```js
+  var task = []; // 初始项目数据
+
+  /* 获取项目数据接口 */
+  project.get('/', function(req, res, next) {
+    res.send(JSON.stringify(task));
+  });
+ ```
+ - 新建项目接口
+
+ 添加新建项目API，新建操作通过使用HTTP的POST方法实现。
+
+ ```js
+  /* 新建项目接口 */
+  project.post('/', function(req, res, next) {
+    task = task.concat(req.body);
+    res.send(JSON.stringify(task));
+  });
+```
+- 更新项目接口
+
+该接口使用HTTP协议的PUT方法，通过接收指定id进行更新操作
+```js
+  /* 更新项目接口 */
+  project.put('/:id', function(req, res, next) {
+    for (var i = 0; i < task.length; i++) {
+      if(i === parseInt(req.params.id)) {
+        task[i] = req.body
+      }
+    }
+    res.send(JSON.stringify(task));
+  });
+```
+- 删除项目接口
+
+同理，通过指定的id并通过HTTP协议的DELETE方法进行删除操作。
+```js
+  /* 删除 */
+  project.delete('/:id', function(req, res, next) {
+    for (var i = 0; i < task.length; i++) {
+      if(i === parseInt(req.params.id)) {
+        task.splice(i, 1);
+      }
+    }
+    res.send("success");
+  });
+```
+
+### 4.2.3 结合 MySQL 实现注册登录接口
+
+MySQL是Oracle公司开源的一个广泛应用的轻量级关系型数据库管理系统，其关联数据库通过将数据保存在不同的表中，而不是将所有数据放在一个大仓库内，就增加了速度并提高了灵活性。这也是项目选择MySQL作为相应数据库的原因。
+以用户的注册登录为例，具体介绍结合 MySQL 数据库实现的步骤。
+- 开启服务并新建一个表
+
+  项目使用 phpStudy2014 作为 MySQL 的客户端开启服务，之后新建一个新的数据库 userdb,新建一个表user，设置字段如下。
+
+  ![](./paperimg/table.png)
+
+- 在Express项目中配置MySQL
+  
+   添加数据库操作
+  ```js
+    SEARCH: 'SELECT * FROM User', // 查找
+    INSERT: 'INSERT INTO User(uid,userName) VALUES(?,?)', // 插入
+  ```
+  创建一个链接池并返回响应数据
+  ```js
+    var pool = mysql.createPool( dbConfig.mysql );
+    var responseJSON = function (res, ret) {
+      (typeof ret === 'undefined')? res.json({ code: '-200', msg: '操作失败'}):res.json(ret);
+    };
+  ```
+- 注册接口
+  
+  根据请求传递过来的参数，判断数据库中是已经存在该字段，若不存在则插入参数到数据库中并返回注册成功。
+  ```js
+  connection.query(userSQL.SEARCH, function (err, res) {
+    var isTrue = false;
+    //查询用户是否已存在
+    if(res){ 
+      for (var i=0;i<res.length;i++) {
+        if(res[i].uid == UserName && res[i].userName == Password) {
+          isTrue = true;
+        }
+      }
+    } 
+    ...
+    // 省略
+    // 用户不存在插入数据并返回提示
+    connection.query(userSQL.INSERT, [param.uid,param.name], function (err, result) {
+      if(result) {
+        result = {
+              msg: '注册成功'
+          };
+        }
+  });
+  }
+  ```
+- 登录接口
+
+根据请求传递的用户id以及用户名字（充当密码）进一步查询数据库，若用户已存在，返回登录成功的 succeed 标志。
+  ```js
+  login.get('/login',function (req, res, next) {
+    connection.query(userSQL.SEARCH, function (err, res, result) {
+      var isTrue = false;// 是否登录
+
+      //判断用户id和用户名一致则正常登录
+      if(res){ 
+        for (var i=0;i<res.length;i++) {
+          if(res[i].uid == UserName && res[i].userName == Password) {
+        isTrue = true;
+        }
+      }
+      }
+      ...
+      // 省略
+      // 登录成功记载用户信息
+      if(isTrue) {
+        data={
+          userInfo: {
+            uid: UserName,
+            userName: Password
+          }
+        }
+      } 
+    
+      if(result) {
+        result = {
+          code: 200,
+          msg: 'succeed'
+        };
+        data.result = result;
+      }
+
+    // 返回用户登录信息
+    responseJSON(_res, data);
+    });
+  });
+  ```
+  - 完成接口设计
+
+  postman 上发求 注册/登录 请求接收到的服务器响应。
+
+  ![](./paperimg/reg_log.png)
+  MySQL上的用户user表上的注册信息
+
+  ![](./paperimg/sql_user.png)
+
+### 4.3 本章小结
+截止本章，我们不仅实现了程序在课题需求下的基本页面布局和交互逻辑，还使用Node.JS+ Express + MySQL 这一轻量级组合去实现服务器端接口设计,为程序添加和完善网络交互和数据存储的能力，使得程序更加完整。
 
 
 

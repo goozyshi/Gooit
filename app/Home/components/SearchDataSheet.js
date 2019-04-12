@@ -67,8 +67,6 @@ class SearchDataSheet extends Component {
 
   // 发起请求
   fetchData(id) {
-    // return fetch('http://192.168.0.93:3000/search') // bgy
-    // return fetch(`http://172.29.4.240:3000/search/${id}`) // szu
     return fetch(`http://129.204.128.185:3000/search/${id}`) // ssr
       .then(response => response.text())
       .then((responseText) => {

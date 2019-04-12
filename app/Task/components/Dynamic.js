@@ -1,28 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ListView, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { stepIndicatorStyles } from '../../common/config';
+
 import StepIndicator from 'react-native-step-indicator';
 
-const stepIndicatorStyles = {
-  stepIndicatorSize: 30,
-  currentStepIndicatorSize:40,
-  separatorStrokeWidth: 3,
-  currentStepStrokeWidth: 5,
-
-  stepStrokeCurrentColor: '#fe7013',
-  separatorFinishedColor: '#53c68c',//已完成的线的颜色
-  separatorUnFinishedColor: '#53c68c',
-  stepIndicatorFinishedColor: '#53c68c',// 已完成的节点颜色
-  stepIndicatorUnFinishedColor: '#53c68c',
-  stepIndicatorCurrentColor: '#ffffff',
-  stepIndicatorLabelFontSize: 15,
-  currentStepIndicatorLabelFontSize: 15,
-  stepIndicatorLabelCurrentColor: '#000000',
-  stepIndicatorLabelFinishedColor: '#ffffff',
-  stepIndicatorLabelUnFinishedColor: 'rgba(255,255,255,0.5)',
-  labelColor: '#666666',
-  labelSize: 15,
-  currentStepLabelColor: '#fe7013'
-}
 
 export default class Dynamic extends Component {
 

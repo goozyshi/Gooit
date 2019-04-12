@@ -60,7 +60,7 @@ export default class Edit_Progress extends Component {
       progress: temp_progress,
     },()=>{
       params['progress'] = this.state.progress
-      fetch('http://129.204.128.185:3000/users/' + index, {
+      fetch('http://129.204.128.185:3000/project/' + index, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',

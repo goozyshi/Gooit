@@ -25,7 +25,7 @@ export default class PDFView extends React.Component {
   };
   render() {
       let pdf_uri = this.props.navigation.getParam('pdfUrl', '');
-      const source = {uri:`${pdf_uri} `,cache:true};
+      const source = {uri:`${pdf_uri}`,cache:true};
       return (
           <View style={styles.container}>
               <Pdf source={source} style={styles.pdf}/>

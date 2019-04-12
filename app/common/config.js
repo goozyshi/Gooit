@@ -534,6 +534,9 @@ const tools_data = [{
   icon: 'plus'
 }]
 
+/**
+ * 轮播数据
+ */
 const BannerList = [{
   img: 'http://file.elecfans.com/web1/M00/82/F0/o4YBAFxH4-6AHRwKAADT8LmsT1g256.jpg',
   title: '人工智能区块链或将能改变未来的资产管理',
@@ -559,7 +562,33 @@ const BannerList = [{
   title: '松下ALPHA阿尔法洗衣机卓越洗涤性能 ',
   url: 'http://www.elecfans.com/video/20190123857244.html'
 }]
+
+/**
+ * 动态样式
+ */
+const stepIndicatorStyles = {
+  stepIndicatorSize: 30,
+  currentStepIndicatorSize:40,
+  separatorStrokeWidth: 3,
+  currentStepStrokeWidth: 5,
+  stepStrokeCurrentColor: '#fe7013',
+  separatorFinishedColor: '#53c68c',//已完成的线的颜色
+  separatorUnFinishedColor: '#53c68c',
+  stepIndicatorFinishedColor: '#53c68c',// 已完成的节点颜色
+  stepIndicatorUnFinishedColor: '#53c68c',
+  stepIndicatorCurrentColor: '#ffffff',
+  stepIndicatorLabelFontSize: 15,
+  currentStepIndicatorLabelFontSize: 15,
+  stepIndicatorLabelCurrentColor: '#000000',
+  stepIndicatorLabelFinishedColor: '#ffffff',
+  stepIndicatorLabelUnFinishedColor: 'rgba(255,255,255,0.5)',
+  labelColor: '#666666',
+  labelSize: 15,
+  currentStepLabelColor: '#fe7013'
+}
+
 const { height, width } = Dimensions.get('window');
+
 module.exports = {
 	_height:height,
 	_width:width,
@@ -569,5 +598,6 @@ module.exports = {
   user,
   customColor,
   tools_data,
-  BannerList
+  BannerList,
+  stepIndicatorStyles
 }

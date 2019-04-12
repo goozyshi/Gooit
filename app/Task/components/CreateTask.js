@@ -75,7 +75,7 @@ class CreateTask extends Component {
       { (pre_data.date_over !== date_over ) && (temp_body +='修改了截止时间为'+ date_over+ '\n') }
       temp_progress.push({title: type+'修改了项目配置', date: temp_date, body: temp_body})
     }else {
-      temp_progress.push({title: type+'创建了项目'+title, date: temp_date})
+      temp_progress.push({title: type+'创建了项目', date: temp_date})
     }
   }
 
@@ -104,7 +104,7 @@ class CreateTask extends Component {
       }
       if(this.props.navigation.state.params.data !== undefined){
         let index = this.props.navigation.state.params.data.id
-        fetch('http://129.204.128.185:3000/users/' + index, {
+        fetch('http://129.204.128.185:3000/project/' + index, {
           method: 'PUT',
           headers: {
             'Accept': 'application/json',
@@ -117,7 +117,7 @@ class CreateTask extends Component {
           this.props.navigation.pop(2);
         })
       }else{
-        fetch('http://129.204.128.185:3000/users', {
+        fetch('http://129.204.128.185:3000/project', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
