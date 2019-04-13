@@ -152,13 +152,154 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
 在上一章的需求基础上,对程序进行了总体的页面设计、功能模块划分以及将业务逻辑抽象成流程图并将工程文件以业务需求进行归类。这对之后程序的具体设计以及功能细分来说是重要的设计蓝图。
 
 ## 三.程序客户端的功能模块以及具体实现
-3.1 元器件查询功能模块的具体设计与实现
+### 3.1 元器件查询功能模块的具体设计与实现
 
-3.2 实验室用计算器功能的具体设计与实现
+元器件查询功能模块具体细分为四个部分：搜索页面、结果展示列表页面、参数列表页面以及详情PDF页面。接下来则详细介绍每个部分的具体设计
 
-3.3 项目跟踪管理功能模块的具体设计与实现
+3.1.1 搜索页面
 
-3.4 用户注册登录功能模块的具体设计与实现
+搜索页面的具体设计思路：
+ - 在页面顶部设计一个搜索框。其中搜索框由一个输入框（即TextInput组件）以及一个可点击的搜索按钮（TouchableOpacity组件）组成。
+ ```js
+ // 输入框
+  <TextInput
+    style={styles.input}
+    placeholder={'请输入元器件型号'}
+    value={val}
+    autoFocus={true}
+    onChangeText={val => this.setState({val: val})}
+  />
+
+  // 搜索按钮 
+  <View style={styles.searchBtn}>
+    <TouchableOpacity
+      activeOpacity={0.4}
+      onPress={() => this._onSubmitEditing()}
+      <Text style={{color: '#fff'}}>搜索</Text>
+    </TouchableOpacity>
+  </View>
+ ```
+ - 增加清空输入按钮。当用户输入不为空时，在输入框右侧增加一个可点击的情况按钮。
+ ```js
+  //  用户输入不为空，出现清空按钮，点击后将输入值置为空
+  { (val.length !== 0) && <View style={styles.cancelBtn}>
+    <Icon name="close" size={32} color="#494949" onPress={() => this.setState({val: ''})}/></View>
+  }
+ ```
+ - 进行输入验证。当输入值全为空格时，点击搜索无效并使用 ToastAndroid 组件进行提示。
+ ```js
+    let reg=/^(?!(\s+$))/    //  模式匹配。输入内容不为纯空格
+    if ( val && reg.test(val) ){
+      //提交操作
+      ...
+    }else {
+      ToastAndroid.show("搜索内容不能为空", ToastAndroid.SHORT);
+    }
+ ```
+ - 增加历史记录功能。用户在输入后并进行搜索时，使用 AsyncStorage 组件缓存搜索记录，并增加一个清除历史记录按钮。
+
+ ```js
+  /**
+   * 点击搜索时，使用 AsyncStorage 缓存输入值，
+   * 下次搜索时展示在搜索框下方，点击可直接搜索
+   * 点击清除按钮则移除所有缓存的输入值
+   */
+  <View>
+    <View style={styles.historyheader}>
+      <Text style={styles.headline}>历史记录</Text>
+      <TouchableOpacity onPress={()=>this.setState({history: []},()=>{AsyncStorage.removeItem('history')})}>
+        <Text style={styles.cleartxt}>清除</Text>
+      </TouchableOpacity>
+    </View>
+
+    // 历史记录展示
+    <Viesw style={styles.historybox}>
+      { history.map((item, index)=>
+      // 点击直接搜索
+      <TouchableOpacity key={index} onPress={()=>this.handleChange(item)}>
+        <Text style={styles.historytext}>{item}</Text>
+      </TouchableOpacity>
+      )}
+    </Viesw>
+  </View>
+ ```
+3.1.2 结果列表页面
+结果列表页的具体设计思路。
+- 发起请求。点击搜索后使用 fetch API 发起GET请求，若服务器响应的数据为空，则返回提示。
+```js
+  // 发起请求
+  fetchData(id) {
+    return fetch(`http://129.204.128.185:3000/search/${id}`) // ssr
+      .then(response => response.text())
+      .then((responseText) => {
+        const rawData = responseText;
+        return rawData;// 返回字符串便于缓存
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  ...
+
+  // 提示
+  ToastAndroid.show("搜索内容不能为空", ToastAndroid.SHORT);  
+```
+- 进行数据渲染。接收到的响应数据以列表形式通过 FlatList 组件进行渲染。
+```js
+  <FlatList
+    data={result}
+    keyExtractor={item => item.id}// 使用数据自带id作为item的id
+    showsVerticalScrollIndicator={false}
+    renderItem={({ item }) => 
+      <ResultItem
+        name = {item.name}
+        company = {item.company}
+        desc = {item.desc}
+        data = {item.data}
+        onPress = {()=>navigate('Chip', {
+          name: item.name,
+          data: item,
+          type: val
+        })}
+      />
+    }
+  />
+```
+- 列表项点击跳转。渲染的列表项，在用户点击后可以跳转到该项的参数详情页面
+```js
+  const ResultItem = (props) => {
+    const { name, company, desc, pdf, data, onPress} = props;
+    return(
+        <TouchableOpacity onPress={ onPress } >
+        <View style={styles.result_container}>
+          <Text style={styles.result_name}>{name}</Text>
+          <View style={{justifyContent: 'center'}}>
+            {desc.ch? <Text style={styles.desc}>{desc.ch}</Text> : null}
+            <Text style={styles.desc}>{desc.en}</Text>
+          </View>
+          <Text style={styles.result_corp}>{company}</Text>
+        </View>
+        </TouchableOpacity>
+    )
+  }
+```
+3.1.3 
+
+3.1.4 
+
+3.1.5 元器件查询模块成果展示
+
+各个部分页面展示如图。
+![](./paperimg/yqj_01.png)
+![](./paperimg/yqj_02.png)
+
+
+### 3.2 实验室用计算器功能的具体设计与实现
+
+### 3.3 项目跟踪管理功能模块的具体设计与实现
+
+### 3.4 用户注册登录功能模块的具体设计与实现
 
 ## 四. ReactNative 的服务器端处理
 在上一章我们已经实现并介绍了程序的各大功能模块。但程序内的数据不能只单靠手动组件的state进行更新，一来操作繁琐，二则过多的组件所形成的庞大的state树不利于维护。因此程序的绝大部分数据都是从服务器动态获取更新，本章也将从服务器端的开发角度来展开具体介绍。

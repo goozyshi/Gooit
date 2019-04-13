@@ -58,7 +58,7 @@ class SearchDataSheet extends Component {
           });
         }, 500);
       }else {
-        ToastAndroid.show("找不到你说气不气", ToastAndroid.SHORT);
+        ToastAndroid.show("暂时搜不到该型号的数据手册", ToastAndroid.SHORT);
       }
     } else {
       ToastAndroid.show("搜索内容不能为空", ToastAndroid.SHORT);
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     padding: 20
   },
   result_name: {
-    fontSize: 21,
+    fontSize: 18,
     color: '#333',
     marginRight: 10,
     fontWeight: '500'
@@ -298,12 +298,12 @@ const styles = StyleSheet.create({
   result_corp: {
     marginTop: 20,
     textAlign: 'center',
-    borderRadius: 4,
-    padding: 5,
+    borderRadius: 5,
+    padding: 8,
     fontSize: 10,
     color: '#fff',
     backgroundColor: '#24936E',
-    fontWeight: '500',
+    fontWeight: '600',
   },
   stopLoading: {
     marginTop: 400
