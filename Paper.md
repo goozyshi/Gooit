@@ -57,7 +57,7 @@ ReactNative相比于web开发或者原生开发有以下优势：1) 通过虚拟
   2. 实验室用计算器
     该功能的出发点在于解决本科实验室中一旦人数过多，万用表分配不均而引起的不便。重点设计实现了电阻计算器，主要包括页面设计、操作区域以及计算逻辑。
   3. 项目跟踪管理
-    项目跟踪管理系统在借鉴 Github 的版本管理模式下，主要进行项目发布、项目权限设置、项目列表、项目详情、项目公告、项目实时动态以及项目更新。其中项目的实时动态会用户改动项目时记录下操作人、操作时间以及具体的操作内容。最大程度方便项目管理者与项目负责人间的沟通交流，以及同步了解项目的实时进度。
+    项目跟踪管理系统在借鉴 Github 的版本管理模式下，主要进行项目发布、项目列表、项目详情、项目公告、项目实时动态更新以及项目权限设置。其中项目的实时动态会用户改动项目时记录下操作人、操作时间以及具体的操作内容。最大程度方便项目管理者与项目负责人间的沟通交流，以及同步了解项目的实时进度。
   4. 用户注册登录
     主要子模块包括登录提示、登录页面以及多彩主题。
   5. ReactNative 服务器端处理
@@ -118,6 +118,63 @@ ReactNative相比于web开发或者原生开发有以下优势：1) 通过虚拟
 
 合理的使用第三方库，不但可以提高项目的开发效率，还能解决程序一些在持续迭代过程中出现的性能问题。
 
+其中 common 文件夹内容为程序使用的公共组件，即各模块间频繁使用的共有组件。以页面导航栏的返回按钮（BackButton.js 文件）以及数据配置文件（config.js 文件）为例进行介绍。
+  -  返回按钮
+
+  使用一个点击组件 TouchableOpacity 进行封装，点击后返回上一层，按钮的图标可通过调用时传递的 name 属性进行动态设置。
+  ```js
+  <TouchableOpacity onPress={()=>{props.pop()}} style={{ marginLeft: 10}}>
+    <Icon name={props.name} size={28} color={'#fff'}/>
+  </TouchableOpacity>
+  ```
+  -  数据配置
+  
+  主要存放一些静态配置，包括实验室用计算器的基础数据、用户中心的多彩主题设置等。
+
+  ```js
+  /**
+   * 自定义颜色
+   */
+  const customColor = [{
+    color: '#F4A7B9',
+    name: '一斥染',
+    remark: 'IKKONZOME'
+  },{
+    color: '#4E4F97',
+    name: '红褂花',
+    remark: 'BENIKAKEHANA'
+  },{
+    color: '#E2943B',
+    name: '朽叶',
+    remark: 'KUCHIBA'
+  },{
+    color: '#91AD70',
+    name: '柳染',
+    remark: 'YANAGIZOME'
+  },{
+    color: '#66BAB7',
+    name: '水浅葱',
+    remark: 'MIZUASAGI'
+  },{
+    color: '#005CAF',
+    name: '瑠璃',
+    remark: 'RURI'
+  }]
+
+  // 导出数据
+  module.exports = {
+    _height:height,
+    _width:width,
+    ResisterFour,
+    ResisterFive,
+    exdata,
+    user,
+    customColor,
+    tools_data,
+    BannerList,
+    stepIndicatorStyles
+  }
+  ```
 ### 2.2 程序页面布局结构
 在页面开发过程中，使用了Flexbox布局进行了程序的总体页面设计。以各个主模块的首页为例，整体布局如下：
 
@@ -154,7 +211,7 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
 ## 三.程序客户端的功能模块以及具体实现
 ### 3.1 元器件查询功能模块的具体设计与实现
 
-元器件查询功能模块具体细分为四个部分：搜索页面、结果展示列表页面、参数列表页面以及详情PDF页面。接下来则详细介绍每个部分的具体设计
+元器件查询功能模块具体细分为四个部分：搜索页面、结果展示列表页面、参数列表页面以及详情PDF页面。接下来则详细介绍每个部分的具体设计。
 
 3.1.1 搜索页面
 
@@ -213,14 +270,14 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
     </View>
 
     // 历史记录展示
-    <Viesw style={styles.historybox}>
+    <View style={styles.historybox}>
       { history.map((item, index)=>
       // 点击直接搜索
       <TouchableOpacity key={index} onPress={()=>this.handleChange(item)}>
         <Text style={styles.historytext}>{item}</Text>
       </TouchableOpacity>
       )}
-    </Viesw>
+    </View>
   </View>
  ```
 3.1.2 结果列表页面
@@ -257,6 +314,7 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
         company = {item.company}
         desc = {item.desc}
         data = {item.data}
+        // 点击跳转参数列表页
         onPress = {()=>navigate('Chip', {
           name: item.name,
           data: item,
@@ -284,25 +342,411 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
     )
   }
 ```
-3.1.3 
+3.1.3 参数列表页面
 
-3.1.4 
+参数列表页面的具体设计思路。
+- 页面上方显示器件生产信息。以文字组的形式依次展示信息，并添加一个可点击的详情跳转按钮。
+```js
+  <View style={styles.info}>
+    <Text style={styles.name}>{data.name}</Text>
+    <Divider style={styles.divider}/>
+    <View style={styles.download}>
+      <Text style={styles.company}>元件分类：{type === 'ne555' ? '模拟器件': '逻辑门'}</Text>
+      <TouchableOpacity style={styles.pdf} onPress={()=>{navigate('PDFView', {name: data.name, pdfUrl: this.state.data.pdf})}}>
+        <Text style={{color: '#fff', fontSize: 16}}>详情</Text>
+        <Icon name={'file-pdf'} size={20} color={'#fff'} style={{margin: 5}}/>
+      </TouchableOpacity>
+    </View>
+    <Text style={styles.company}>厂商名称：{data.company}</Text>
+    <Text style={styles.desc}>中文描述：{data.desc.ch}</Text>
+    <Text style={styles.desc}>英文描述：{data.desc.en}</Text>
+  </View>
+```
+- 具体参数表格。元器件更为具体的参数信息使用 DataTable 组件以表格形式呈现，并添加表格分页逻辑。
+
+```html
+<DataTable style={styles.table}>
+  {/** 表格头 */}
+  <DataTable.Header>
+    <DataTable.Title>参数名称</DataTable.Title>
+    <DataTable.Title numeric>数值</DataTable.Title>
+  </DataTable.Header>
+  
+  { /** 分页逻辑： 每页展示8条 */}
+  { data.detail.map((item, index)=>
+      ( 8*page <= index && index < 8*(page+1) )?
+      <DataTable.Row key={item.title}>
+        <DataTable.Cell>{item.title}</DataTable.Cell>
+        <DataTable.Cell numeric>{item.val}</DataTable.Cell>
+      </DataTable.Row>
+      : null
+    )}
+  
+  {/** 底部分页 */}
+  <DataTable.Pagination
+    page={page}
+    numberOfPages={total}
+    onPageChange={(page) => { this.setState({page: page, current: page+1}) }}
+    label={'第' + current + '页，共' + total + '页'}
+  />
+</DataTable>
+```
+3.1.4 详情PDF页面
+
+
+详情PDF页面的具体设计思路。
+- 使用第三方组件 react-native-pdf 提供的 Pdf 组件，进行全屏渲染，并缓存查看过的 pdf 文件，以避免多次下载渲染，浪费流量。
+```js
+import Pdf from 'react-native-pdf';
+const source = {uri:`${pdf_uri}`,cache:true};
+...
+
+<Pdf source={source} style={styles.pdf}/>
+```
 
 3.1.5 元器件查询模块成果展示
 
-各个部分页面展示如图。
+各个部分页面展示如图所示：
 ![](./paperimg/yqj_01.png)
 ![](./paperimg/yqj_02.png)
-
 
 ### 3.2 实验室用计算器功能的具体设计与实现
 
 ### 3.3 项目跟踪管理功能模块的具体设计与实现
+项目跟踪管理功能模块的核心功能包括：项目发布、项目列表、项目详情、项目公告、项目实时动态更新以及项目权限设置。
+3.3.1 项目发布
+- 基本信息。主要包括项目标题、面向学院项目负责人以及项目描述。
+```js
+<TextInput
+          label={!this.state.title ? '项目标题' : ''}
+          value={this.state.title}
+          placeholder='示例: 深度学习'
+          style = {{marginVertical: 10, padding: 8, backgroundColor: '#fff'}}
+          onChangeText={title => this.setState({ title })}
+        />
+        <View>
+          <TouchableOpacity style={styles.message_box} onPress={()=>{navigate('ChooseList', {'title': '选择学院', callback: ((info)=>{this.setState({academy: info})}) })}}>
+            <Text style={styles.message_box_title}>面向学院</Text>
+            <View style={styles.message_box_opt}>
+              <Text>{ this.state.academy || '请选择'}</Text>
+              <Icon name="angle-right" size={20} color="#999" style={{marginLeft: 20}}/>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.message_box} onPress={()=>{navigate('ChooseList', { 'title': '选择负责人', callback: ((info)=>{this.setState({contact: info})})})}} >
+            <Text style={styles.message_box_title}>项目负责人</Text>
+            <View style={styles.message_box_opt}>
+              <Text>{ this.state.contact || '请选择'}</Text>
+              <Icon name="angle-right" size={20} color="#999" style={{marginLeft: 20}}/>
+            </View>
+          </TouchableOpacity
+          >
+          <TouchableOpacity style={styles.message_box} onPress={()=>{navigate('ChooseList', { 'title': '更改状态', callback: ((info, color)=>{this.setState({status: info, status_color: color})})})}}>
+            <Text style={styles.message_box_title}>项目状态</Text>
+            <View style={styles.message_box_opt}>
+              <Text>{ this.state.status || '未开始'}</Text>
+              <Icon name="angle-right" size={20} color="#999" style={{marginLeft: 20}}/>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <TextInput
+          mode='outlined'
+          multiline={true}
+          label={'项目描述'}
+          numberOfLines = {6}
+          value={this.state.remark}
+          placeholder='项目描述（选填）'
+          style = {{margin: 10, padding: 8, backgroundColor: '#fff'}}
+          onChangeText={remark => this.setState({ remark })}
+        />
+```
+- 附加选项。主要包括项目的开始与截止日期。
+
+点击跳出日期选择组件，其中开始日期不得大于截止日期，截止日期不得小于开始日期。
+```js
+  /** 开始日期选择 */
+  _handleBeginPicked = (date) => {
+    let current = this.getmyDate(date)
+    if(this.state.date_over && this.state.date_over < current){
+      ToastAndroid.show('开始时间不能大于结束时间', ToastAndroid.SHORT)
+      this._hideBeginPicker()
+    }else {
+      this.setState({
+          date_begin: current
+      },()=>this._hideBeginPicker())
+    }
+  };
+
+  /** 结束日期选择 */
+  _handleOverPicked = (date) => {
+    let current = this.getmyDate(date)
+    if( this.state.date_begin && this.state.date_begin>current){
+      ToastAndroid.show('结束时间不能小于开始时间', ToastAndroid.SHORT)
+      this._hideOverPicker()
+    }else {
+      this.setState({
+          date_over: current
+      },()=>this._hideOverPicker())
+    }
+  };
+
+  ...
+
+  /** 日期组件 */
+  <DateTimePicker
+    isVisible={this.state.beginPickerVisible}
+    onConfirm={this._handleBeginPicked}
+    onCancel={this._hideBeginPicker} />
+  <DateTimePicker
+    isVisible={this.state.overPickerVisible}
+    onConfirm={this._handleOverPicked}
+    onCancel={this._hideOverPicker} />
+```
+- 效果展示
+
+  如图。
+  ![](./paperimg/create.png)
+
+3.3.4 项目列表
+- 渲染数据。 在 FlatList 组件的基础上外嵌了一个可滑动的第三方库提供的 Swipeout 组件，并根据项目的不同状态渲染边框颜色：蓝色代表未开始，黄色代表进行中，绿色代表已完成。
+```html
+  <View style={styles.header}>
+    <Icon name="info" size={20} color={item.status_color} style={{marginRight: 10}}/>
+    <Text style={styles.title}>{item.title}</Text>
+  </View>
+  <View style={styles.header}>
+    <Icon name="user" size={20} color={item.status_color} style={{marginRight: 8}}/>
+    <Text>{item.contact}</Text>
+  </View>
+
+  <View style={styles.footer}>
+    <View style={styles.item}>
+      { /** 根据状态渲染不同的颜色以及图标 */}
+      <Icon name={item.status === '未开始' ? 'anchor': (item.status === '进行中' ? 'activity' : 'check')} size={20} color={item.status_color} style={{marginRight: 8}}/>
+      <View style={{borderWidth:1, paddingHorizontal: 10, borderColor: item.status_color, borderRadius: 40}}>
+        <Text style={styles.status}>{item.status}</Text>
+      </View>
+    </View>
+
+    <View style={styles.item}>
+      <Icon name="layers" size={20} color={item.status_color} style={{marginRight: 8}}/>
+      <Text style={styles.status}>{item.academy}</Text>
+    </View>
+
+    <View style={styles.item}>
+      <Icon name="calendar" size={20} color={item.status_color} style={{marginRight: 8}}/>
+      <Text>{ item.date_begin } - { item.date_over || '至今'}</Text>
+    </View>
+  </View>
+```
+- 效果展示。
+
+![](./paperimg/project.png)
+
+3.3.3 项目详情
+
+项目详情页主要由顶部的公告部分以及下方的一个可滑动的Tab视图（包括动态以及详情）组成。滑动视图默认展示动态更新数据，这在之后的3.3.4 动态更新部分再进行详细介绍。以下介绍详情部分的具体设计思路。
+- 项目数据渲染。将由列表页点击传递过来的项目数据进行渲染，并根据状态显示不同颜色。
+```html
+  <View tabLabel='详情' style={styles.tab_container}>
+    <View style={[styles.block, {backgroundColor: data.status_color, marginBottom: 0}]}>
+      <Text style={{color: '#fff', fontWeight: '600', fontSize: 16}}>{'    ' +  data.status}</Text>
+    </View>
+    <View style={[styles.block, {borderColor: data.status_color, borderWidth: 1}]}>
+      <Text style={styles.remark}>{data.remark? `  ${data.remark}`: '暂无具体描述'}</Text>
+    </View>
+    <View style={[styles.block, {borderColor: data.status_color, borderWidth: 1}]}>
+      <View style={styles.item}>
+        <Icon name="layers" size={20} style={{margin: 10}} color={data.status_color}/>
+        <Text style={styles.remark}>面向学院：{ data.academy}</Text>
+      </View>
+      <Divider style={{margin: 8}}/>
+      <View style={styles.item}>
+        <Icon name="user" size={20} style={{margin: 10}} color={data.status_color}/>
+        <Text style={styles.remark}>任务负责人：{ data.contact}</Text>
+      </View>
+      <Divider style={{margin: 8}}/>
+      <View style={styles.item}>
+        <Icon name="clock" size={20} style={{margin: 10}} color={data.status_color}/>
+        <Text style={styles.remark}>开始时间：{ data.date_begin}</Text>
+      </View>
+      <View style={styles.item}>
+        <Icon name="calendar" size={20} style={{margin: 10}} color={data.status_color}/>
+        <Text style={styles.remark}>截止时间：{ data.date_over || '至今'}</Text>
+      </View>
+    </View>
+  </View>
+```
+- 效果展示。
+
+  如图。
+
+  ![](./paperimg/project_detail.png)
+
+
+3.3.4 动态更新
+
+以下操作会触发项目的动态更新，并即时展示在项目详情页中。
+- 添加公告。管理者（如老师A），在输入完成后自动对服务器发起POST请求进行更新项目。
+```js
+// 添加公告
+addAnnounce = () => {
+  
+  ...
+
+  this.setState({announce_date: date},()=>{
+    params['announce'] = this.state.announce;
+    params['announce_date'] = this.state.announce_date;
+    fetch('http://129.204.128.185:3000/project/' + index, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params)
+    })
+  })
+}
+```
+- 修改项目信息。管理者重新编辑项目信息且出现改动时会触发动态更新记录。
+```js
+  // 添加动态记录
+  addProgress = () => {
+    
+    ...
+
+    if(this.props.navigation.state.params.data !== undefined){
+      let pre_data = this.props.navigation.state.params.data.data;
+
+      { (pre_data.title !== title ) && (temp_body +='修改了项目标题为'+ title+ '\n') }
+      { (pre_data.academy !== academy ) && (temp_body +='修改了面向学院为'+ academy+ '\n')}
+      { (pre_data.contact !== contact ) && (temp_body +='修改了任务负责人为'+ contact+ '\n') }
+      { (pre_data.status !== status ) && (temp_body +='修改了项目状态为'+ status+ '\n') }
+      { (pre_data.remark !== remark ) && (temp_body +='修改了项目描述为'+ remark+ '\n') }
+      { (pre_data.date_begin !== date_begin ) && (temp_body +='修改了开始时间为'+ date_begin+ '\n') }
+      { (pre_data.date_over !== date_over ) && (temp_body +='修改了截止时间为'+ date_over+ '\n') }
+      temp_progress.push({title: type+'修改了项目配置', date: temp_date, body: temp_body})
+    }
+  }
+```
+
+- 添加进度描述。任务负责人添加描述后会记录添加内容并重新渲染详情页中的动态视图。
+```js
+_submitForm = () => {
+  
+  ...
+
+  temp_progress.push({'title': type +'添加进度：' + title, 'body': body, 'date': date})
+
+  this.setState({
+    progress: temp_progress,
+  },()=>{
+    params['progress'] = this.state.progress
+    fetch('http://129.204.128.185:3000/project/' + index, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params)
+    })
+    // 订阅更新事件
+    .then(()=>{
+      DeviceEventEmitter.emit('UPDATE')
+      this.props.navigation.pop(2);
+    })
+  })
+}
+```
+- 效果展示
+
+![](./paperimg/project_dynamic.png)
+
+3.3.5 权限设置
+
+权限部分具体设计思路如下。
+- 查看限制。非管理者或者项目负责人无法打开项目详情
+```js
+  <TouchableOpacity style={[styles.task_container, {borderColor: item.status_color}]} 
+    key={item.title + item.date_begin} 
+    onPress={()=>
+    (type == '老师A' || type === item.contact)? navigate('TaskDetail', {'data': item, 'id': length-index, 'type': type})
+    :
+    ToastAndroid.show('你不是该任务的负责人', ToastAndroid.SHORT)
+  }>
+```
+- 修改限制。管理者可以修改项目配置以及项目公告，任务负责人则可以添加进度描述。
+```js
+// 用户为管理者时，公告输入框呈现可编辑状态
+<TextInput
+  mode='outlined'
+  numberOfLines = {3}
+  style = {{padding: 5, color: '#333'}}
+  multiline={true}
+  disabled={this.state.type !== '老师A'}
+  label={'项目公告'}
+  value={this.state.announce}
+  placeholder='示例: 下午在电子楼505开会。'
+  onChangeText={announce => this.setState({ announce })}
+  onBlur={()=>this.addAnnounce()}
+/>
+
+...
+
+// 用户为任务负责人时可添加进度描述
+{ type !== '老师A' &&
+  <TouchableOpacity style={[styles.block, {backgroundColor: '#24292e', padding: 15}]} 
+    onPress={()=>navigate('Edit_Progress', { 'title': '填写进度', 'data': this.state.data, 'index': this.state.index, 'type': this.state.type})}>
+    <Text style={{color: '#fff', fontWeight: '600', fontSize: 17, textAlign: 'center'}}>添加进度描述</Text>
+  </TouchableOpacity>
+}
+
+```
+
+- 项目发布删除。管理者可以进行项目的发布与删除。
+
+```js
+// 用户为管理者时在屏幕右下角出现发布按钮
+{ this.state.type === '老师A' && 
+    <FAB
+      style={styles.fab}
+      large
+      icon="add"
+      onPress={()=>this.props.navigation.navigate('CreateTask', {'title': '新建项目'})}
+    />
+}
+
+...
+
+// 管理者可进行项目删除
+swipeHandleDelete = () => {
+  if(this.state.type !== '老师A'){
+    ToastAndroid.show('你没有权限删除', ToastAndroid.SHORT);
+    return false
+  }
+  ToastAndroid.show('删除成功', ToastAndroid.SHORT);
+  let index = this.state.dataList.length -1 - this.state.rowIndex;
+  fetch('http://129.204.128.185:3000/project/' + index, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(()=>this.getRemoteData())
+}
+```
+
+- 效果展示。
+
+![](./paperimg/project_right.png)
 
 ### 3.4 用户注册登录功能模块的具体设计与实现
+### 3.5 本章小结
 
 ## 四. ReactNative 的服务器端处理
-在上一章我们已经实现并介绍了程序的各大功能模块。但程序内的数据不能只单靠手动组件的state进行更新，一来操作繁琐，二则过多的组件所形成的庞大的state树不利于维护。因此程序的绝大部分数据都是从服务器动态获取更新，本章也将从服务器端的开发角度来展开具体介绍。
+在上一章我们已经实现并介绍了程序的各大功能模块。但程序内的数据不能只单靠手动组件的state进行更新，一来操作繁琐，二则过多的组件所形成的庞大的state树不利于维护。因此程序的绝大部分数据都是从服务器动态获取更新，本章也将从服务器端的开发角度来展开具体介绍，项目中使用Node.JS + Expres + MySQL 实现服务器接口。
 
 ### 4.1 服务器语言与接口规范
 4.1.1 Node.js
@@ -530,7 +974,7 @@ MySQL是Oracle公司开源的一个广泛应用的轻量级关系型数据库管
 
 
 
- ## 参考文献
+ ## 五. 参考文献
 [1].程化梅. 基于React Native的即时通讯应用的设计与实现[D]. 武汉邮电科学研究院, 2017.
 
 [2].钟爱青. 基于React Native的校园二手物品竞拍平台的设计与实现[J]. 电脑知识与技术, 2018(16).
@@ -555,7 +999,13 @@ MySQL是Oracle公司开源的一个广泛应用的轻量级关系型数据库管
 
 [12]. Eisenman B . Learning React Native : building Native mobile apps with JavaScript[M]// Learning React Native: Building Native Mobile Apps with JavaScript. O'Reilly Media, Inc. 2018.
 
- ## 致谢
+ ## 六. 致谢
 到这里，论文的撰写接近了尾声，我在深大剩余的日子也即将在青春的六月的某天画上句号，步入社会。但是校园生活的结束并不意味着学习生涯的结束，母校的“自立，自律，自强”精神不断的激励着我严于律己，自强不息，未来的我也会秉承这样的信念在职场中奋发向上，不轻易向挫折失败低头，闯出自己的一片新天地。首先要感谢我的指导老师和实验室师兄对本次论文撰写提出的宝贵意见和修改。回首大学四年，大一的懵懂的我要感谢同乡会的陈建宗师兄，引领着我走进深大的校园；也要感谢吴静怡师姐，在每一个我自我矛盾的时刻给我答疑解惑，她是我的良师也是我的益友。大二的时光大部分是在黎冰老师的实验室中度过，实验室开放自由的学习环境满足了我在浩瀚书海遨游、不断学习进步的求知欲，也感谢深大每一个在学习生活中授予我知识，提高我眼界的老师；大三大四的生活自然复杂了一些，校园生活与社会实践交织，使我成为了一个更加饱满的人，在这里我要感谢陈松豪、吴政琳同学，学习上不断给与我帮助，在我初次面对职场生活时也不断给我建议，一起经历那些焦虑的时刻。当然我也要感谢我的父母，如果没有他们，我不可能如此顺利的完成我的学业，毕业典礼上他们可不能缺席，见证我的成长。同时也感谢直系师妹卢静霞，虽然认识的时间不长，但在学习、生活上向我的请教使我有机会成为了我所感谢的那类人。毕业的钟声终究是要敲响的，我也将不带遗憾离开往日生活校园，走向更精彩的世界。
+
+## 七. 附录
+完整代码详见：
+
+### 客户端Gooit项目：https://github.com/goozyshi/Gooit
+### 服务器端GooSSR项目：https://github.com/goozyshi/GooSSR
 
 
