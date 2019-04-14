@@ -1,14 +1,40 @@
+- [摘要](#摘要)
+- [Abstract](#abstract)
+- [一. 引言](#一-引言)
+  - [1.1 课题来源及研究目的和意义](#11-课题来源及研究目的和意义)
+  - [1.2 移动开发国内外研究现状](#12-移动开发国内外研究现状)
+  - [1.3 论文主要内容](#13-论文主要内容)
+  - [1.4 本章小结](#14-本章小结)
+- [二. ReactNative 学习辅助程序的整体设计](#二-reactnative-学习辅助程序的整体设计)
+  - [2.1 程序工程项目结构](#21-程序工程项目结构)
+  - [2.2 程序页面布局结构](#22-程序页面布局结构)
+  - [2.3 程序的逻辑结构](#23-程序的逻辑结构)
+  - [2.4 程序的通信过程](#24-程序的通信过程)
+- [三.程序客户端的功能模块以及具体实现](#三程序客户端的功能模块以及具体实现)
+  - [3.1 便捷学习功能模块的具体设计与实现](#31-便捷学习功能模块的具体设计与实现)
+  - [3.1.2 行业资讯的具体设计与实现](#312-行业资讯的具体设计与实现)
+  - [3.1.3 实验室用计算器功能的具体设计与实现[TODO]](#313-实验室用计算器功能的具体设计与实现todo)
+  - [3.2 项目跟踪管理功能模块的具体设计与实现](#32-项目跟踪管理功能模块的具体设计与实现)
+  - [3.3 用户登录功能模块的具体设计与实现](#33-用户登录功能模块的具体设计与实现)
+  - [3.4 本章小结](#34-本章小结)
+- [四. ReactNative 的服务器端处理](#四-reactnative-的服务器端处理)
+  - [4.1 服务器语言与接口规范](#41-服务器语言与接口规范)
+  - [4.2 使用Express框架实现服务器端接口](#42-使用express框架实现服务器端接口)
+  - [4.2.1 Express 项目结构介绍](#421-express-项目结构介绍)
+  - [4.2.2 实现具体数据接口](#422-实现具体数据接口)
+
+
 ## 摘要
 随着互联网的兴起，移动开发应用，尤其在 Android 和 iOS 平台上的开发趋势，日益火热。不少高校也加快校园信息化建设，推出了互联网+智慧校园的发展规划。然而，传统的 Android 或者 iOS 开发模式在面对日益多样化的移动终端诸如各种形式的安卓手机、平板以及iPhone等，不得不选择了多种平台重复开发的方案。 2015 年 Facebook 推出了一款名为 ReactNative 的基于 Javascript 构建原生应用的框架，它强调了“一次学习，随处可写”，从而解决了传统开发模式代码无法复用的难题。
   
-论文研究内容正是基于 ReactNative 技术致力于在 Android 系统上为高校提供本科实验室便捷学习平台以及项目跟踪管理的辅助程序。程序主要包括以下四大核心功能模块，依次为：元器件数据手册查询模块、电子实验室用计算器模块、项目管理模块以及用户注册登录模块。程序使用 ReactNative 框架实现移动App页面设计，采用 VS Code 编辑器编写，后端服务器则选择 Node.JS + Express + Mysql 这一轻量级组合来完成业务所需求的存储功能。经过 Android 平台多端的测试，程序符合预期业务需求，达到了预期效果。
+论文研究内容正是基于 ReactNative 技术致力于在 Android 系统上为高校提供本科实验室便捷学习平台以及项目跟踪管理的辅助程序。程序主要包括以下三大核心功能模块，依次为：便捷学习模块、项目管理模块以及用户登录模块。程序使用 ReactNative 框架实现移动App页面设计，采用 VS Code 编辑器编写，后端服务器则选择 Node.JS + Express + Mysql 这一轻量级组合来完成业务所需求的存储功能。经过 Android 平台多端的测试，程序符合预期业务需求，达到了预期效果。
 
 关键字： 实验室；ReactNative；学习辅助；项目追踪管理；
 
 ## Abstract
 With the rise of the Internet, mobile development applications, especially on Android and iOS platforms, are becoming increasingly hot.Many colleges and universities have also accelerated the construction of campus information, and launched the development plan of the Internet + smart campus.However, the traditional Android or iOS development mode has to choose a repetitive development solutions of  variety platform in the face of increasingly diverse mobile terminals such as various forms of Android phones, tablets and iPhone. In 2015, Facebook published a framework for building native applications based on Javascript called ReactNative, which emphasizes “Learning once, write anywhere”, which solves the problem that traditional development mode code cannot be reused.
 
-The research content of this thesis is based on ReactNative technology, which is dedicated to providing colleges and universities with convenient learning platform for undergraduate laboratory and project tracking management.The program mainly includes the following four core functional modules, which are: component DataSheet query module, electronic laboratory calculator module, project management module and user registration login module.The program uses the ReactNative framework to implement mobile App page design, written in the VS Code editor, and the back-end server chooses the lightweight combination of Node.JS + Express + Mysql to complete the storage functions required by the business.After testing on the Android platform, the program meets the expected business needs and achieves the expected results.
+The research content of this thesis is based on ReactNative technology, which is dedicated to providing colleges and universities with convenient learning platform for undergraduate laboratory and project tracking management.The program mainly includes the following three core functional modules, which are: Convenient learning module, project management module and user login module.The program uses the ReactNative framework to implement mobile App page design, written in the VS Code editor, and the back-end server chooses the lightweight combination of Node.JS + Express + Mysql to complete the storage functions required by the business.After testing on the Android platform, the program meets the expected business needs and achieves the expected results.
 
 Key words: laboratory; ReactNative; Assisted Learing; Project tracking management;
 
@@ -51,15 +77,13 @@ ReactNative相比于web开发或者原生开发有以下优势：1) 通过虚拟
 
 ### 1.3 论文主要内容
 
-论文选题内容正是基于ReactNative 技术，致力于在 Android 系统上构建一款高校本科实验室便捷学习以及项目跟踪管理的学习辅助程序。程序主要包含四大核心功能模块：元器件数据手册查询、电子实验室用计算器、项目跟踪管理以及用户注册登录。论文着重设计并实现项目跟踪管理模块，在完成基本项目跟踪管理的同时，对功能细节进行改进完善，力求能给用户带来友好便捷的交互方式。该学习辅助程序的研究内容主要包括以下部分：
-  1. 元器件数据手册查询
-    本科实验室中，尤其是电子类实验室拥有者大量的 IC 芯片单单从型号学生无法获得完整的芯片信息，而只能求助于搜索引擎而往往找到的只是该型号芯片的冰山一角，详细的信息则在一个压缩包中，不方便学生直观的了解学习。本功能模块主要包含搜索框的设计实现、用户搜索历史、搜索结果列表、参数列表以及详情页面。
-  2. 实验室用计算器
-    该功能的出发点在于解决本科实验室中一旦人数过多，万用表分配不均而引起的不便。重点设计实现了电阻计算器，主要包括页面设计、操作区域以及计算逻辑。
+论文选题内容正是基于ReactNative 技术，致力于在 Android 系统上构建一款高校本科实验室便捷学习以及项目跟踪管理的学习辅助程序。程序主要包含三大核心功能模块：便捷学习、项目跟踪管理以及用户注册登录。论文着重设计并实现项目跟踪管理模块，在完成基本项目跟踪管理的同时，对功能细节进行改进完善，力求能给用户带来友好便捷的交互方式。该学习辅助程序的研究内容主要包括以下部分：
+  1. 便捷学习模块
+    该功能出发点是为高校学生建立一个课下的学习平台。重点设计实现了元器件查询、行业资讯以及实验室用计算器。
   3. 项目跟踪管理
     项目跟踪管理系统在借鉴 Github 的版本管理模式下，主要进行项目发布、项目列表、项目详情、项目公告、项目实时动态更新以及项目权限设置。其中项目的实时动态会用户改动项目时记录下操作人、操作时间以及具体的操作内容。最大程度方便项目管理者与项目负责人间的沟通交流，以及同步了解项目的实时进度。
-  4. 用户注册登录
-    主要子模块包括登录提示、登录页面以及多彩主题。
+  4. 用户登录
+    主要子模块包括登录提示、登录切换页面以及多彩主题。
   5. ReactNative 服务器端处理
     具体使用 Node.JS + Express + MySQL 实现了注册登录模块以及数据列表的查询、添加、更新和删除功能并最终从本地部署到了腾讯云。
 
@@ -94,7 +118,7 @@ ReactNative相比于web开发或者原生开发有以下优势：1) 通过虚拟
 其中重点对含有自定义组件的app文件夹，做详细介绍。
   - common： 存放封装的自定义组件以及公共组件
   - Home：主页面首页模块，包括元器件查询模块、实验室用计算器模块以及一些辅助教学功能。
-  - My： 我的页面模块，包括用户登录注册以及多彩主题。
+  - My： 我的页面模块，包括用户登录以及多彩主题。
   - Task: 项目中心页面模块，主要包括项目发布、项目列表、项目状态更新等功能模块。
 
 在软件开发过程中，为了达到快速开发的目的，常常需要在官方组件的基础上引入一些性能相对高效，并且使用便捷的第三方库。在本项目中，package.json 引入的第三方库如下：
@@ -132,35 +156,6 @@ ReactNative相比于web开发或者原生开发有以下优势：1) 通过虚拟
   主要存放一些静态配置，包括实验室用计算器的基础数据、用户中心的多彩主题设置等。
 
   ```js
-  /**
-   * 自定义颜色
-   */
-  const customColor = [{
-    color: '#F4A7B9',
-    name: '一斥染',
-    remark: 'IKKONZOME'
-  },{
-    color: '#4E4F97',
-    name: '红褂花',
-    remark: 'BENIKAKEHANA'
-  },{
-    color: '#E2943B',
-    name: '朽叶',
-    remark: 'KUCHIBA'
-  },{
-    color: '#91AD70',
-    name: '柳染',
-    remark: 'YANAGIZOME'
-  },{
-    color: '#66BAB7',
-    name: '水浅葱',
-    remark: 'MIZUASAGI'
-  },{
-    color: '#005CAF',
-    name: '瑠璃',
-    remark: 'RURI'
-  }]
-
   // 导出数据
   module.exports = {
     _height:height,
@@ -209,21 +204,24 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
 在上一章的需求基础上,对程序进行了总体的页面设计、功能模块划分以及将业务逻辑抽象成流程图并将工程文件以业务需求进行归类。这对之后程序的具体设计以及功能细分来说是重要的设计蓝图。
 
 ## 三.程序客户端的功能模块以及具体实现
-### 3.1 元器件查询功能模块的具体设计与实现
+### 3.1 便捷学习功能模块的具体设计与实现
+主要包括以下部分：元器件数据手册查询、行业资讯以实验室用计算器。
+3.1.1 元器件数据手册查询功能模块的具体设计与实现
 
 元器件查询功能模块具体细分为四个部分：搜索页面、结果展示列表页面、参数列表页面以及详情PDF页面。接下来则详细介绍每个部分的具体设计。
 
-3.1.1 搜索页面
+- 搜索页面
 
 搜索页面的具体设计思路：
- - 在页面顶部设计一个搜索框。其中搜索框由一个输入框（即TextInput组件）以及一个可点击的搜索按钮（TouchableOpacity组件）组成。
+1. 在页面顶部设计一个搜索框。其中搜索框由一个输入框（即TextInput组件）以及一个可点击的搜索按钮（TouchableOpacity组件）组成。
  ```js
  // 输入框
   <TextInput
     style={styles.input}
     placeholder={'请输入元器件型号'}
     value={val}
-    autoFocus={true}
+    
+    Focus={true}
     onChangeText={val => this.setState({val: val})}
   />
 
@@ -236,14 +234,14 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
     </TouchableOpacity>
   </View>
  ```
- - 增加清空输入按钮。当用户输入不为空时，在输入框右侧增加一个可点击的情况按钮。
+ 2. 增加清空输入按钮。当用户输入不为空时，在输入框右侧增加一个可点击的情况按钮。
  ```js
   //  用户输入不为空，出现清空按钮，点击后将输入值置为空
   { (val.length !== 0) && <View style={styles.cancelBtn}>
     <Icon name="close" size={32} color="#494949" onPress={() => this.setState({val: ''})}/></View>
   }
  ```
- - 进行输入验证。当输入值全为空格时，点击搜索无效并使用 ToastAndroid 组件进行提示。
+ 3. 进行输入验证。当输入值全为空格时，点击搜索无效并使用 ToastAndroid 组件进行提示。
  ```js
     let reg=/^(?!(\s+$))/    //  模式匹配。输入内容不为纯空格
     if ( val && reg.test(val) ){
@@ -253,7 +251,7 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
       ToastAndroid.show("搜索内容不能为空", ToastAndroid.SHORT);
     }
  ```
- - 增加历史记录功能。用户在输入后并进行搜索时，使用 AsyncStorage 组件缓存搜索记录，并增加一个清除历史记录按钮。
+ 4. 增加历史记录功能。用户在输入后并进行搜索时，使用 AsyncStorage 组件缓存搜索记录，并增加一个清除历史记录按钮。
 
  ```js
   /**
@@ -280,9 +278,9 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
     </View>
   </View>
  ```
-3.1.2 结果列表页面
+-  结果列表页面
 结果列表页的具体设计思路。
-- 发起请求。点击搜索后使用 fetch API 发起GET请求，若服务器响应的数据为空，则返回提示。
+1. 发起请求。点击搜索后使用 fetch API 发起GET请求，若服务器响应的数据为空，则返回提示。
 ```js
   // 发起请求
   fetchData(id) {
@@ -302,7 +300,7 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
   // 提示
   ToastAndroid.show("搜索内容不能为空", ToastAndroid.SHORT);  
 ```
-- 进行数据渲染。接收到的响应数据以列表形式通过 FlatList 组件进行渲染。
+2. 进行数据渲染。接收到的响应数据以列表形式通过 FlatList 组件进行渲染。
 ```js
   <FlatList
     data={result}
@@ -324,7 +322,7 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
     }
   />
 ```
-- 列表项点击跳转。渲染的列表项，在用户点击后可以跳转到该项的参数详情页面
+3. 列表项点击跳转。渲染的列表项，在用户点击后可以跳转到该项的参数详情页面
 ```js
   const ResultItem = (props) => {
     const { name, company, desc, pdf, data, onPress} = props;
@@ -342,10 +340,10 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
     )
   }
 ```
-3.1.3 参数列表页面
+- 参数列表页面
 
 参数列表页面的具体设计思路。
-- 页面上方显示器件生产信息。以文字组的形式依次展示信息，并添加一个可点击的详情跳转按钮。
+1. 页面上方显示器件生产信息。以文字组的形式依次展示信息，并添加一个可点击的详情跳转按钮。
 ```js
   <View style={styles.info}>
     <Text style={styles.name}>{data.name}</Text>
@@ -362,7 +360,7 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
     <Text style={styles.desc}>英文描述：{data.desc.en}</Text>
   </View>
 ```
-- 具体参数表格。元器件更为具体的参数信息使用 DataTable 组件以表格形式呈现，并添加表格分页逻辑。
+2. 具体参数表格。元器件更为具体的参数信息使用 DataTable 组件以表格形式呈现，并添加表格分页逻辑。
 
 ```html
 <DataTable style={styles.table}>
@@ -391,11 +389,11 @@ Flexbox布局是ReactNative开发的基础和重点，使用Flexbox布局，可�
   />
 </DataTable>
 ```
-3.1.4 详情PDF页面
+-  详情PDF页面
 
 
 详情PDF页面的具体设计思路。
-- 使用第三方组件 react-native-pdf 提供的 Pdf 组件，进行全屏渲染，并缓存查看过的 pdf 文件，以避免多次下载渲染，浪费流量。
+1.  使用第三方组件 react-native-pdf 提供的 Pdf 组件，进行全屏渲染，并缓存查看过的 pdf 文件，以避免多次下载渲染，浪费流量。
 ```js
 import Pdf from 'react-native-pdf';
 const source = {uri:`${pdf_uri}`,cache:true};
@@ -404,17 +402,135 @@ const source = {uri:`${pdf_uri}`,cache:true};
 <Pdf source={source} style={styles.pdf}/>
 ```
 
-3.1.5 元器件查询模块成果展示
+- 成果展示
 
 各个部分页面展示如图所示：
 ![](./paperimg/yqj_01.png)
 ![](./paperimg/yqj_02.png)
 
-### 3.2 实验室用计算器功能的具体设计与实现
+### 3.1.2 行业资讯的具体设计与实现
+- 轮播展示。使用第三方库 react-native-swiper 提供的 Swiper 组件进行渲染。
+```js
+// 引入组件
+import Swiper from 'react-native-swiper';
 
-### 3.3 项目跟踪管理功能模块的具体设计与实现
+...
+
+// 轮播渲染
+<Swiper
+  loop={true}
+  // showsButtons={true} // 显示左右按钮
+  
+  play={true}
+  
+  playTimeout={3}
+  dotStyle={styles.dotStyle}
+  activeDotStyle={styles.activeDotStyle}
+  onIndexChanged={(index)=>(
+    this.setState({
+      headindex: index+1,
+    })
+  )}
+>
+  { this.state.BannerList.map((item)=>
+      <TouchableOpacity 
+        key={item.title}
+        style={styles.slide}
+        onPress={()=>{navigate('Details',{
+          url: item.url
+        })}
+        }
+      >
+        <Image source={{uri: item.img}} style={styles.banner}/>
+        <Text style={styles.banner_title}>{item.title}</Text>
+      </TouchableOpacity>
+    )
+  }
+</Swiper>
+```
+- 增加页数展示。在标题右侧增加页数展示。
+```js
+<View style={styles.head}>
+  <Text style={styles.headline}>行业资讯</Text>
+  <View style={styles.indexbox}>
+    <Text style={styles.current_index}>{this.state.headindex}</Text>
+    <Text style={styles.all_index}>/{this.state.BannerList.length}</Text>
+  </View>
+</View>
+```
+- 详情页面。使用 WebView 组件将第三方的行业资讯以网页形式内嵌到程序中，增加开发效率。
+```js
+<WebView
+  source={{uri:BannerUrl}}
+  style={{width:'100%',height:'100%'}}
+  startInLoadingState={true}
+  renderError={() => { // 网络不好则报错
+      return <View><Text>网络出问题啦！404</Text></View>
+  }}
+  renderLoading={() => {
+      return <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}><Text>正在加载Loading...</Text></View>
+  }}
+/>
+```
+- 效果展示
+
+  如图。
+  ![](./paperimg/career.png)
+
+
+### 3.1.3 实验室用计算器功能的具体设计与实现[TODO]
+以电阻计算器为例，详解设计思路与实现。
+- 工具栏视图。
+```js
+// 循环渲染每个计算器
+{ tools_data.map((item,index)=>(
+  <View key={index}>
+    <TouchableOpacity onPress={()=>navigate('Caculator', {'name': item.name})}>
+      
+      ...
+      
+    </TouchableOpacity>
+  </View>
+          )
+)}
+```
+- 实现计算逻辑。五色环电阻计算器计算逻辑。
+```js
+  /**
+   * 五环电阻计算部分
+   */
+  counter = () => {
+    let { firstValue, secondValue, thirdValue, forthValue, fifthValue } = this.state;
+    let fault = fifthValue || 1;// 误差
+    let ex = forthValue;// 指数
+    let num = '100';
+    let unit = 'Ω';
+    let reg=/\.\d{2,}/
+    if(ex<1){
+        num = (firstValue + secondValue + thirdValue)*Math.pow(10,ex) ;// 数值部分
+        unit = 'Ω'
+    }else if (1<=ex && ex<=3){
+       num = (firstValue + secondValue + thirdValue)*Math.pow(10,ex-3)
+       unit = 'KΩ'
+    }else if(ex>3){
+       num = (firstValue + secondValue + thirdValue)*Math.pow(10,ex-6);
+       unit = 'MΩ'
+    }
+    if(reg.test(num)){
+      num = num.toFixed(2) // 解决JavaScript精度问题，保存两位有效数字
+    }
+    let result = num + ' ' + unit + ' ' + '±' + ' ' + fault + '%';
+    return result
+  }
+```
+- 效果展示。
+  如图。
+  ![](./paperimg/caculator.png)
+
+### 3.2 项目跟踪管理功能模块的具体设计与实现
 项目跟踪管理功能模块的核心功能包括：项目发布、项目列表、项目详情、项目公告、项目实时动态更新以及项目权限设置。
-3.3.1 项目发布
+
+3.2.1 项目发布
 - 基本信息。主要包括项目标题、面向学院项目负责人以及项目描述。
 ```js
 <TextInput
@@ -508,7 +624,7 @@ const source = {uri:`${pdf_uri}`,cache:true};
   如图。
   ![](./paperimg/create.png)
 
-3.3.4 项目列表
+3.2.2 项目列表
 - 渲染数据。 在 FlatList 组件的基础上外嵌了一个可滑动的第三方库提供的 Swipeout 组件，并根据项目的不同状态渲染边框颜色：蓝色代表未开始，黄色代表进行中，绿色代表已完成。
 ```html
   <View style={styles.header}>
@@ -544,9 +660,9 @@ const source = {uri:`${pdf_uri}`,cache:true};
 
 ![](./paperimg/project.png)
 
-3.3.3 项目详情
+3.2.3 项目详情
 
-项目详情页主要由顶部的公告部分以及下方的一个可滑动的Tab视图（包括动态以及详情）组成。滑动视图默认展示动态更新数据，这在之后的3.3.4 动态更新部分再进行详细介绍。以下介绍详情部分的具体设计思路。
+项目详情页主要由顶部的公告部分以及下方的一个可滑动的Tab视图（包括动态以及详情）组成。滑动视图默认展示动态更新数据，这在之后的动态更新部分再进行详细介绍。以下介绍详情部分的具体设计思路。
 - 项目数据渲染。将由列表页点击传递过来的项目数据进行渲染，并根据状态显示不同颜色。
 ```html
   <View tabLabel='详情' style={styles.tab_container}>
@@ -585,7 +701,7 @@ const source = {uri:`${pdf_uri}`,cache:true};
   ![](./paperimg/project_detail.png)
 
 
-3.3.4 动态更新
+3.2.4 动态更新
 
 以下操作会触发项目的动态更新，并即时展示在项目详情页中。
 - 添加公告。管理者（如老师A），在输入完成后自动对服务器发起POST请求进行更新项目。
@@ -663,7 +779,7 @@ _submitForm = () => {
 
 ![](./paperimg/project_dynamic.png)
 
-3.3.5 权限设置
+3.2.5 权限设置
 
 权限部分具体设计思路如下。
 - 查看限制。非管理者或者项目负责人无法打开项目详情
@@ -742,8 +858,104 @@ swipeHandleDelete = () => {
 
 ![](./paperimg/project_right.png)
 
-### 3.4 用户注册登录功能模块的具体设计与实现
-### 3.5 本章小结
+### 3.3 用户登录功能模块的具体设计与实现
+该模块主要由登录提示、用户登录与切换以及多彩主题三个部分组成。用户注册在之后的服务器章节详解。
+3.3.1 登录提示
+登录提示主要出现在我的页面以及项目页面。
+```js
+// 项目页面登录提示
+<Banner
+  visible={this.state.visible}
+  actions={[
+    {
+      label: '再看看',
+      onPress: () => this.setState({ visible: false }),
+    },
+    {
+      label: '马上登录',
+      onPress: () => this.setState({ visible: false }),
+    },
+  ]}
+  image={({ size }) =>
+    <Image
+      source={{ uri: 'https://avatars3.githubusercontent.com/u/17571969?s=400&v=4' }}
+      style={{
+        width: size,
+        height: size,
+      }}
+    />
+  }
+>登录之后才能使用项目管理功能哦</Banner>
+
+...
+
+// 我的页面登录提示
+
+<View style={{margin: 10}}>
+  <Text style={styles.name}>{isLogin? selectedUser : '尚未登录'}</Text>
+  <Text style={styles.sub}>{isLogin? selectedDepartment : '点击右侧登陆吧'}</Text>
+</View>
+```
+3.3.2 用户登录与切换
+- 用户尚未登录。点击登录按钮后弹出登录浮层。
+```js
+/**
+ * 选择用户
+ */
+_chooseUser = (index) => {
+  this.timer = setTimeout(() => {
+    this.setState({
+      isLogin: true,
+    },()=>{
+      // 缓存登录者
+      AsyncStorage.setItem('logged', this.state.isLogin)
+      AsyncStorage.setItem('logged_user', this.state.selectedUser)
+      AsyncStorage.setItem('logged_department', this.state.selectedDepartment)
+      AsyncStorage.setItem('logged_img', this.state.img)
+      DeviceEventEmitter.emit('LOGGED')
+    })
+  }, 500);
+}
+
+```
+- 用户已登录。点击切换按钮弹出用户切换页面，并可以确认退出。
+```js
+{ !wait && <Dialog.Actions><Button onPress={()=>this._confirmExit()}>{isLogin? '确认退出' : '取消'}</Button></Dialog.Actions> }
+```
+3.3.3 多彩主题
+
+用户可随时通过多彩主题选择自己喜欢的颜色作为应用颜色基调。
+- 颜色选择页。
+```js
+// 从config.js 文件引入主题颜色数据
+import { customColor } from '../../common/config';
+
+...
+
+{customColor.map((item)=>
+  <TouchableOpacity key ={item.remark} onPress={ ()=>{ this.setState({expanded:!this.state.expanded},()=>{DeviceEventEmitter.emit('colorMaker',item.color)})} }>
+    <View style={[styles.colorfulitem, {backgroundColor: item.color} ]}>
+    <Text style={styles.name}>{item.name}</Text>
+    <Text style={styles.remark}>{item.remark}</Text></View>
+  </TouchableOpacity>
+)}
+```          
+- 监听颜色选择事件。选择颜色后，更改主题颜色。
+```js
+DeviceEventEmitter.addListener("colorMaker", (color) => {
+  this.setState({
+    customcolor: color,
+  },()=>{
+    theme.colors.primary = this.state.customcolor
+  })
+})
+```
+3.3.4 效果展示
+
+如图。
+![](./paperimg/user.png)
+### 3.4 本章小结
+在本章节中，我们在第二章的总体设计流程图的基础上，将每个大的功能模块细分为更小的部分并逐个按照设计思路一一实现，附加的页面设计以及逻辑代码和效果展示图可以让我们更加直观的看到程序设计的过程与成果。
 
 ## 四. ReactNative 的服务器端处理
 在上一章我们已经实现并介绍了程序的各大功能模块。但程序内的数据不能只单靠手动组件的state进行更新，一来操作繁琐，二则过多的组件所形成的庞大的state树不利于维护。因此程序的绝大部分数据都是从服务器动态获取更新，本章也将从服务器端的开发角度来展开具体介绍，项目中使用Node.JS + Expres + MySQL 实现服务器接口。
@@ -969,8 +1181,67 @@ MySQL是Oracle公司开源的一个广泛应用的轻量级关系型数据库管
 
   ![](./paperimg/sql_user.png)
 
-### 4.3 本章小结
-截止本章，我们不仅实现了程序在课题需求下的基本页面布局和交互逻辑，还使用Node.JS+ Express + MySQL 这一轻量级组合去实现服务器端接口设计,为程序添加和完善网络交互和数据存储的能力，使得程序更加完整。
+### 4.3 程序向服务器发起请求
+以项目跟踪管理模块中项目的展示、发布、更改以及删除为例，介绍在客户端使用 fetch API 向服务器发起请求。
+- 项目查询。使用 GET 方法发起请求。
+```js
+  fetch('http://129.204.128.185:3000/project')
+  .then((response) => response.json())
+  .then((responseJson) => {
+    let temp =  [...responseJson].reverse()
+    this.setState({
+      dataList: temp,
+      flag: !this.state.flag
+    })
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+```
+
+- 项目发布。使用 POST 方法发起请求
+```js
+fetch('http://129.204.128.185:3000/project', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(params)
+})
+```
+- 项目更新。项目编辑后会触发更新，使用 PUT 方法实现。
+```js
+fetch('http://129.204.128.185:3000/project/' + index, {
+  method: 'PUT',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(params)
+})
+.then(()=>{
+  DeviceEventEmitter.emit('UPDATE')
+  this.props.navigation.pop(2);
+})
+```
+
+- 项目删除。使用 DELETE 方法进行删除。
+
+```js
+fetch('http://129.204.128.185:3000/project/' + index, {
+  method: 'DELETE',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+})
+.then(()=>this.getRemoteData())
+```
+
+
+### 4.4 本章小结
+截止本章，我们不仅实现了程序在课题需求下的基本页面布局和交互逻辑，还使用Node.JS+ Express + MySQL 这一轻量级组合去实现服务器端接口设计,并且使用 fetch API 为程序添加和完善网络交互和数据存储的能力，使得程序更加完整。
 
 
 

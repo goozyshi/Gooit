@@ -114,28 +114,28 @@ class User extends Component {
     const { isLogin, wait, selectedUser, selectedDepartment, img} = this.state;
     return (
       <View style={styles.forebox}>
-          <Image source={{uri: isLogin? this.state.img :'https://static.zcool.cn/git_z/z/images/boy.png'}} style={styles.avatar}/>
-          <View style={styles.wrapper}>
-            <View style={{margin: 10}}>
-              <Text style={styles.name}>{isLogin? selectedUser : '尚未登录'}</Text>
-              <Text style={styles.sub}>{isLogin? selectedDepartment : '点击右侧登陆吧'}</Text>
-            </View>
-            <View>
-              <TouchableOpacity onPress={this._showDialog}>
-                <Text style={isLogin? styles.exit: styles.login}>{isLogin? '退出' : '登录'}</Text>
-                <Portal>
-                  <Dialog
-                    visible={this.state.visible}
-                    onDismiss={this._hideDialog}
-                  >
-                    <Dialog.Title>{wait? '请稍后' :(isLogin? '切换用户': '选择用户')}</Dialog.Title>
-                    <Dialog.Content>{this._showUser()}</Dialog.Content>
-                    { !wait && <Dialog.Actions><Button onPress={()=>this._confirmExit()}>{isLogin? '确认退出' : '取消'}</Button></Dialog.Actions> }
-                  </Dialog>
-                </Portal>
-              </TouchableOpacity>
-            </View>
+        <Image source={{uri: isLogin? this.state.img :'https://static.zcool.cn/git_z/z/images/boy.png'}} style={styles.avatar}/>
+        <View style={styles.wrapper}>
+          <View style={{margin: 10}}>
+            <Text style={styles.name}>{isLogin? selectedUser : '尚未登录'}</Text>
+            <Text style={styles.sub}>{isLogin? selectedDepartment : '点击右侧登陆吧'}</Text>
           </View>
+          <View>
+            <TouchableOpacity onPress={this._showDialog}>
+              <Text style={isLogin? styles.exit: styles.login}>{isLogin? '退出' : '登录'}</Text>
+              <Portal>
+                <Dialog
+                  visible={this.state.visible}
+                  onDismiss={this._hideDialog}
+                >
+                  <Dialog.Title>{wait? '请稍后' :(isLogin? '切换用户': '选择用户')}</Dialog.Title>
+                  <Dialog.Content>{this._showUser()}</Dialog.Content>
+                  { !wait && <Dialog.Actions><Button onPress={()=>this._confirmExit()}>{isLogin? '确认退出' : '取消'}</Button></Dialog.Actions> }
+                </Dialog>
+              </Portal>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     )
   }

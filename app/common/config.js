@@ -542,9 +542,9 @@ const BannerList = [{
   title: '人工智能区块链或将能改变未来的资产管理',
   url: 'https://visualgo.net/zh'
 },{
-  img: 'http://file.elecfans.com/web1/M00/83/6E/pIYBAFxH4gWAG3QBAASVKQO5ec4817.png',
-  title: 'DRAM价格有望止跌回稳',
-  url: 'http://www.elecfans.com/consume/856924.html'
+  img: 'https://upload.semidata.info/new.eefocus.com/article/image/2019/04/11/5caec82a2b441-thumb.jpg',
+  title: '支持可视化编程，让你轻松上手的机器人平台',
+  url: 'https://www.eefocus.com/embedded/434073'
 },{
   img: 'http://file.elecfans.com/web1/M00/83/6E/pIYBAFxH4SmAb9vOAABnadHw0Ms248.jpg',
   title: '苹果明年将完全放弃LCD显示屏',
