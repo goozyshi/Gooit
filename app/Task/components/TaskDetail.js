@@ -152,7 +152,7 @@ export default class TaskDetail extends Component {
               <Divider style={{margin: 8}}/>
               <View style={styles.item}>
                 <Icon name="user" size={20} style={{margin: 10}} color={data.status_color}/>
-                <Text style={styles.remark}>任务负责人：{ data.contact}</Text>
+                <Text style={styles.remark}>项目负责人：{ data.contact}</Text>
               </View>
               <Divider style={{margin: 8}}/>
               <View style={styles.item}>
